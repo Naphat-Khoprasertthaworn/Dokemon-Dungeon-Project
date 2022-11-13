@@ -6,5 +6,9 @@ public class main {
 		System.out.println("hello");
 
 	}
+	
+	public static void eiei() {
+		
+	}
 
 }
