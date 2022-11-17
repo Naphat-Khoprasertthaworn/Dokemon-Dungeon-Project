@@ -9,21 +9,35 @@ public abstract class Unit {
 	private String name;
 	private String text;
 	private int position;
+	private int defense;
 	
 	private int health;
 	private ArrayList<Buff> buffs;
 	private boolean attackToken;
+	private ArrayList<Skill> skills;
+	private int buffAttack;
+	private int buffDefense;
+
 	
-	
-	public Unit( String name, String text, int attack , int position,int maxHealth ) {
+
+
+	public Unit( String name, String text, int attack, int defense , int position,int maxHealth ) {
 		this.setName(name);
 		this.setText(text);
 		this.setAttack(attack);
 		this.setMaxHealth(maxHealth);
 		this.setPosition(position);
-		
+		this.setBuffDefense(defense);
+	}
+	
+	public ArrayList<Skill> getSkills() {
+		return skills;
 	}
 
+
+	public void addSkills(Skill skill) {
+		this.skills.add(skill);
+	}
 
 	public int getAttack() {
 		return attack;
@@ -115,10 +129,45 @@ public abstract class Unit {
 		for(Buff b:this.buffs) {
 			b.countDown();
 			if(b.getTurn()==0) {
+				b.removeSelf(this);
 				this.buffs.remove(b);
 			}
 		}
 	}
+
+	public int getBuffAttack() {
+		return buffAttack;
+	}
+
+	public void setBuffAttack(int buffAttack) {
+		this.buffAttack = buffAttack;
+	}
+	
+	public int getTotalAttack() {
+		return this.getAttack() + this.getBuffAttack();
+	}
+
+	public int getDefense() {
+		return defense;
+	}
+
+	public void setDefense(int defense) {
+		if(defense < 0) {
+			this.defense = 0;
+			return;
+		}
+		this.defense = defense;
+	}
+
+	public int getBuffDefense() {
+		return buffDefense;
+	}
+
+	public void setBuffDefense(int buffDefense) {
+		this.buffDefense = buffDefense;
+	}
+
+
 	
 
 }
