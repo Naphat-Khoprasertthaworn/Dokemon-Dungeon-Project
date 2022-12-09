@@ -9,7 +9,7 @@ public class Exhaust extends Buff{
 	
 	public Exhaust(int turn, int ratio) {
 		super(turn, ratio);
-		
+		super.setName("Exhaust");
 	}
 
 	

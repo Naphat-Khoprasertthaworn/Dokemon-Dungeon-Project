@@ -1,8 +1,10 @@
 package entity.base;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
-public abstract class Unit {
+
+public class Unit {
 	
 	private int attack;
 	private int maxHealth;
@@ -13,7 +15,7 @@ public abstract class Unit {
 	
 	private int health;
 	private ArrayList<Buff> buffs;
-	private boolean attackToken;
+	//private boolean attackToken;
 	private ArrayList<Skill> skills;
 	private int buffAttack;
 	private int buffDefense;
@@ -27,7 +29,36 @@ public abstract class Unit {
 		this.setAttack(attack);
 		this.setMaxHealth(maxHealth);
 		this.setPosition(position);
-		this.setBuffDefense(defense);
+		this.setDefense(defense);
+		this.skills = new ArrayList<Skill>();
+		this.buffs = new ArrayList<Buff>();
+		
+		
+		this.reset();
+	}
+	
+	public void takeDamage(int dmg) {
+		dmg = dmg - this.getTotalDefense();
+		if(dmg<=0) {
+			return;
+		}
+		this.setHealth(this.getHealth()-dmg);
+	}
+	
+	public void reset() {
+		this.setHealth( this.getMaxHealth() );
+		this.setBuffAttack(0);
+		this.setBuffDefense(0);
+		this.buffs.clear();
+	}
+	
+	public boolean useSkill( int order,ArrayList<Unit> units, Unit targetUnit ) {
+		if(this.skills.get(order)==null) {
+			return false;
+		}
+		this.skills.get(order).skillActive(units,targetUnit,this);
+		
+		return true;
 	}
 	
 	public ArrayList<Skill> getSkills() {
@@ -123,16 +154,31 @@ public abstract class Unit {
 	
 	public void addBuff(Buff buff) {
 		this.buffs.add(buff);
+		buff.activeBuff(this);
 	}
 	
 	public void countdownBuffs() {
-		for(Buff b:this.buffs) {
-			b.countDown();
-			if(b.getTurn()==0) {
-				b.removeSelf(this);
-				this.buffs.remove(b);
-			}
+		if(this.buffs.isEmpty()) {
+			return;
 		}
+
+		int i = 0;
+		while(true) {
+			this.buffs.get(i).countDown();
+			if(this.buffs.get(i).getTurn()==0) {
+				this.buffs.get(i).removeSelf(this);
+				this.buffs.remove(this.buffs.get(i));
+			}
+			else {
+				i++;
+			}
+			if(i==this.buffs.size()) {
+				break;
+			}
+			
+		}
+
+		
 	}
 
 	public int getBuffAttack() {
@@ -146,7 +192,11 @@ public abstract class Unit {
 	public int getTotalAttack() {
 		return this.getAttack() + this.getBuffAttack();
 	}
-
+	
+	public int getTotalDefense() {
+		return this.getDefense()+this.getBuffDefense();
+	}
+	
 	public int getDefense() {
 		return defense;
 	}
