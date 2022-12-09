@@ -22,14 +22,20 @@ public abstract class Skill implements Countdownable {
 		
 	}
 	
+	public Skill(Skill s) {
+		this.setName(s.getName());
+		this.setText(s.getText());
+		this.setRatio(s.getRatio());
+		this.setCd(s.getCd());
+	}
 	
-	public  abstract void skillActive(ArrayList<Unit> units, Unit targetUnit,Unit owner);
+	public abstract boolean skillActive(Unit owner);
 	
 	
-	//public void useSkill( ArrayList<Unit> units, Unit targetUnit ) {
-	//	this.skillActive(units, targetUnit,this);
-	//	this.setInCombatCd(this.cd);
-	//}
+//	public void useSkill() {
+//		this.skillActive(units, targetUnit,this);
+//		this.setInCombatCd(this.cd);
+//	}
 	
 	
 	public void countDown() {
@@ -97,7 +103,14 @@ public abstract class Skill implements Countdownable {
 		this.inCombatCd = inCombatCd;
 	}
 
+	public String toString() {
+		return this.getName() + " : " + this.getInCombatCd() + "/" + this.getCd();
+		
+	}
 
+	public abstract void skillEffect(ArrayList<Unit> units, int i, Unit unit);
+	
+	
 //	public boolean isAOE() {
 //		return isAOE;
 //	}
