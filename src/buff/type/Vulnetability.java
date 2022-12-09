@@ -9,7 +9,7 @@ public class Vulnetability extends Buff {
 	
 	public Vulnetability(int turn, int ratio) {
 		super(turn, ratio);
-		// TODO Auto-generated constructor stub
+		super.setName("Vulnetability");
 	}
 
 	@Override

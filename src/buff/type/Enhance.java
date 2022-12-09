@@ -9,6 +9,7 @@ public class Enhance extends Buff{
 	
 	public Enhance(int turn,int ratio) {
 		super(turn, ratio);
+		super.setName("Enhance");
 	}
 
 	@Override

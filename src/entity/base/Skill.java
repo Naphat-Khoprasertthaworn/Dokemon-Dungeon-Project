@@ -8,28 +8,28 @@ public abstract class Skill implements Countdownable {
 	private String text;
 	private int cd;
 	private ArrayList<Buff> buffs;
-	private boolean isAOE;
+	//private boolean isAOE;
 	
 	private int inCombatCd;
 	
 	
-	public Skill(String name,String text,int ratio,int cd,boolean isAOE) {
+	public Skill(String name,String text,int ratio,int cd) {
 		this.setName(name);
 		this.setText(text);
 		this.setRatio(ratio);
 		this.setCd(cd);
-		this.setAOE(isAOE);
+		//this.setAOE(isAOE);
 		
 	}
 	
 	
-	public  abstract void skillActive(ArrayList<Unit> units, Unit targetUnit);
+	public  abstract void skillActive(ArrayList<Unit> units, Unit targetUnit,Unit owner);
 	
 	
-	public void useSkill( ArrayList<Unit> units, Unit targetUnit ) {
-		this.skillActive(units, targetUnit);
-		this.setInCombatCd(this.cd);
-	}
+	//public void useSkill( ArrayList<Unit> units, Unit targetUnit ) {
+	//	this.skillActive(units, targetUnit,this);
+	//	this.setInCombatCd(this.cd);
+	//}
 	
 	
 	public void countDown() {
@@ -98,14 +98,14 @@ public abstract class Skill implements Countdownable {
 	}
 
 
-	public boolean isAOE() {
-		return isAOE;
-	}
-
-
-	public void setAOE(boolean isAOE) {
-		this.isAOE = isAOE;
-	}
+//	public boolean isAOE() {
+//		return isAOE;
+//	}
+//
+//
+//	public void setAOE(boolean isAOE) {
+//		this.isAOE = isAOE;
+//	}
 	
 	
 	
