@@ -18,6 +18,7 @@ public class GameLogic {
 	private int targetedMonster;
 	private int distance;
 	static final int MAX_DISTANCE = 20;
+	
 	private GameLogic() {
 		this.newGame();
 	}
@@ -185,6 +186,8 @@ public class GameLogic {
 //		}
 //	}
 	
+	
+	// ############################################################################################
 	public void newGame() {
 		this.setDistance(0);
 		this.heros = new ArrayList<Unit>();
