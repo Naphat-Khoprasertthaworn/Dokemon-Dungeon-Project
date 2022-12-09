@@ -12,6 +12,7 @@ public class Unit {
 	private String text;
 	private int position;
 	private int defense;
+	private boolean isAlive;
 	
 	private int health;
 	private ArrayList<Buff> buffs;
@@ -33,10 +34,22 @@ public class Unit {
 		this.skills = new ArrayList<Skill>();
 		this.buffs = new ArrayList<Buff>();
 		
-		
 		this.reset();
 	}
 	
+	public void countdownAll() {
+		this.countdownBuffs();
+		this.countdownSkills();
+	}
+	
+	public boolean isAlive() {
+		return isAlive;
+	}
+
+	public void setAlive(boolean isAlive) {
+		this.isAlive = isAlive;
+	}
+
 	public void takeDamage(int dmg) {
 		dmg = dmg - this.getTotalDefense();
 		if(dmg<=0) {
@@ -45,20 +58,33 @@ public class Unit {
 		this.setHealth(this.getHealth()-dmg);
 	}
 	
+	public void receiveHeal(int heal) {
+		if(heal<=0) {
+			return;
+		}
+		this.setHealth(this.getHealth()+ heal);
+	}
+	
 	public void reset() {
+		this.setAlive(true);
 		this.setHealth( this.getMaxHealth() );
 		this.setBuffAttack(0);
 		this.setBuffDefense(0);
 		this.buffs.clear();
+		for(Skill s:this.getSkills()) {
+			s.setInCombatCd(0);
+		}
 	}
 	
-	public boolean useSkill( int order,ArrayList<Unit> units, Unit targetUnit ) {
+	public boolean useSkill( int order ) {
+		if( this.skills.get(order).readySkill()==false ) {
+			return false;
+		}
 		if(this.skills.get(order)==null) {
 			return false;
 		}
-		this.skills.get(order).skillActive(units,targetUnit,this);
-		
-		return true;
+		System.out.println("############# "+ this.getName()+" use skill " + this.skills.get(order).getName());
+		return this.skills.get(order).skillActive(this);
 	}
 	
 	public ArrayList<Skill> getSkills() {
@@ -69,7 +95,13 @@ public class Unit {
 	public void addSkills(Skill skill) {
 		this.skills.add(skill);
 	}
-
+	
+	public void countdownSkills() {
+		for(Skill s:this.getSkills()) {
+			s.countDown();
+		}
+	}
+	
 	public int getAttack() {
 		return attack;
 	}
@@ -93,6 +125,7 @@ public class Unit {
 	
 	public void setHealth(int health) {
 		if(health < 0) {
+			this.setAlive(false);
 			this.health = 0;
 		}else if(health > this.maxHealth) {
 			this.health = this.maxHealth;
@@ -133,14 +166,14 @@ public class Unit {
 	}
 
 
-	public boolean isAttackToken() {
-		return attackToken;
-	}
-
-
-	public void setAttackToken(boolean attackToken) {
-		this.attackToken = attackToken;
-	}
+//	public boolean isAttackToken() {
+//		return attackToken;
+//	}
+//
+//
+//	public void setAttackToken(boolean attackToken) {
+//		this.attackToken = attackToken;
+//	}
 
 
 	public ArrayList<Buff> getBuffs() {
@@ -217,7 +250,9 @@ public class Unit {
 		this.buffDefense = buffDefense;
 	}
 
-
+	public String toString() {
+		return "😆 "+ this.getName() + "\n💥 Atk : " + this.getTotalAttack() + " / " + this.getAttack() + "\n❤️ Health: " + this.getHealth() +" / "+ this.getMaxHealth() + "\n🔰 Def : " + this.getTotalDefense() + " / " + this.getDefense();
+	}
 	
 
 }

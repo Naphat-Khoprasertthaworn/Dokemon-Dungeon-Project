@@ -9,7 +9,7 @@ public class DamageReduction extends Buff{
 	public DamageReduction(int turn, int ratio) {
 		super(turn, ratio);
 		super.setName("DamageReduction");
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override
