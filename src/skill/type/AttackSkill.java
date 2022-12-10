@@ -13,12 +13,15 @@ public abstract class AttackSkill extends Skill {
 		
 	}
 	
-	public boolean skillActive(Unit owner) {
-		
+	public boolean skillActive(Unit userUnit) {
 		if( this.getInCombatCd() != 0 ) {
 			return false;
 		}
-		this.skillEffect(GameLogic.getInstance().findParty(owner, false), GameLogic.getInstance().findTarget(owner, false),owner);
+
+		if(userUnit == null) {
+			return false;
+		}
+		this.skillEffect(GameLogic.getInstance().findParty(userUnit, false), GameLogic.getInstance().findTarget(userUnit, false),userUnit);
 		this.setInCombatCd(getCd());
 		return true;
 	};

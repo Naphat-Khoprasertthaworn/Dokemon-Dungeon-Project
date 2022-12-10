@@ -7,19 +7,20 @@ import entity.base.Unit;
 import logic.GameLogic;
 
 public abstract class DefenceSkill extends Skill {
+	
 	public DefenceSkill(String name, String text, int ratio, int cd) {
 		super(name, text, ratio, cd);
-		// TODO Auto-generated constructor stub
 	}
 
 
-	public boolean skillActive(Unit owner) {
+	public boolean skillActive(Unit userUnit) {
 		if( this.getInCombatCd() != 0 ) {
 			return false;
 		}
-		this.skillEffect(GameLogic.getInstance().findParty(owner, true), GameLogic.getInstance().findTarget(owner, true),owner);
-		System.out.println(GameLogic.getInstance().findTarget(owner, true));
-		//System.out.println("!!!!!!!!!!!!!!!!!!!");
+		if(userUnit == null) {
+			return false;
+		}
+		this.skillEffect(GameLogic.getInstance().findParty(userUnit, true), GameLogic.getInstance().findTarget(userUnit, true),userUnit);
 		this.setInCombatCd(getCd());
 		return true;
 	};

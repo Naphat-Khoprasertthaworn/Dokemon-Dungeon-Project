@@ -13,7 +13,8 @@ public class Main {
 	private static boolean isGameActive;
 	private static boolean isCombatMode;
 	private static boolean isHeroTurn;
-	
+	private static boolean isStageClear;
+	private static boolean isStageFail;
 	public static void main(String[] args) {
 		
 		
@@ -62,30 +63,38 @@ public class Main {
 			System.out.println( "distance NOW : "+GameLogic.getInstance().getDistance() );
 			if(bossStage) {
 				isGameActive = false;
+				System.err.println("GAME END !!!");
 				break;
 			}
 			GameLogic.getInstance().generateMonsters();
+			isStageClear = false;
+			isStageFail = false;
 			isCombatMode = true;
 			while(isCombatMode) {
 				playerTurn();
 				monsterTurn();
 				GameLogic.getInstance().countdownGame();
 				if(GameLogic.getInstance().stageClear()) {
-					GameLogic.getInstance().resetHeros();
+					GameLogic.getInstance().resetUnits();
 					break;
 				}else if(GameLogic.getInstance().stageFail()) {
 					isGameActive = false;
+					GameLogic.getInstance().resetUnits();
 					System.out.println("You died");
 					break;
 				}
 				
 			}
 			//System.out.println( GameLogic.getInstance().getHeros() );
-			break;
+			//break;
 		}
 		
 		
 		
+	}
+	public static void updateStageGame() {
+		isStageClear = GameLogic.getInstance().stageClear();
+		isStageFail = GameLogic.getInstance().stageFail();
 	}
 	
 	public static void showCombat() {
@@ -113,12 +122,16 @@ public class Main {
 		System.out.println( "* * * * * * * * * * * * PLAYER TURN *  * * * * * * * * * **" );
 		ArrayList<Unit> heros = GameLogic.getInstance().getHeros();
 		Unit hero;
-		for(int i = 0;i<3;i++) {
+		for(int i = 0;i<heros.size();i++) {
 			showCombat();
 			hero = GameLogic.getInstance().getUnitByPosition(i,heros);
 			isHeroTurn = true;
 			
 			System.out.println( "|| "+hero.getName() + " Turn ||" );
+			
+			if(!hero.isAlive()) {
+				continue;
+			}
 			
 			while(isHeroTurn) {
 				int order = getChoice();
@@ -131,7 +144,10 @@ public class Main {
 				}
 				
 			}
-			
+			updateStageGame();
+			if(isStageClear || isStageFail) {
+				return;
+			}
 			
 		}
 		
@@ -141,19 +157,26 @@ public class Main {
 		System.out.println( "* * * * * * * * * * * * MONSTER TURN * * * * * * * * * * **" );
 		ArrayList<Unit> monsters = GameLogic.getInstance().getMonsters();
 		Unit monster;
-		for(int i = 0;i<3;i++) {
+		for(int i = 0;i<monsters.size();i++) {
 			showCombat();
 			monster = GameLogic.getInstance().getUnitByPosition(i,monsters);
+			if(!monster.isAlive()) {
+				continue;
+			}
 			
 			for(int j = monster.getSkills().size()-1;j>=0;j--) {
 				if(monster.getSkills().get(j).readySkill()) {
 					monster.useSkill(j);
+					break;
 				}
 			}
 			
 			
 		}
-		//ArrayList
+		if(isStageClear || isStageFail) {
+			return;
+		}
+		
 	}
 	
 

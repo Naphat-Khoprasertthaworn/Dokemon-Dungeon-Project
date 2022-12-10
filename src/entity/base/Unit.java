@@ -3,9 +3,10 @@ package entity.base;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import logic.GameLogic;
+
 
 public class Unit {
-	
 	private int attack;
 	private int maxHealth;
 	private String name;
@@ -16,13 +17,9 @@ public class Unit {
 	
 	private int health;
 	private ArrayList<Buff> buffs;
-	//private boolean attackToken;
 	private ArrayList<Skill> skills;
 	private int buffAttack;
 	private int buffDefense;
-
-	
-
 
 	public Unit( String name, String text, int attack, int defense , int position,int maxHealth ) {
 		this.setName(name);
@@ -36,6 +33,7 @@ public class Unit {
 		
 		this.reset();
 	}
+
 	
 	public void countdownAll() {
 		this.countdownBuffs();
@@ -47,6 +45,9 @@ public class Unit {
 	}
 
 	public void setAlive(boolean isAlive) {
+		if(isAlive == false) {
+			this.getBuffs().clear();
+		}
 		this.isAlive = isAlive;
 	}
 
@@ -141,40 +142,25 @@ public class Unit {
 		return name;
 	}
 
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 
 	public String getText() {
 		return text;
 	}
 
-
 	public void setText(String text) {
 		this.text = text;
 	}
-
 
 	public int getPosition() { //0 = Leader ,1 = DPS, 2 = support
 		return position;
 	}
 
-
 	public void setPosition(int position) {
 		this.position = position;
 	}
-
-
-//	public boolean isAttackToken() {
-//		return attackToken;
-//	}
-//
-//
-//	public void setAttackToken(boolean attackToken) {
-//		this.attackToken = attackToken;
-//	}
 
 
 	public ArrayList<Buff> getBuffs() {
@@ -187,6 +173,9 @@ public class Unit {
 	}
 	
 	public void addBuff(Buff buff) {
+		if(!this.isAlive()) {
+			return;
+		}
 		this.buffs.add(buff);
 		buff.activeBuff(this);
 	}
