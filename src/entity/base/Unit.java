@@ -50,12 +50,13 @@ public class Unit {
 		this.isAlive = isAlive;
 	}
 
-	public void takeDamage(int dmg) {
+	public int takeDamage(int dmg) {
 		dmg = dmg - this.getTotalDefense();
 		if(dmg<=0) {
-			return;
+			return 0;
 		}
 		this.setHealth(this.getHealth()-dmg);
+		return dmg;
 	}
 	
 	public void receiveHeal(int heal) {

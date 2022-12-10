@@ -6,7 +6,9 @@ import buff.type.DamageReduction;
 import buff.type.Enhance;
 import buff.type.Exhaust;
 import buff.type.Vulnetability;
+import entity.base.Buff;
 import entity.base.Unit;
+import item.type.BuffPotion;
 import skill.type.AttackSkill;
 import skill.type.DefenceSkill;
 
@@ -14,28 +16,31 @@ public class GameLogic {
 	private static GameLogic instance = null;
 	private ArrayList<Unit> heros;
 	private ArrayList<Unit> monsters;
+	private ArrayList<Unit> poolMonsters;
 	private int targetedHero;
 	private int targetedMonster;
 	private int distance;
 	static final int MAX_DISTANCE = 20;
+	static final int MAX_PARTY = 3;
+	private Inventory inventory;
 	
+	
+	//######## GAME LOGIC ########
 	private GameLogic() {
 		this.newGame();
 	}
 	
-	public void resetHeros() {
-		for(Unit unit:this.getHeros()) {
-			unit.reset();
+	public static GameLogic getInstance() {
+		if(instance == null) {
+			instance = new GameLogic();
 		}
+		return instance;
 	}
-	
-	public void countdownGame() {
-		for(Unit unit:this.getHeros()) {
-			unit.countdownAll();
-		}
-		for(Unit unit:this.getMonsters()) {
-			unit.countdownAll();
-		}
+	//######## DISTANCE & DICE ########
+	public int rollDice() {
+		int i = (int) ((Math.random()*5) +1);
+		//this.setDistance(this.getDistance() + i);
+		return i;
 	}
 	
 	public int getDistance() {
@@ -48,6 +53,23 @@ public class GameLogic {
 		}
 		this.distance = distance;
 		return false;
+	}
+	
+	//######## TURN & STAGE HANDLER ########
+	
+	public void countdownGame() {
+		for(Unit unit:this.getHeros()) {
+			unit.countdownAll();
+		}
+		for(Unit unit:this.getMonsters()) {
+			unit.countdownAll();
+		}
+	}
+	
+	public void resetHeros() {
+		for(Unit unit:this.getHeros()) {
+			unit.reset();
+		}
 	}
 	
 	public boolean stageClear() {
@@ -68,11 +90,16 @@ public class GameLogic {
 		return true;
 	}
 	
-	public int rollDice() {
-		int i = (int) ((Math.random()*5) +1);
-		//this.setDistance(this.getDistance() + i);
-		return i;
+	public void updateTargetPointer() {
+		if(!this.heros.get( this.getTargetedHero()).isAlive()) {
+			this.setTargetedHero( this.getFrontLineUnit(heros).getPosition() );
+		}
+		if(!this.monsters.get( this.getTargetedMonster()).isAlive()) {
+			this.setTargetedMonster( this.getFrontLineUnit(monsters).getPosition() );
+		}
 	}
+	
+	//######## TARGET POINTER HANDLER ########
 	
 	public int findTarget(Unit unit,boolean b) {
 		if(this.getHeros().contains(unit) == b) {
@@ -82,15 +109,6 @@ public class GameLogic {
 		}else {
 			return -1;
 		}
-	}
-	
-	public Unit getUnitByPosition(int p,ArrayList<Unit> units) {
-		for(int i = 0;i<3;i++) {
-			if(units.get(i).getPosition() == p) {
-				return units.get(i);
-			}
-		}
-		return null;
 	}
 	
 	public int getTargetedHero() {
@@ -113,6 +131,71 @@ public class GameLogic {
 		}
 	}
 
+	//######## SINGLE UNIT HANDLER ########
+	
+	public Unit getUnitByPosition(int p,ArrayList<Unit> units) {
+		for(int i = 0;i<MAX_PARTY;i++) {
+			if(units.get(i).getPosition() == p) {
+				return units.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public Unit getFrontLineUnit(ArrayList<Unit> units) {
+		for( int i = 0;i<MAX_PARTY;i++ ) {
+			for(Unit u :units) {
+				if(u.getPosition()==i && u.isAlive()) {
+					return u;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public Unit getBackLineUnit(ArrayList<Unit> units) {
+		for( int i = MAX_PARTY-1;i>=0;i-- ) {
+			for(Unit u :units) {
+				if(u.getPosition()==i && u.isAlive()) {
+					return u;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public Unit getLowestHealthUnit( ArrayList<Unit> units ) {
+		Unit u = getFrontLineUnit(units);
+		for(Unit unit:units) {
+			if(unit.isAlive() && unit.getHealth() < u.getHealth() ) {
+				u = unit;
+			}
+		}
+		return u;
+	}
+	
+//	public void deathUnit(Unit u) {
+//	u.setAlive(false);
+//	ArrayList<Unit> party = findParty(u, true);
+//	for(Unit unit:party) {
+//		if(unit.getPosition() > u.getPosition() ) {
+//			unit.setPosition(unit.getPosition()-1);
+//		}
+//	}
+//}
+//
+//public void reviveUnit(Unit u) {
+//	u.setAlive(true);
+//	ArrayList<Unit> party = findParty(u, true);
+//	for(Unit unit:party) {
+//		if(unit.getPosition()>=u.getPosition()) {
+//			unit.setPosition(0);
+//		}
+//	}
+//}
+	
+	//######## PARTY HANDLER ########
+
 	public ArrayList<Unit> getHeros() {
 		return heros;
 	}
@@ -129,22 +212,6 @@ public class GameLogic {
 		this.monsters.add(monsters);
 	}
 	
-	public static GameLogic getInstance() {
-		if(instance == null) {
-			instance = new GameLogic();
-		}
-		return instance;
-	}
-	
-	public void updateTargetPointer() {
-		if(!this.heros.get( this.getTargetedHero()).isAlive()) {
-			this.setTargetedHero( this.getFrontLineUnit(heros).getPosition() );
-		}
-		if(!this.monsters.get( this.getTargetedMonster()).isAlive()) {
-			this.setTargetedMonster( this.getFrontLineUnit(monsters).getPosition() );
-		}
-	}
-	
 	public ArrayList<Unit> findParty(Unit u,boolean b){
 		if( this.getHeros().contains(u)==b ) {
 			return this.getHeros();
@@ -155,41 +222,17 @@ public class GameLogic {
 		}
 	}
 	
-	public Unit getFrontLineUnit(ArrayList<Unit> units) {
-		for( int i = 0;i<units.size();i++ ) {
-			for(Unit u :units) {
-				if(u.getPosition()==i && u.isAlive()) {
-					return u;
-				}
-			}
-		}
-		return null;
-	}
 	
-//	public void deathUnit(Unit u) {
-//		u.setAlive(false);
-//		ArrayList<Unit> party = findParty(u, true);
-//		for(Unit unit:party) {
-//			if(unit.getPosition() > u.getPosition() ) {
-//				unit.setPosition(unit.getPosition()-1);
-//			}
-//		}
-//	}
-//	
-//	public void reviveUnit(Unit u) {
-//		u.setAlive(true);
-//		ArrayList<Unit> party = findParty(u, true);
-//		for(Unit unit:party) {
-//			if(unit.getPosition()>=u.getPosition()) {
-//				unit.setPosition(0);
-//			}
-//		}
-//	}
-	
-	
-	// ############################################################################################
+	//######## INITIAL GAME ########
 	public void newGame() {
 		this.setDistance(0);
+		this.inventory = new Inventory();
+		this.gennerateHerosParty();
+		this.generatePoolMonsters();
+		
+	}
+	
+	public void gennerateHerosParty() {
 		this.heros = new ArrayList<Unit>();
 		
 		Unit warriorUnit = new Unit("Warrior", "I am warrior.", 50, 30, 0, 100);
@@ -198,8 +241,6 @@ public class GameLogic {
 		heros.add(warriorUnit);
 		heros.add(archerUnit);
 		heros.add(medicUnit);
-		
-		
 		
 		AttackSkill autoAttackWarrior = new AttackSkill("Auto attack","can't target",100,1) {
 			@Override
@@ -246,11 +287,9 @@ public class GameLogic {
 			@Override
 			public void skillEffect(ArrayList<Unit> units, int targetUnit, Unit owner) {
 				for(Unit unit:units) {
-					//System.out.println("######################");
 					unit.addBuff(new DamageReduction(1, 100));
 					unit.addBuff(new Enhance(2, 100));
 				}
-				
 			}
 		};
 		
@@ -292,12 +331,147 @@ public class GameLogic {
 		medicUnit.addSkills(autoAttackMedic);
 		medicUnit.addSkills(medicSkill1);
 		medicUnit.addSkills(medicSkill2);
+	}
+	
+	public void generatePoolMonsters() {
+		this.poolMonsters = new ArrayList<Unit>();
+		Unit golemUnit = new Unit("Golem", "I am golem", 50, 30, 0,100);
+		Unit slimeUnit = new Unit("Slime", "I am slime", 20, 10, 0, 50);
+		Unit oniUnit = new Unit("Oni", "I am Oni", 50 , 30, 0, 60);
+		Unit bloodHawkUnit = new Unit("Blood Hawk", "I am blood hawk" ,40, 10, 0, 50);
+		Unit gnomeUnit = new Unit("Gnome", "I am Gnome", 20, 10, 0, 50);
 		
+		AttackSkill autoAttackGolem = new AttackSkill("Auto attack","attack front line hero",100,2) {
+			
+			@Override
+			public void skillEffect(ArrayList<Unit> units, int targetUnit, Unit owner) {
+				getFrontLineUnit(units).takeDamage( (this.getRatio()*owner.getTotalAttack() )/100 );
+			}
+		};
 		
+		AttackSkill golemSkill1 = new AttackSkill("Eathquake","AOE attack",100,5) {
+			
+			@Override
+			public void skillEffect(ArrayList<Unit> units, int targetUnit, Unit owner) {
+				for(Unit u:units) {
+					u.takeDamage( (this.getRatio()*owner.getTotalAttack())/100 );
+				}
+			}
+		};
 		
+		AttackSkill autoAttackSlime = new AttackSkill("Auto attack" , "heal self and give front line exhaust" , 100,1) {
+			
+			@Override
+			public void skillEffect(ArrayList<Unit> units, int targetUnit, Unit owner) {
+				Unit unit = getFrontLineUnit(units);
+				unit.addBuff(new Exhaust(1, 10));
+				int dmg = unit.takeDamage( (this.getRatio() * owner.getTotalAttack())/100 );
+				owner.receiveHeal(dmg);
+			}
+		};
+		
+		AttackSkill slimeSkill1 = new AttackSkill("normal debuff","give debuff to front line",100,3) {
+			
+			@Override
+			public void skillEffect(ArrayList<Unit> units, int targetUnit, Unit owner) {
+				Unit u = getFrontLineUnit(units);
+				u.addBuff( new Exhaust(3, 20) );
+				u.addBuff( new Vulnetability(2, 20) );
+				u.takeDamage( (this.getRatio() * owner.getTotalAttack())/100 );
+			}
+		};
+				
+				
+		AttackSkill autoAttackOni = new AttackSkill("Auto attack" , "target back line first" , 100,2) {
+			
+			@Override
+			public void skillEffect(ArrayList<Unit> units, int targetUnit, Unit owner) {
+				getBackLineUnit(units).takeDamage( (this.getRatio()*owner.getTotalAttack())/100 );
+				
+			}
+		};
+		
+		AttackSkill oniSkill1 = new AttackSkill("heavy attack","attack front line",120,5) {
+			
+			@Override
+			public void skillEffect(ArrayList<Unit> units, int targetUnit, Unit owner) {
+				Unit u = getFrontLineUnit(units);
+				u.addBuff( new Vulnetability(2, 50));
+				u.takeDamage((this.getRatio()*owner.getTotalAttack())/100 );
+			}
+		};
+		
+		AttackSkill autoAttackBloodHawk = new AttackSkill("Auto attack" , "target back line first" , 100,1) {
+			
+			@Override
+			public void skillEffect(ArrayList<Unit> units, int targetUnit, Unit owner) {
+				Unit u = getBackLineUnit(units);
+				u.takeDamage( (this.getRatio()*owner.getTotalAttack())/100 );
+				if(u.isAlive()) {
+					u.addBuff(new Vulnetability(4, 10));
+				}
+			}
+		};
+		
+		AttackSkill bloodHawkSkill1 = new AttackSkill("super dangerous vulnetability" , "attack vulnetability incresing" , 100,2) {
+			
+			@Override
+			public void skillEffect(ArrayList<Unit> units, int targetUnit, Unit owner) {
+				Unit u = getBackLineUnit(units);
+				for(Buff b: u.getBuffs()) {
+					if(b instanceof Vulnetability) {
+						u.takeDamage( ((this.getRatio()+50)*owner.getTotalAttack())/100 );
+						return;
+					}
+				}
+				u.addBuff(new Vulnetability(4, 10));
+				u.takeDamage( (this.getRatio()*owner.getTotalAttack())/100 );
+			}
+		};
+		
+		DefenceSkill autoAttackGnome = new DefenceSkill("heal lowest hp monster","single heal",50,2) {
+			
+			@Override
+			public void skillEffect(ArrayList<Unit> units, int targetUnit, Unit owner) {
+				getLowestHealthUnit(units).receiveHeal( (this.getRatio()*owner.getTotalAttack())/100 );
+				
+			}
+		};
+		
+		DefenceSkill gnomeSkill1 = new DefenceSkill("Heal monster","AOE heal",30,4) {
+			
+			@Override
+			public void skillEffect(ArrayList<Unit> units, int targetUnit, Unit owner) {
+				for(Unit unit:units) {
+					unit.receiveHeal( this.getRatio()*owner.getTotalAttack() );
+				}
+			}
+		};
+		
+		golemUnit.addSkills(autoAttackGolem);
+		golemUnit.addSkills(golemSkill1);
+		
+		slimeUnit.addSkills(autoAttackSlime);
+		slimeUnit.addSkills(slimeSkill1);
+		
+		oniUnit.addSkills(autoAttackOni);
+		oniUnit.addSkills(oniSkill1);
+		
+		bloodHawkUnit.addSkills(autoAttackBloodHawk);
+		bloodHawkUnit.addSkills(bloodHawkSkill1);
+		
+		gnomeUnit.addSkills(autoAttackGnome);
+		gnomeUnit.addSkills(gnomeSkill1);
+		
+		this.poolMonsters.add(golemUnit);
+		this.poolMonsters.add(slimeUnit);
+		this.poolMonsters.add(oniUnit);
+		this.poolMonsters.add(bloodHawkUnit);
+		this.poolMonsters.add(gnomeUnit);
 		
 	}
 	
+	//######## INITIAL STAGE ########
 	public void generateMonsters() {
 		this.monsters = new ArrayList<Unit>();
 		
