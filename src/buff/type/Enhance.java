@@ -1,5 +1,6 @@
 package buff.type;
 
+
 import entity.base.Buff;
 import entity.base.Unit;
 
@@ -11,7 +12,11 @@ public class Enhance extends Buff{
 		super(turn, ratio);
 		super.setName("Enhance");
 	}
-
+	
+	public Enhance(Enhance e) {
+		this(e.getTurn(), e.getRatio());
+	}
+	
 	@Override
 	public void activeBuff(Unit unit) {
 		
@@ -19,7 +24,7 @@ public class Enhance extends Buff{
 		unit.setBuffAttack( unit.getBuffAttack() + this.getIncreasingAttack() );
 		
 	}
-	
+	@Override
 	public void removeSelf(Unit unit) {
 		unit.setBuffAttack( unit.getBuffAttack() - this.getIncreasingAttack() );
 	}

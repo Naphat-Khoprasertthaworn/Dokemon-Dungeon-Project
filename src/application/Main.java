@@ -9,7 +9,6 @@ import logic.GameLogic;
 public class Main {
 	
 	private static Scanner keyBoard;
-	//private static int Distance;
 	private static boolean isGameActive;
 	private static boolean isCombatMode;
 	private static boolean isHeroTurn;
@@ -32,7 +31,6 @@ public class Main {
 			int results = getChoice();
 			
 			if(results==1) {
-				//System.out.println("=============================");
 				startGame();
 			}else if(results==2){
 				break;
@@ -74,10 +72,10 @@ public class Main {
 				playerTurn();
 				monsterTurn();
 				GameLogic.getInstance().countdownGame();
-				if(GameLogic.getInstance().stageClear()) {
+				if(isStageClear) {
 					GameLogic.getInstance().resetUnits();
 					break;
-				}else if(GameLogic.getInstance().stageFail()) {
+				}else if(isStageFail) {
 					isGameActive = false;
 					GameLogic.getInstance().resetUnits();
 					System.out.println("You died");
@@ -85,8 +83,6 @@ public class Main {
 				}
 				
 			}
-			//System.out.println( GameLogic.getInstance().getHeros() );
-			//break;
 		}
 		
 		

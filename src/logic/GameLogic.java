@@ -93,7 +93,7 @@ public class GameLogic {
 	public boolean stageClear() {
 		for(Unit unit :this.getMonsters()) {
 			if(unit.isAlive()) {
-				System.out.println(unit);
+				//System.out.println(unit);
 				return false;
 			}
 		}

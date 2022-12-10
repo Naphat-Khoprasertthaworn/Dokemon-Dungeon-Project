@@ -1,5 +1,6 @@
 package buff.type;
 
+
 import entity.base.Buff;
 import entity.base.Unit;
 
@@ -10,6 +11,10 @@ public class DamageReduction extends Buff{
 		super(turn, ratio);
 		super.setName("DamageReduction");
 		
+	}
+	
+	public DamageReduction(DamageReduction buff) {
+		this(buff.getTurn(), buff.getRatio());
 	}
 
 	@Override
