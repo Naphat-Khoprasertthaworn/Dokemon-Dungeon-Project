@@ -1,6 +1,6 @@
 package entity.base;
 
-public abstract class Buff implements Countdownable {
+public class Buff implements Countdownable {
 	private int turn;
 	private int ratio;
 	private String name;
@@ -10,6 +10,10 @@ public abstract class Buff implements Countdownable {
 		this.setRatio(ratio);
 	}
 	
+	public Buff(Buff b) {
+		this(b.getTurn(),b.getRatio());
+	}
+
 	public int getTurn() {
 		return turn;
 	}
@@ -37,8 +41,7 @@ public abstract class Buff implements Countdownable {
 	public void countDown() {
 		this.setTurn(this.getTurn() - 1);
 	}
-	
-	
+
 	
 	public String getName() {
 		return name;
@@ -47,10 +50,6 @@ public abstract class Buff implements Countdownable {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public abstract void activeBuff(Unit unit);
-
-	public abstract void removeSelf(Unit unit);
 	
 	public boolean equals(Object o) {
 		if (o == this) {
@@ -65,5 +64,12 @@ public abstract class Buff implements Countdownable {
 		
 	}
 	
+	public void activeBuff(Unit unit) {
+		
+	};
+	
+	public void removeSelf(Unit unit) {
+		
+	};
 	
 }

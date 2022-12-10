@@ -1,9 +1,10 @@
 package buff.type;
 
+
 import entity.base.Buff;
 import entity.base.Unit;
 
-public class Vulnetability extends Buff {
+public class Vulnetability extends Buff{
 	
 	private int decreasingDefense;
 	
@@ -11,7 +12,14 @@ public class Vulnetability extends Buff {
 		super(turn, ratio);
 		super.setName("Vulnetability");
 	}
-
+	
+	public Vulnetability(Vulnetability buff) {
+		this(buff.getTurn(), buff.getRatio());
+		//System.out.println("i am called" );
+	}
+	
+	
+	
 	@Override
 	public void activeBuff(Unit unit) {
 		this.setDecreasingDefense(unit.getDefense());

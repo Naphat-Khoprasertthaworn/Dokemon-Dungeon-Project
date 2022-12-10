@@ -7,9 +7,8 @@ public abstract class Skill implements Countdownable {
 	private String name;
 	private String text;
 	private int cd;
-	private ArrayList<Buff> buffs;
-	//private boolean isAOE;
-	
+	private ArrayList<Buff> buffsTarget;
+	private ArrayList<Buff> buffsSelf;
 	private int inCombatCd;
 	
 	
@@ -18,8 +17,8 @@ public abstract class Skill implements Countdownable {
 		this.setText(text);
 		this.setRatio(ratio);
 		this.setCd(cd);
-		//this.setAOE(isAOE);
-		
+		this.buffsSelf = new ArrayList<Buff>();
+		this.buffsTarget = new ArrayList<Buff>();
 	}
 	
 	public Skill(Skill s) {
@@ -29,14 +28,7 @@ public abstract class Skill implements Countdownable {
 		this.setCd(s.getCd());
 	}
 	
-	public abstract boolean skillActive(Unit owner);
-	
-	
-//	public void useSkill() {
-//		this.skillActive(units, targetUnit,this);
-//		this.setInCombatCd(this.cd);
-//	}
-	
+	public abstract boolean skillActive(Unit u);
 	
 	public void countDown() {
 		this.setInCombatCd(inCombatCd - 1);
@@ -49,16 +41,26 @@ public abstract class Skill implements Countdownable {
 	
 	
 	// getter setter
-	public ArrayList<Buff> getBuffs() {
-		return buffs;
-	}
-
-	public void addBuffs(Buff buffs) {
-		this.buffs.add(buffs);
-	}
+	
 
 	public int getRatio() {
 		return ratio;
+	}
+
+	public ArrayList<Buff> getBuffsTarget() {
+		return buffsTarget;
+	}
+
+	public void addBuffsTarget(Buff buff) {
+		this.buffsTarget.add(buff);
+	}
+
+	public ArrayList<Buff> getBuffsSelf() {
+		return buffsSelf;
+	}
+
+	public void addBuffsSelf(Buff buff) {
+		this.buffsSelf.add(buff);
 	}
 
 	public void setRatio(int ratio) {
@@ -108,17 +110,6 @@ public abstract class Skill implements Countdownable {
 		
 	}
 
-	public abstract void skillEffect(ArrayList<Unit> units, int i, Unit unit);
-	
-	
-//	public boolean isAOE() {
-//		return isAOE;
-//	}
-//
-//
-//	public void setAOE(boolean isAOE) {
-//		this.isAOE = isAOE;
-//	}
 	
 	
 	

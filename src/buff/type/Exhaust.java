@@ -1,5 +1,6 @@
 package buff.type;
 
+
 import entity.base.Buff;
 import entity.base.Unit;
 
@@ -12,7 +13,9 @@ public class Exhaust extends Buff{
 		super.setName("Exhaust");
 	}
 
-	
+	public Exhaust(Exhaust e) {
+		this(e.getTurn(), e.getRatio());
+	}
 
 	@Override
 	public void activeBuff(Unit unit) {
@@ -20,7 +23,7 @@ public class Exhaust extends Buff{
 		unit.setBuffAttack( unit.getBuffAttack() - this.getDecreasingAttack() );
 		
 	}
-
+	
 	public int getDecreasingAttack() {
 		return decreasingAttack;
 	}
