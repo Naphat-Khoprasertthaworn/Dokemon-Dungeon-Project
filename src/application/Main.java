@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import logic.GameLogic;
+import sound.SoundManager;
 
 public class Main extends Application  {
 	
@@ -24,7 +25,7 @@ public class Main extends Application  {
 	private static boolean isCombatMode;
 	private static boolean isHeroTurn;
 	
-	@Override
+	//@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
 		try {
@@ -33,6 +34,7 @@ public class Main extends Application  {
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Progmeth-project");
 			primaryStage.setResizable(false);
+			SoundManager.setCurrentBGM("audio/MenuBGM.wav",0.1);
 			primaryStage.show();
 			
 		} catch (Exception e) {
@@ -188,8 +190,4 @@ public class Main extends Application  {
 		}
 		//ArrayList
 	}
-
-
-	
-
 }
