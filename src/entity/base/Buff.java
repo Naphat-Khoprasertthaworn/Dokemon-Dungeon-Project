@@ -52,5 +52,18 @@ public abstract class Buff implements Countdownable {
 
 	public abstract void removeSelf(Unit unit);
 	
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+		}
+		if( !(o.getClass().equals(this.getClass())) ) {
+			return false;
+		}
+		
+		Buff bo = (Buff)o;
+		return (bo.getRatio() == this.getRatio()) && (bo.getTurn() == this.getTurn());
+		
+	}
+	
 	
 }
