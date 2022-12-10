@@ -23,8 +23,10 @@ public class Main extends Application  {
 	private static boolean isGameActive;
 	private static boolean isCombatMode;
 	private static boolean isHeroTurn;
+	private static boolean isStageFail;
+	private static boolean isStageClear;
 	
-	//@Override
+	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
 		try {
@@ -47,7 +49,7 @@ public class Main extends Application  {
 	
 	
 
-
+//
 //	public static void main(String[] args) {
 //		
 //		
