@@ -26,5 +26,4 @@ public abstract class DefenceSkill extends Skill {
 	
 	public abstract void skillEffect(ArrayList<Unit> units, int targetUnit,Unit owner);
 	
-
 }
