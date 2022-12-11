@@ -1,6 +1,9 @@
 package logic;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.annotation.processing.Generated;
 
@@ -41,7 +44,12 @@ public class GameLogic {
 	static final int MAX_PARTY = 3;
 	static final int ITEM_DROP = 3;
 	private Inventory inventory;
-	
+	private Comparator<Unit> compUnit = (Unit u1,Unit u2)->{
+		if(u1.getPosition() > u2.getPosition()) {
+			return 1;
+		}
+		return -1;
+	};
 
 	//######## GAME LOGIC ########
 	private GameLogic() {
@@ -104,7 +112,6 @@ public class GameLogic {
 	public boolean stageClear() {
 		for(Unit unit :this.getMonsters()) {
 			if(unit.isAlive()) {
-				//System.out.println(unit);
 				return false;
 			}
 		}
@@ -129,11 +136,8 @@ public class GameLogic {
 			}else {
 				this.setTargetedHero( unit.getPosition() );
 			}
-			//System.out.println("its work hros");
 
 		}
-		//System.out.println(this.getTargetedMonster());
-		//System.out.println(this.monsters);
 		if(!this.monsters.get( this.getTargetedMonster()).isAlive()) {
 			unit = this.getFrontLineUnit(monsters);
 			if(unit == null) {
@@ -141,7 +145,6 @@ public class GameLogic {
 			}else {
 				this.setTargetedMonster( unit.getPosition() );
 			}
-			//System.out.println("its work boss");
 		}
 	}
 	//######## INVENTORY ########
@@ -247,6 +250,7 @@ public class GameLogic {
 
 	public void addHeros(Unit heros) {
 		this.heros.add(heros);
+		Collections.sort( this.heros,compUnit );
 	}
 
 	public ArrayList<Unit> getMonsters() {
@@ -255,6 +259,7 @@ public class GameLogic {
 
 	public void addMonsters(Unit monsters) {
 		this.monsters.add(monsters);
+		Collections.sort( this.monsters,compUnit );
 	}
 	
 	public ArrayList<Unit> findParty(Unit u,boolean b){
@@ -285,10 +290,10 @@ public class GameLogic {
 		Unit warriorUnit = new Unit("Warrior", "I am warrior.", 50, 30, 0, 100);
 		Unit archerUnit = new Unit("Archer", "I am archer.", 50, 10, 1, 50);
 		Unit medicUnit = new Unit("Medic", "I am medic", 40, 20, 2, 75);
-		heros.add(warriorUnit);
-		heros.add(archerUnit);
-		heros.add(medicUnit);
 		
+		this.addHeros(archerUnit);
+		this.addHeros(medicUnit);
+		this.addHeros(warriorUnit);
 		SingleTargetAttackSkill warriorAutoAttack = new SingleTargetAttackSkill("Auto attack","can't target", 100,0, false);
 		SingleTargetAttackSkill warriorSkill1 = new SingleTargetAttackSkill("atk & self buff","give dmg reduc to self",120,3,false);
 		warriorSkill1.addBuffsSelf( new DamageReduction(2, 30) );
@@ -414,7 +419,7 @@ public class GameLogic {
 				nums.add(rand);
 				Unit monsterUnit = this.poolMonsters.get(rand);
 				monsterUnit.setPosition(i);
-				this.monsters.add(monsterUnit);
+				this.addMonsters(monsterUnit);
 				
 				i++;
 				if(i==MAX_PARTY) {
