@@ -1,6 +1,9 @@
 package entity.base;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Vector;
 
 import logic.GameLogic;
@@ -20,6 +23,7 @@ public class Unit {
 	private ArrayList<Skill> skills;
 	private int buffAttack;
 	private int buffDefense;
+	private Comparator<Skill> compSkill;
 
 	public Unit( String name, String text, int attack, int defense , int position,int maxHealth ) {
 		this.setName(name);
@@ -31,7 +35,16 @@ public class Unit {
 		this.skills = new ArrayList<Skill>();
 		this.buffs = new ArrayList<Buff>();
 		
+		this.compSkill = (Skill s1,Skill s2)->{
+			if(s1.getCd() > s2.getCd()) {
+				return 1;
+			}
+			return -1;
+		};
+		
 		this.reset();
+		
+		
 	}
 
 	
@@ -72,7 +85,7 @@ public class Unit {
 		this.setHealth( this.getMaxHealth() );
 		this.setBuffAttack(0);
 		this.setBuffDefense(0);
-		this.buffs.clear();
+		this.getBuffs().clear();
 		for(Skill s:this.getSkills()) {
 			s.setInCombatCd(0);
 		}
@@ -96,6 +109,7 @@ public class Unit {
 
 	public void addSkills(Skill skill) {
 		this.skills.add(skill);
+		Collections.sort(this.getSkills(),this.compSkill);
 	}
 	
 	public void countdownSkills() {

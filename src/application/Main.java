@@ -15,10 +15,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import logic.GameLogic;
+import logic.Inventory;
 import sound.SoundManager;
 
-public class Main extends Application  {
-	
+//public class Main extends Application  {
+public class Main  {
 	private static Scanner keyBoard;
 	private static boolean isGameActive;
 	private static boolean isCombatMode;
@@ -26,57 +27,57 @@ public class Main extends Application  {
 	private static boolean isStageFail;
 	private static boolean isStageClear;
 	
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		// TODO Auto-generated method stub
-		try {
-			Parent root = FXMLLoader.load(getClass().getResource("/gui/MenuScene.fxml"));
-			Scene scene = new Scene(root);
-			primaryStage.setScene(scene);
-			primaryStage.setTitle("Progmeth-project");
-			primaryStage.setResizable(false);
-			SoundManager.setCurrentBGM("audio/MenuBGM.wav",0.1);
-			primaryStage.show();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static void main(String[] args) {
-		launch(args);
-	}
+//	@Override
+//	public void start(Stage primaryStage) throws Exception {
+//		// TODO Auto-generated method stub
+//		try {
+//			Parent root = FXMLLoader.load(getClass().getResource("/gui/MenuScene.fxml"));
+//			Scene scene = new Scene(root);
+//			primaryStage.setScene(scene);
+//			primaryStage.setTitle("Progmeth-project");
+//			primaryStage.setResizable(false);
+//			SoundManager.setCurrentBGM("audio/MenuBGM.wav",0.1);
+//			primaryStage.show();
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
+//	
+//	public static void main(String[] args) {
+//		launch(args);
+//	}
 	
 	
 
-//
-//	public static void main(String[] args) {
-//		
-//		
-//		keyBoard = new Scanner(System.in);
-//		
-//		while(true){
-//			System.out.println("=============================");
-//			System.out.println("Welcome to");
-//			System.out.println("Overdue! All You Can Rush");
-//			System.out.println("=============================");
-//			System.out.println("What are you doing?");
-//			System.out.println("1) Start Game");
-//			System.out.println("2) Quit");
-//			System.out.println("=============================");
-//			int results = getChoice();
-//			
-//			if(results==1) {
-//				//System.out.println("=============================");
-//				startGame();
-//			}else if(results==2){
-//				break;
-//			}else {
-//				System.out.println("Invalid Input, Terminate the game.");
-//				break;
-//			}
-//		}
-//	}
+
+	public static void main(String[] args) {
+		
+		
+		keyBoard = new Scanner(System.in);
+		
+		while(true){
+			System.out.println("=============================");
+			System.out.println("Welcome to");
+			System.out.println("Overdue! All You Can Rush");
+			System.out.println("=============================");
+			System.out.println("What are you doing?");
+			System.out.println("1) Start Game");
+			System.out.println("2) Quit");
+			System.out.println("=============================");
+			int results = getChoice();
+			
+			if(results==1) {
+				//System.out.println("=============================");
+				startGame();
+			}else if(results==2){
+				break;
+			}else {
+				System.out.println("Invalid Input, Terminate the game.");
+				break;
+			}
+		}
+	}
 	
 	public static int getChoice() {
 		System.out.print(">> ");
@@ -94,14 +95,14 @@ public class Main extends Application  {
 		
 		while(isGameActive) {
 			int ni = GameLogic.getInstance().rollDice();
-			Boolean bossStage = GameLogic.getInstance().setDistance( GameLogic.getInstance().getDistance() + ni);
+			Boolean isBossStage = GameLogic.getInstance().setDistance( GameLogic.getInstance().getDistance() + ni);
 			System.out.println( "distance NOW : "+GameLogic.getInstance().getDistance() );
-			if(bossStage) {
-				isGameActive = false;
-				System.err.println("GAME END !!!");
-				break;
+			if(isBossStage) {
+				GameLogic.getInstance().generateBossStage();
+			}else {
+				GameLogic.getInstance().generateMonsters();
 			}
-			GameLogic.getInstance().generateMonsters();
+			GameLogic.getInstance().startStage();
 			isStageClear = false;
 			isStageFail = false;
 			isCombatMode = true;
@@ -111,12 +112,18 @@ public class Main extends Application  {
 				GameLogic.getInstance().countdownGame();
 				if(isStageClear) {
 					GameLogic.getInstance().resetUnits();
+					if(isBossStage) {
+						System.err.println("GAME END !!! You WIN");
+						isGameActive = false;
+						return;
+					}
+					collectItem();
 					break;
 				}else if(isStageFail) {
 					isGameActive = false;
 					GameLogic.getInstance().resetUnits();
 					System.out.println("You died");
-					break;
+					return;
 				}
 				
 			}
@@ -135,14 +142,14 @@ public class Main extends Application  {
 		ArrayList<Unit> monsters = GameLogic.getInstance().getMonsters();
 		ArrayList<Unit> heros = GameLogic.getInstance().getHeros();
 		for(int i = 0;i<monsters.size();i++) {
-			System.out.println("---------------------------- "+i+" ----------------------------" );
+			System.out.println("---------------------------- "+ monsters.get(i).getPosition() +" ----------------------------" );
 			System.out.println( monsters.get(i) );
 			System.out.println("------------------------- Skills --------------------------" );
 			System.out.println( monsters.get(i).getSkills() );
 		}
 		System.out.println("========================== Heros ==========================");
 		for(int i = 0;i<heros.size();i++) {
-			System.out.println("---------------------------- "+i+" ----------------------------" );
+			System.out.println("---------------------------- "+ heros.get(i).getPosition() +" ----------------------------" );
 			System.out.println( heros.get(i) );
 			System.out.println("------------------------- Skills --------------------------" );
 			System.out.println( heros.get(i).getSkills() );
@@ -191,24 +198,27 @@ public class Main extends Application  {
 		ArrayList<Unit> monsters = GameLogic.getInstance().getMonsters();
 		Unit monster;
 		for(int i = 0;i<monsters.size();i++) {
-			showCombat();
+			
 			monster = GameLogic.getInstance().getUnitByPosition(i,monsters);
 			if(!monster.isAlive()) {
 				continue;
 			}
-			
-			for(int j = monster.getSkills().size()-1;j>=0;j--) {
-				if(monster.getSkills().get(j).readySkill()) {
-					monster.useSkill(j);
-					break;
-				}
+			showCombat();
+			monster.useSkill(0);
+			updateStageGame();
+			if(isStageClear || isStageFail) {
+				return;
 			}
 			
-			
 		}
-		if(isStageClear || isStageFail) {
-			return;
-		}
+
 		
+	}
+	
+	public static void collectItem() {
+		GameLogic.getInstance().generateItemDrop();
+		//System.out.println("is work");
+		GameLogic.getInstance().getInventory().showInventory();
+		//System.out.println("is2 work");
 	}
 }

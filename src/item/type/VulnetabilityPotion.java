@@ -13,6 +13,10 @@ public class VulnetabilityPotion extends DebuffPotion {
 		
 	}
 
+	public VulnetabilityPotion(VulnetabilityPotion dp) {
+		this(dp.getAmount(), dp.getBuff().getTurn(), dp.getBuff().getRatio());
+	}
+	
 	public Vulnetability getBuff() {
 		return vulnetabilityBuff;
 	}
