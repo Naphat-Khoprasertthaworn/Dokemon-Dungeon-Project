@@ -52,6 +52,7 @@ public class Buff implements Countdownable {
 	}
 	
 	public boolean equals(Object o) {
+		//System.out.println( "buff eaual work" );
 		if (o == this) {
 			return true;
 		}
@@ -60,6 +61,7 @@ public class Buff implements Countdownable {
 		}
 		
 		Buff bo = (Buff)o;
+		//System.out.println( "buff eaual work" );
 		return (bo.getRatio() == this.getRatio()) && (bo.getTurn() == this.getTurn());
 		
 	}

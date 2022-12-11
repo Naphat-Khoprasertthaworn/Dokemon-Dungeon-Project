@@ -15,7 +15,11 @@ public class EnhancePotion extends BuffPotion{
 		super("Enhance Potion", "give enhance buff to a hero", amount);
 		enhanceBuff = new Enhance(turn, ratio);
 	}
-
+	
+	public EnhancePotion(EnhancePotion dp) {
+		this(dp.getAmount(), dp.getBuff().getTurn(), dp.getBuff().getRatio());
+	}
+	
 	@Override
 	public void activeEffect(Unit u) {
 		u.addBuff(this.enhanceBuff);

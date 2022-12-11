@@ -11,6 +11,10 @@ public class ExhaustPotion extends DebuffPotion {
 		super("Exhaust Potion", "give exhaust to a monster", amount);
 		exhaustBuff = new Exhaust(turn, ratio);
 	}
+	
+	public ExhaustPotion(ExhaustPotion dp) {
+		this(dp.getAmount(), dp.getBuff().getTurn(), dp.getBuff().getRatio());
+	}
 
 	@Override
 	public void activeEffect(Unit u) {

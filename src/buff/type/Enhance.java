@@ -36,4 +36,6 @@ public class Enhance extends Buff{
 	public void setIncreasingAttack(int baseAttack) {
 		this.increasingAttack = ( baseAttack*this.getRatio() )/100 ;
 	}
+	
+	
 }

@@ -11,6 +11,7 @@ import item.type.EnhancePotion;
 import item.type.ExhaustPotion;
 import item.type.HealingPotion;
 import item.type.VulnetabilityPotion;
+import logic.GameLogic;
 import logic.Inventory;
 
 public abstract class Item {
@@ -41,7 +42,8 @@ public abstract class Item {
 
 	public void setAmount(int amount) {
 		if(amount <= 0) {
-			Inventory.getInstance().getInventory().remove(this);
+			GameLogic.getInstance().getInventory().getInventory().remove(this);
+			//Inventory.getInstance().getInventory().remove(this);
 			return;
 		}
 		this.amount = amount;
@@ -64,7 +66,7 @@ public abstract class Item {
 	}
 	
 	public boolean equals(Object o) {
-		
+		//System.out.println("item equal work!");
 		if(o == this) {
 			return true;
 		}
@@ -82,15 +84,19 @@ public abstract class Item {
 			return ((EnhancePotion)this).getBuff().equals(((EnhancePotion)o).getBuff());
 		}
 		if( this instanceof DamageReductionPotion ) {
-			return ((DamageReductionPotion)this).getBuff() == ((DamageReductionPotion)o).getBuff();
+			return ((DamageReductionPotion)this).getBuff().equals(((DamageReductionPotion)o).getBuff());
 		}
 		if( this instanceof ExhaustPotion ) {
-			return ((ExhaustPotion)this).getBuff() == ((ExhaustPotion)o).getBuff();
+			return ((ExhaustPotion)this).getBuff().equals(((ExhaustPotion)o).getBuff());
 		}
 		if( this instanceof VulnetabilityPotion ) {
-			return ((VulnetabilityPotion)this).getBuff() == ((VulnetabilityPotion)o).getBuff();
+			return ((VulnetabilityPotion)this).getBuff().equals(((VulnetabilityPotion)o).getBuff());
 		}
 		
 		return false;
+	}
+	
+	public String toString() {
+		return this.getName() + " x " + this.getAmount();
 	}
 }

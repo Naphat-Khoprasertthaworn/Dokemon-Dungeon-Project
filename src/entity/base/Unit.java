@@ -72,7 +72,7 @@ public class Unit {
 		this.setHealth( this.getMaxHealth() );
 		this.setBuffAttack(0);
 		this.setBuffDefense(0);
-		this.buffs.clear();
+		this.getBuffs().clear();
 		for(Skill s:this.getSkills()) {
 			s.setInCombatCd(0);
 		}

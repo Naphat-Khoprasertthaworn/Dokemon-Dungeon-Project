@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import entity.base.Item;
 
 public class Inventory {
-	private static Inventory instance = null;
 	private ArrayList<Item> inventory;
 	
 	public Inventory() {
@@ -19,7 +18,6 @@ public class Inventory {
 	public void addItem(Item item) {
 		for(Item i:this.getInventory()) {
 			if( i.equals(item) ) {
-				//System.out.println("yes");
 				i.setAmount( i.getAmount() + item.getAmount() );
 				return;
 			}
@@ -27,11 +25,11 @@ public class Inventory {
 		this.getInventory().add(item);
 	}
 
-	public static Inventory getInstance() {
-		if(instance == null) {
-			instance = new Inventory();
+	
+	public void showInventory() {
+		for(int i = 0;i<inventory.size();i++) {
+			System.out.println( inventory.get(i) );
 		}
-		return instance;
 	}
 	
 	

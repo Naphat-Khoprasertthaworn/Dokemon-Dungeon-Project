@@ -2,6 +2,8 @@ package logic;
 
 import java.util.ArrayList;
 
+import javax.annotation.processing.Generated;
+
 import org.junit.jupiter.params.shadow.com.univocity.parsers.conversions.EnumSelector;
 
 import buff.type.DamageReduction;
@@ -10,8 +12,15 @@ import buff.type.Exhaust;
 import buff.type.Regeneration;
 import buff.type.Vulnetability;
 import entity.base.Buff;
+import entity.base.Item;
+import entity.base.Monster;
 import entity.base.Unit;
 import item.type.BuffPotion;
+import item.type.DamageReductionPotion;
+import item.type.EnhancePotion;
+import item.type.ExhaustPotion;
+import item.type.HealingPotion;
+import item.type.VulnetabilityPotion;
 import skill.type.AttackSkill;
 import skill.type.DefenceSkill;
 import skill.type.MultiTargetAttackSkill;
@@ -23,15 +32,17 @@ public class GameLogic {
 	private static GameLogic instance = null;
 	private ArrayList<Unit> heros;
 	private ArrayList<Unit> monsters;
-	private ArrayList<Unit> poolMonsters;
+	private ArrayList<Monster> poolMonsters;
+	private ArrayList<Item> poolItems;
 	private int targetedHero;
 	private int targetedMonster;
 	private int distance;
 	static final int MAX_DISTANCE = 20;
 	static final int MAX_PARTY = 3;
+	static final int ITEM_DROP = 3;
 	private Inventory inventory;
 	
-	
+
 	//######## GAME LOGIC ########
 	private GameLogic() {
 		this.newGame();
@@ -118,8 +129,11 @@ public class GameLogic {
 			}else {
 				this.setTargetedHero( unit.getPosition() );
 			}
+			//System.out.println("its work hros");
 
 		}
+		//System.out.println(this.getTargetedMonster());
+		//System.out.println(this.monsters);
 		if(!this.monsters.get( this.getTargetedMonster()).isAlive()) {
 			unit = this.getFrontLineUnit(monsters);
 			if(unit == null) {
@@ -127,7 +141,16 @@ public class GameLogic {
 			}else {
 				this.setTargetedMonster( unit.getPosition() );
 			}
+			//System.out.println("its work boss");
 		}
+	}
+	//######## INVENTORY ########
+	public Inventory getInventory() {
+		return inventory;
+	}
+
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
 	}
 	
 	//######## TARGET POINTER HANDLER ########
@@ -205,15 +228,6 @@ public class GameLogic {
 		return u;
 	}
 	
-//	public void deathUnit(Unit u) {
-//	u.setAlive(false);
-//	ArrayList<Unit> party = findParty(u, true);
-//	for(Unit unit:party) {
-//		if(unit.getPosition() > u.getPosition() ) {
-//			unit.setPosition(unit.getPosition()-1);
-//		}
-//	}
-//}
 //
 //public void reviveUnit(Unit u) {
 //	u.setAlive(true);
@@ -259,7 +273,7 @@ public class GameLogic {
 		this.setDistance(0);
 		this.inventory = new Inventory();
 		this.gennerateHerosParty();
-		
+		this.generatePoolItems();
 		this.monsters = new ArrayList<Unit>();
 		this.generatePoolMonsters();
 		
@@ -275,20 +289,20 @@ public class GameLogic {
 		heros.add(archerUnit);
 		heros.add(medicUnit);
 		
-		SingleTargetAttackSkill warriorAutoAttack = new SingleTargetAttackSkill("Auto attack","can't target", 100,1, false);
+		SingleTargetAttackSkill warriorAutoAttack = new SingleTargetAttackSkill("Auto attack","can't target", 100,0, false);
 		SingleTargetAttackSkill warriorSkill1 = new SingleTargetAttackSkill("atk & self buff","give dmg reduc to self",120,3,false);
 		warriorSkill1.addBuffsSelf( new DamageReduction(2, 30) );
 		MultiTargetAttackSkill warriorSkill2 = new MultiTargetAttackSkill("AOE atk","can't target",120,5);
 		warriorSkill2.addBuffsSelf( new Exhaust(2, 30) );
 		
-		SingleTargetAttackSkill medicAutoAttack = new SingleTargetAttackSkill("Auto attack","can't target and give exhaust to attacked unit",100,1, false);
+		SingleTargetAttackSkill medicAutoAttack = new SingleTargetAttackSkill("Auto attack","can't target and give exhaust to attacked unit",100,0, false);
 		medicAutoAttack.addBuffsTarget(new Exhaust(1 , 30));
 		SingleTargetDefenceSkill medicSkill1 = new SingleTargetDefenceSkill("heal","single heal",100,3);
 		MultiTargetDefenceSkill medicSkill2 = new MultiTargetDefenceSkill("AOE buff","AOE buff",0,6);
 		medicSkill2.addBuffsTarget( new DamageReduction(1, 100) );
 		medicSkill2.addBuffsTarget( new Enhance(2, 100) );
 		
-		SingleTargetAttackSkill archerAutoAttack = new SingleTargetAttackSkill("Auto attack","Give vulnetability to target",100,1, true);
+		SingleTargetAttackSkill archerAutoAttack = new SingleTargetAttackSkill("Auto attack","Give vulnetability to target",100,0, true);
 		archerAutoAttack.addBuffsTarget(new Vulnetability(2, 20));
 		SingleTargetAttackSkill archerSkill1 = new SingleTargetAttackSkill("DPS skill","enhance self and vulnetability target",200,2, true);
 		archerSkill1.addBuffsTarget(new Vulnetability(2, 30));
@@ -311,29 +325,29 @@ public class GameLogic {
 	}
 	
 	public void generatePoolMonsters() {
-		this.poolMonsters = new ArrayList<Unit>();
-		Unit golemUnit = new Unit("Golem", "I am golem", 50, 30, 0,100);
-		Unit slimeUnit = new Unit("Slime", "I am slime", 20, 10, 0, 50);
-		Unit oniUnit = new Unit("Oni", "I am Oni", 50 , 30, 0, 60);
-		Unit bloodHawkUnit = new Unit("Blood Hawk", "I am blood hawk" ,40, 10, 0, 50);
-		Unit gnomeUnit = new Unit("Gnome", "I am Gnome", 20, 10, 0, 50);
+		this.poolMonsters = new ArrayList<Monster>();
+		Monster golemUnit = new Monster("Golem", "I am golem", 50, 30, 0,100);
+		Monster slimeUnit = new Monster("Slime", "I am slime", 20, 10, 0, 50);
+		Monster oniUnit = new Monster("Oni", "I am Oni", 50 , 30, 0, 60);
+		Monster bloodHawkUnit = new Monster("Blood Hawk", "I am blood hawk" ,40, 10, 0, 50);
+		Monster gnomeUnit = new Monster("Gnome", "I am Gnome", 20, 10, 0, 50);
 		
 		
 		SingleTargetAttackSkill golemAutoAttack = new SingleTargetAttackSkill("Auto attack","attack front line hero",100,2, false);
 		MultiTargetAttackSkill golemSkill1 = new MultiTargetAttackSkill("Eathquake","AOE attack",100,5);
 
-		SingleTargetAttackSkill slimeAutoAttack = new SingleTargetAttackSkill("Auto attack" , "heal self and give front line exhaust" , 100,1, false);
+		SingleTargetAttackSkill slimeAutoAttack = new SingleTargetAttackSkill("Auto attack" , "heal self and give front line exhaust" , 100,0, false);
 		slimeAutoAttack.addBuffsSelf(new Regeneration(40));
 
 		SingleTargetAttackSkill slimeSkill1 = new SingleTargetAttackSkill("normal debuff","give debuff to front line",100,3, false);
 		slimeSkill1.addBuffsTarget(new Exhaust(3, 20));
 		slimeSkill1.addBuffsTarget(new Vulnetability(2, 20));
 		
-		SingleTargetAttackSkill oniAutoAttack = new SingleTargetAttackSkill("Auto attack" , "target back line first" , 100,2, true);
+		SingleTargetAttackSkill oniAutoAttack = new SingleTargetAttackSkill("Auto attack" , "target back line first" , 100,1, true);
 		SingleTargetAttackSkill oniSkill1 = new SingleTargetAttackSkill("heavy attack","attack front line",150,5, false);
 		oniSkill1.addBuffsTarget(new Vulnetability(2, 30));
 		
-		SingleTargetAttackSkill bloodHawkAutoAttack = new SingleTargetAttackSkill("Auto attack" , "target back line first" , 100,1,true);
+		SingleTargetAttackSkill bloodHawkAutoAttack = new SingleTargetAttackSkill("Auto attack" , "target back line first" , 100,0,true);
 		bloodHawkAutoAttack.addBuffsTarget(new Vulnetability(4, 10));
 		SingleTargetAttackSkill bloodHawkSkill1 = new SingleTargetAttackSkill("super dangerous vulnetability" , "" , 100,2,true);
 		bloodHawkSkill1.addBuffsTarget(new Vulnetability(2, 30));
@@ -362,8 +376,29 @@ public class GameLogic {
 		this.poolMonsters.add(oniUnit);
 		this.poolMonsters.add(bloodHawkUnit);
 		this.poolMonsters.add(gnomeUnit);
+		for(Monster m:this.poolMonsters) {
+			m.reset();
+		}
+		
 		
 	}
+	
+	public void generatePoolItems() {
+		this.poolItems = new ArrayList<Item>();
+		
+		DamageReductionPotion damageReductionPotion = new DamageReductionPotion(1, 3, 30);
+		EnhancePotion enhancePotion = new EnhancePotion(1, 3, 30);
+		ExhaustPotion exhaustPotion = new ExhaustPotion(1, 3, 30);
+		HealingPotion healingPotion = new HealingPotion(1, 30);
+		VulnetabilityPotion vulnetabilityPotion = new VulnetabilityPotion(1, 3, 30);
+		
+		this.poolItems.add(damageReductionPotion);
+		this.poolItems.add(enhancePotion);
+		this.poolItems.add(exhaustPotion);
+		this.poolItems.add(healingPotion);
+		this.poolItems.add(vulnetabilityPotion);
+	}
+	
 	
 	//######## INITIAL STAGE ########
 	public void generateMonsters() {
@@ -372,7 +407,7 @@ public class GameLogic {
 		int i = 0;
 		while(true) {
 			rand = (int) ((Math.random()*5));
-			System.out.println(rand);
+			//System.out.println(rand);
 			if(nums.contains(rand)) {
 				
 			}else {
@@ -389,6 +424,58 @@ public class GameLogic {
 		}
 
 		
+	}
+	
+	public void generateBossStage() {
+		Monster bossMonster = new Monster("Boss", "I am Boss of this game", 100, 70, 0, 200);
+		MultiTargetAttackSkill bossAutoAttack = new MultiTargetAttackSkill("boss auto attack", "AOE debuff and buff self", 10, 3);
+		bossAutoAttack.addBuffsSelf( new Enhance(3, 30) );
+		bossAutoAttack.addBuffsSelf( new DamageReduction(3, 30) );
+		bossAutoAttack.addBuffsTarget( new Vulnetability(3, 30) );
+		bossAutoAttack.addBuffsTarget( new Exhaust(3, 30) );
+		
+		MultiTargetAttackSkill bossSkill1 = new MultiTargetAttackSkill("AOE DMG", "aoe", 100 , 4 );
+		bossSkill1.addBuffsSelf( new Vulnetability(3,50) );
+		
+		MultiTargetAttackSkill bossSkill2 = new MultiTargetAttackSkill("ULT", "AOE", 150, 5);
+		bossSkill2.addBuffsSelf( new Vulnetability(2,50) );
+		
+		bossMonster.addSkills(bossAutoAttack);
+		bossMonster.addSkills(bossSkill1);
+		bossMonster.addSkills(bossSkill2);
+		bossMonster.reset();
+		this.monsters.add(bossMonster);
+	}
+	
+	//######## END STAGE ########
+	
+	public ArrayList<Item> generateItemDrop(){
+		
+		ArrayList<Item> itemDrop = new ArrayList<Item>();
+		int rand;
+		for(int i = 0;i<ITEM_DROP;i++) {
+			rand = (int) ((Math.random()*5));
+			Item item = this.poolItems.get(rand);
+			Item newItem;
+			if(item instanceof DamageReductionPotion) {
+				newItem = new DamageReductionPotion((DamageReductionPotion)item);
+			}else if(item instanceof EnhancePotion) {
+				newItem = new EnhancePotion((EnhancePotion)item);
+			}else if(item instanceof ExhaustPotion) {
+				newItem = new ExhaustPotion((ExhaustPotion)item);
+			}else if(item instanceof HealingPotion) {
+				newItem = new HealingPotion((HealingPotion)item);
+			}else if(item instanceof VulnetabilityPotion) {
+				newItem = new VulnetabilityPotion((VulnetabilityPotion)item);
+			}else {
+				System.out.println("Item Drop error");
+				newItem = null;
+			}
+			this.inventory.addItem(newItem);
+			itemDrop.add( item );
+		}
+		
+		return itemDrop;
 	}
 }
 	
