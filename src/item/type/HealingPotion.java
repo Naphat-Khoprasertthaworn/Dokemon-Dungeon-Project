@@ -12,7 +12,11 @@ public class HealingPotion extends BuffPotion {
 		super("Healing Potion", "I can heal a unit", amount);
 		this.setHealingRatio(ratio);
 	}
-
+	
+	public HealingPotion(HealingPotion dp) {
+		this(dp.getAmount(), dp.getHealingRatio());
+	}
+	
 	@Override
 	public void activeEffect(Unit heroUnit) {
 		heroUnit.receiveHeal( ( this.getHealingRatio()*heroUnit.getMaxHealth() )/100  );

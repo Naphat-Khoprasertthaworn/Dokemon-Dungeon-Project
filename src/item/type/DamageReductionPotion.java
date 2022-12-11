@@ -12,8 +12,12 @@ public class DamageReductionPotion extends BuffPotion{
 	}
 
 	public DamageReductionPotion(int amount,int turn,int ratio) {
-		super("Damage Ruduction", "give dmg reduction to hero", amount);
+		super("Damage Reduction", "give dmg reduction to hero", amount);
 		dmgRedBuff = new DamageReduction(turn, ratio);
+	}
+	
+	public DamageReductionPotion(DamageReductionPotion dp) {
+		this(dp.getAmount(), dp.getBuff().getTurn(), dp.getBuff().getRatio());
 	}
 
 	@Override
