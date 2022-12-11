@@ -1,7 +1,4 @@
 package gui;
-
-//import java.awt.Image;
-
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -21,13 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import sound.SoundManager;
 
-
-public class MenuController   {
-
-	@FXML
-	public Button testButton ;
-	@FXML
-	public VBox testVBOX ;
+public class CombatController {
 	@FXML
 	public ProgressBar distanceProgressBar ;
 	@FXML
@@ -36,25 +27,6 @@ public class MenuController   {
 	public Scene scene ;
 	@FXML
 	public Parent root ;
-	@FXML
-	public ImageView gameLogo ;
-	@FXML
-	Image dota2 = new Image(getClass().getResourceAsStream("Dota2.png"));
-
-	
-	public void switchToCombat (ActionEvent event) {
-		try {
-			root = FXMLLoader.load(getClass().getResource("/gui/CombatScene.fxml"));
-			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-			scene = new Scene(root);
-			stage.setScene(scene);
-			SoundManager.setCurrentBGM("audio/CombatBGM.wav",0.1);
-			stage.show();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	
 	public void switchToMenu (ActionEvent event) {
 		try {
@@ -74,11 +46,5 @@ public class MenuController   {
 		Platform.exit();
 		System.exit(0);
 	}
-	
-	public void addButtonOnVBOX (ActionEvent event) {
-		Button newButt = new Button();
-		testVBOX.getChildren().add(newButt);
-	}
-	
 
 }

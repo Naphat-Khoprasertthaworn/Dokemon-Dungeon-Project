@@ -19,7 +19,7 @@ import logic.Inventory;
 import sound.SoundManager;
 
 //public class Main extends Application  {
-public class Main  {
+public class Main  extends Application{
 	private static Scanner keyBoard;
 	private static boolean isGameActive;
 	private static boolean isCombatMode;
@@ -27,57 +27,56 @@ public class Main  {
 	private static boolean isStageFail;
 	private static boolean isStageClear;
 	
-//	@Override
-//	public void start(Stage primaryStage) throws Exception {
-//		// TODO Auto-generated method stub
-//		try {
-//			Parent root = FXMLLoader.load(getClass().getResource("/gui/MenuScene.fxml"));
-//			Scene scene = new Scene(root);
-//			primaryStage.setScene(scene);
-//			primaryStage.setTitle("Progmeth-project");
-//			primaryStage.setResizable(false);
-//			SoundManager.setCurrentBGM("audio/MenuBGM.wav",0.1);
-//			primaryStage.show();
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-//	
-//	public static void main(String[] args) {
-//		launch(args);
-//	}
-	
-	
-
-
-	public static void main(String[] args) {
-		
-		
-		keyBoard = new Scanner(System.in);
-		
-		while(true){
-			System.out.println("=============================");
-			System.out.println("Welcome to");
-			System.out.println("Overdue! All You Can Rush");
-			System.out.println("=============================");
-			System.out.println("What are you doing?");
-			System.out.println("1) Start Game");
-			System.out.println("2) Quit");
-			System.out.println("=============================");
-			int results = getChoice();
+	public void start(Stage primaryStage) throws Exception {
+		// TODO Auto-generated method stub
+		try {
+			Parent root = FXMLLoader.load(getClass().getResource("/gui/MenuScene.fxml"));
+			Scene scene = new Scene(root);
+			primaryStage.setScene(scene);
+			primaryStage.setTitle("Progmeth-project");
+			primaryStage.setResizable(false);
+			SoundManager.setCurrentBGM("audio/MenuBGM.wav",0.1);
+			primaryStage.show();
 			
-			if(results==1) {
-				//System.out.println("=============================");
-				startGame();
-			}else if(results==2){
-				break;
-			}else {
-				System.out.println("Invalid Input, Terminate the game.");
-				break;
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
+	
+	public static void main(String[] args) {
+		launch(args);
+	}
+	
+	
+
+
+//	public static void main(String[] args) {
+//		
+//		
+//		keyBoard = new Scanner(System.in);
+//		
+//		while(true){
+//			System.out.println("=============================");
+//			System.out.println("Welcome to");
+//			System.out.println("Overdue! All You Can Rush");
+//			System.out.println("=============================");
+//			System.out.println("What are you doing?");
+//			System.out.println("1) Start Game");
+//			System.out.println("2) Quit");
+//			System.out.println("=============================");
+//			int results = getChoice();
+//			
+//			if(results==1) {
+//				//System.out.println("=============================");
+//				startGame();
+//			}else if(results==2){
+//				break;
+//			}else {
+//				System.out.println("Invalid Input, Terminate the game.");
+//				break;
+//			}
+//		}
+//	}
 	
 	public static int getChoice() {
 		System.out.print(">> ");
