@@ -129,11 +129,11 @@ public class GameLogic {
 			}else {
 				this.setTargetedHero( unit.getPosition() );
 			}
-			System.out.println("its work hros");
+			//System.out.println("its work hros");
 
 		}
-		System.out.println(this.getTargetedMonster());
-		System.out.println(this.monsters);
+		//System.out.println(this.getTargetedMonster());
+		//System.out.println(this.monsters);
 		if(!this.monsters.get( this.getTargetedMonster()).isAlive()) {
 			unit = this.getFrontLineUnit(monsters);
 			if(unit == null) {
@@ -141,7 +141,7 @@ public class GameLogic {
 			}else {
 				this.setTargetedMonster( unit.getPosition() );
 			}
-			System.out.println("its work boss");
+			//System.out.println("its work boss");
 		}
 	}
 	//######## INVENTORY ########
@@ -407,7 +407,7 @@ public class GameLogic {
 		int i = 0;
 		while(true) {
 			rand = (int) ((Math.random()*5));
-			System.out.println(rand);
+			//System.out.println(rand);
 			if(nums.contains(rand)) {
 				
 			}else {

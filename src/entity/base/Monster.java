@@ -8,7 +8,7 @@ public class Monster extends Unit {
 	}
 	
 	public void reset() {
-		System.out.println("use this");
+		//System.out.println("use this");
 		this.setAlive(true);
 		this.setHealth( this.getMaxHealth() );
 		this.setBuffAttack(0);

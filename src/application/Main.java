@@ -107,7 +107,7 @@ public class Main  {
 			isStageFail = false;
 			isCombatMode = true;
 			while(isCombatMode) {
-				System.out.println("this loop");
+				//System.out.println("this loop");
 				playerTurn();
 				monsterTurn();
 				GameLogic.getInstance().countdownGame();
