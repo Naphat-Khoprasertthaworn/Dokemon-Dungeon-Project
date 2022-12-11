@@ -107,7 +107,6 @@ public class Main  {
 			isStageFail = false;
 			isCombatMode = true;
 			while(isCombatMode) {
-				//System.out.println("this loop");
 				playerTurn();
 				monsterTurn();
 				GameLogic.getInstance().countdownGame();
@@ -143,14 +142,14 @@ public class Main  {
 		ArrayList<Unit> monsters = GameLogic.getInstance().getMonsters();
 		ArrayList<Unit> heros = GameLogic.getInstance().getHeros();
 		for(int i = 0;i<monsters.size();i++) {
-			System.out.println("---------------------------- "+i+" ----------------------------" );
+			System.out.println("---------------------------- "+ monsters.get(i).getPosition() +" ----------------------------" );
 			System.out.println( monsters.get(i) );
 			System.out.println("------------------------- Skills --------------------------" );
 			System.out.println( monsters.get(i).getSkills() );
 		}
 		System.out.println("========================== Heros ==========================");
 		for(int i = 0;i<heros.size();i++) {
-			System.out.println("---------------------------- "+i+" ----------------------------" );
+			System.out.println("---------------------------- "+ heros.get(i).getPosition() +" ----------------------------" );
 			System.out.println( heros.get(i) );
 			System.out.println("------------------------- Skills --------------------------" );
 			System.out.println( heros.get(i).getSkills() );
@@ -206,13 +205,13 @@ public class Main  {
 			}
 			showCombat();
 			monster.useSkill(0);
-			
+			updateStageGame();
+			if(isStageClear || isStageFail) {
+				return;
+			}
 			
 		}
-		updateStageGame();
-		if(isStageClear || isStageFail) {
-			return;
-		}
+
 		
 	}
 	
