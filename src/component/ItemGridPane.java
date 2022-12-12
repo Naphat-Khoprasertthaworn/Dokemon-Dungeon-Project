@@ -23,7 +23,7 @@ public class ItemGridPane extends GridPane{
 			}
 		}
 		//inventory = new Item[MAX_COL][MAX_ROW];
-		inventory = GameLogic.getInstance().getInventory().getInventory();
+		inventory = GameLogic.getInstance().getInventory();
 	}
 	
 	public void updateState(Item item) {

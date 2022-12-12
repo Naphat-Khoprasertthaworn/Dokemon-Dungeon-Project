@@ -46,5 +46,9 @@ public class CombatController {
 		Platform.exit();
 		System.exit(0);
 	}
+	
+	public void updateCombatDisplay() {
+		
+	}
 
 }
