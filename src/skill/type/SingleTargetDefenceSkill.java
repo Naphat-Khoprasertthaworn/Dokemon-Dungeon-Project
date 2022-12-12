@@ -14,19 +14,19 @@ import logic.GameLogic;
 
 public class SingleTargetDefenceSkill extends DefenceSkill {
 	
-	public SingleTargetDefenceSkill(String name, String text, int ratio, int cd) {
-		super(name, text, ratio, cd);
+	public SingleTargetDefenceSkill(String name, String text, int ratio, int cd,String imagePath) {
+		super(name, text, ratio, cd,imagePath);
 
 	}
 
 	@Override
-	public void skillEffect(ArrayList<Unit> units, int targetUnit, Unit owner) {
+	public void skillEffect(ArrayList<Unit> units, Unit targetUnit, Unit owner) {
 		
 		Unit unit;
 		if(owner instanceof Monster) {
 			unit = GameLogic.getInstance().getLowestHealthUnit(units);
 		}else {
-			unit = GameLogic.getInstance().getUnitByPosition(targetUnit, units);
+			unit = targetUnit;
 		}
 		unit.receiveHeal( (this.getRatio()*owner.getTotalAttack())/100 );
 		for(Buff b:this.getBuffsSelf()) {

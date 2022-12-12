@@ -6,9 +6,10 @@ import entity.base.Unit;
 public class ExhaustPotion extends DebuffPotion {
 
 	private Exhaust exhaustBuff;
+	//private final String imagePath = "exhaustPotion.png";
 	
 	public ExhaustPotion( int amount,int turn,int ratio) {
-		super("Exhaust Potion", "give exhaust to a monster", amount);
+		super("Exhaust Potion", "give exhaust to a monster", amount,"exhaustPotion.png");
 		exhaustBuff = new Exhaust(turn, ratio);
 	}
 	

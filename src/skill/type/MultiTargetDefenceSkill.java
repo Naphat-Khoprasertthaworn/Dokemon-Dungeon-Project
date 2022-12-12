@@ -12,12 +12,12 @@ import entity.base.Unit;
 
 public class MultiTargetDefenceSkill extends DefenceSkill {
 
-	public MultiTargetDefenceSkill(String name, String text, int ratio, int cd) {
-		super(name, text, ratio, cd);
+	public MultiTargetDefenceSkill(String name, String text, int ratio, int cd,String imagePath) {
+		super(name, text, ratio, cd,imagePath);
 	}
 
 	@Override
-	public void skillEffect(ArrayList<Unit> units, int targetUnit, Unit owner) {
+	public void skillEffect(ArrayList<Unit> units, Unit targetUnit, Unit owner) {
 		for(Unit unit:units) {
 			unit.receiveHeal( (this.getRatio()*owner.getTotalAttack())/100 );
 

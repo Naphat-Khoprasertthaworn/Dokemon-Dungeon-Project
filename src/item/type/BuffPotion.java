@@ -6,14 +6,13 @@ import logic.GameLogic;
 
 public abstract class BuffPotion extends Item {
 
-	public BuffPotion(String name, String text, int amount) {
-		super(name, text, amount);
+	public BuffPotion(String name, String text, int amount,String imagePath) {
+		super(name, text, amount,imagePath);
 	}
 
 	@Override
 	public void selectTarget() {
-		int index = GameLogic.getInstance().getTargetedHero();
-		Unit heroUnit = GameLogic.getInstance().getHeros().get(index);
+		Unit heroUnit = GameLogic.getInstance().getTargetedHero();
 		this.activeEffect(heroUnit);
 	}
 	

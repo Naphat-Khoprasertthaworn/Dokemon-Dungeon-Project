@@ -2,8 +2,8 @@ package entity.base;
 
 public class Monster extends Unit {
 
-	public Monster(String name, String text, int attack, int defense, int position, int maxHealth) {
-		super(name, text, attack, defense, position, maxHealth);
+	public Monster(String name, String text, int attack, int defense, int position, int maxHealth,String imagePath) {
+		super(name, text, attack, defense, position, maxHealth, imagePath);
 		
 	}
 	
@@ -21,7 +21,7 @@ public class Monster extends Unit {
 		}
 	}
 	
-	public boolean useSkill(int order) {
+	public boolean useSkill(Skill skill) {
 		for(int i=this.getSkills().size()-1;i>=0;i--) {
 			if(this.getSkills().get(i)==null) {
 				continue;

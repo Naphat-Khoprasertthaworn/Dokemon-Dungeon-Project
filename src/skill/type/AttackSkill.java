@@ -8,8 +8,8 @@ import logic.GameLogic;
 
 public abstract class AttackSkill extends Skill {
 
-	public AttackSkill(String name, String text, int ratio, int cd) {
-		super(name, text, ratio, cd);
+	public AttackSkill(String name, String text, int ratio, int cd,String imagePath) {
+		super(name, text, ratio, cd,imagePath);
 		
 	}
 	
@@ -26,6 +26,6 @@ public abstract class AttackSkill extends Skill {
 		return true;
 	};
 	
-	public abstract void skillEffect(ArrayList<Unit> units, int targetUnit,Unit owner);
+	public abstract void skillEffect(ArrayList<Unit> units, Unit targetUnit,Unit owner);
 	
 }
