@@ -15,7 +15,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import logic.GameLogic;
-import logic.Inventory;
 import sound.SoundManager;
 
 //public class Main extends Application  {
@@ -175,7 +174,7 @@ public class Main  extends Application{
 			while(isHeroTurn) {
 				int order = getChoice();
 				if(hero.getSkills().get(order).readySkill()) {
-					hero.useSkill(order);
+					hero.useSkill(null); // <- fix this later
 					GameLogic.getInstance().updateTargetPointer();
 					isHeroTurn = false;
 				}else {
@@ -203,7 +202,7 @@ public class Main  extends Application{
 				continue;
 			}
 			showCombat();
-			monster.useSkill(0);
+			monster.useSkill(null);
 			updateStageGame();
 			if(isStageClear || isStageFail) {
 				return;
@@ -217,7 +216,7 @@ public class Main  extends Application{
 	public static void collectItem() {
 		GameLogic.getInstance().generateItemDrop();
 		//System.out.println("is work");
-		GameLogic.getInstance().getInventory().showInventory();
+		GameLogic.getInstance().showInventory();
 		//System.out.println("is2 work");
 	}
 }
