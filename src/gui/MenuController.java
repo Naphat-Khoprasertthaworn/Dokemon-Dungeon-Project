@@ -50,6 +50,7 @@ public class MenuController implements Initializable  {
             800, false, true);
 
 	
+	
 	public void switchToCombat (ActionEvent event) {
 		try {
 			GameLogic.getInstance().startGame();
@@ -60,7 +61,6 @@ public class MenuController implements Initializable  {
 			SoundManager.setCurrentBGM("audio/CombatBGM.wav",0.1);
 			
 			stage.show();
-			
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -98,8 +98,13 @@ public class MenuController implements Initializable  {
 		System.out.println("eiei");
 	}
 	
-	public void switchImage (ActionEvent event) {
-		gameLogo.setImage(image);
+//	public void switchImage (ActionEvent event) {
+//		gameLogo.setImage(image);
+//	}
+	
+	public void testAdjustImage(ActionEvent event) {
+		gameLogo.setFitWidth(300);
+		gameLogo.setFitHeight(300);
 	}
 	
 	
