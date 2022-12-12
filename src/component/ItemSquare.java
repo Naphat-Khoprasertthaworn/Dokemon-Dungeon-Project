@@ -9,7 +9,13 @@ import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import logic.GameLogic;
 
@@ -18,13 +24,13 @@ public class ItemSquare extends Pane {
 	private Text text;
 	private ImageView imageView;
 	private Item item;
-	private final String blankImagePath = "blankItem.png";
+	private final String blankImagePath = "image/blank.png";
 	
 	
 	public ItemSquare() {
 		this.setPrefHeight(100);
 		this.setPrefWidth(100);
-		
+		this.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(3))));
 		this.text = new Text();
 		String imgPath = ClassLoader.getSystemResource( blankImagePath ).toString();
 		this.imageView = new ImageView(new Image(imgPath));
