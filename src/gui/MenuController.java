@@ -3,6 +3,9 @@ package gui;
 //import java.awt.Image;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
@@ -22,8 +25,10 @@ import javafx.stage.Stage;
 import sound.SoundManager;
 
 
-public class MenuController   {
+public class MenuController implements Initializable  {
 
+	@FXML
+	public Button eieiButton ;
 	@FXML
 	public Button testButton ;
 	@FXML
@@ -39,7 +44,9 @@ public class MenuController   {
 	@FXML
 	public ImageView gameLogo ;
 	@FXML
-	Image dota2 = new Image(getClass().getResourceAsStream("Dota2.png"));
+	//Image dota2 = new Image(getClass().getResourceAsStream("image/monsterSkill.png"));
+	Image image = new Image(ClassLoader.getSystemResource("image/monsterSkill.png").toString(), 1200,
+            800, false, true);
 
 	
 	public void switchToCombat (ActionEvent event) {
@@ -79,6 +86,18 @@ public class MenuController   {
 		Button newButt = new Button();
 		testVBOX.getChildren().add(newButt);
 	}
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		// TODO Auto-generated method stub
+		System.out.println("eiei");
+	}
+	
+	public void switchImage (ActionEvent event) {
+		gameLogo.setImage(image);
+	}
+	
+	
 	
 
 }
