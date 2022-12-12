@@ -40,7 +40,7 @@ public class CombatDisplay extends HBox {
 		monsterCardBox.setPrefHeight(200);
 		
 		BackgroundImage bgImg = new BackgroundImage(combatBackground,BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT,BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT);
-		GameLogic.getInstance().generateMonsters();
+		//GameLogic.getInstance().generateMonsters();
 		ArrayList<Unit> heros = GameLogic.getInstance().getHeros();
 		
 		ArrayList<Unit> monsters = GameLogic.getInstance().getMonsters();
