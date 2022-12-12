@@ -12,13 +12,13 @@ import entity.base.Unit;
 
 public class MultiTargetAttackSkill extends AttackSkill {
 
-	public MultiTargetAttackSkill(String name, String text, int ratio, int cd) {
-		super(name, text, ratio, cd);
+	public MultiTargetAttackSkill(String name, String text, int ratio, int cd,String imagePath) {
+		super(name, text, ratio, cd,imagePath);
 		
 	}
 
 	@Override
-	public void skillEffect(ArrayList<Unit> units, int targetUnit, Unit owner) {
+	public void skillEffect(ArrayList<Unit> units, Unit targetUnit, Unit owner) {
 		for(Unit unit : units) {
 			unit.takeDamage( (this.getRatio()*owner.getTotalAttack())/100 );
 			for(Buff b: this.getBuffsTarget()) {

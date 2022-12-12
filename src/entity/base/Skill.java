@@ -10,15 +10,16 @@ public abstract class Skill implements Countdownable {
 	private ArrayList<Buff> buffsTarget;
 	private ArrayList<Buff> buffsSelf;
 	private int inCombatCd;
+	private String imagePath;
 	
-	
-	public Skill(String name,String text,int ratio,int cd) {
+	public Skill(String name,String text,int ratio,int cd,String imagePath) {
 		this.setName(name);
 		this.setText(text);
 		this.setRatio(ratio);
 		this.setCd(cd);
 		this.buffsSelf = new ArrayList<Buff>();
 		this.buffsTarget = new ArrayList<Buff>();
+		this.setImagePath(imagePath);
 	}
 	
 	public Skill(Skill s) {
@@ -108,6 +109,14 @@ public abstract class Skill implements Countdownable {
 	public String toString() {
 		return this.getName() + " : " + this.getInCombatCd() + "/" + this.getCd();
 		
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 
 	

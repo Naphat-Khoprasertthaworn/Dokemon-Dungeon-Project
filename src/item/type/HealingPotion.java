@@ -7,9 +7,9 @@ import logic.GameLogic;
 public class HealingPotion extends BuffPotion {
 	
 	private int healingRatio;
-	
+	//private final String imagePath = "healingPotion.png";
 	public HealingPotion(int amount,int ratio) {
-		super("Healing Potion", "I can heal a unit", amount);
+		super("Healing Potion", "I can heal a unit", amount,"healingPotion.png");
 		this.setHealingRatio(ratio);
 	}
 	

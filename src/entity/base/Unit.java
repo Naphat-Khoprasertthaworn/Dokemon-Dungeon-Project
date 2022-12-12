@@ -17,6 +17,7 @@ public class Unit {
 	private int position;
 	private int defense;
 	private boolean isAlive;
+	private String imagePath;
 	
 	private int health;
 	private ArrayList<Buff> buffs;
@@ -25,7 +26,7 @@ public class Unit {
 	private int buffDefense;
 	private Comparator<Skill> compSkill;
 
-	public Unit( String name, String text, int attack, int defense , int position,int maxHealth ) {
+	public Unit( String name, String text, int attack, int defense , int position,int maxHealth,String imagePath ) {
 		this.setName(name);
 		this.setText(text);
 		this.setAttack(attack);
@@ -34,7 +35,7 @@ public class Unit {
 		this.setDefense(defense);
 		this.skills = new ArrayList<Skill>();
 		this.buffs = new ArrayList<Buff>();
-		
+		this.setImagePath(imagePath);
 		this.compSkill = (Skill s1,Skill s2)->{
 			if(s1.getCd() > s2.getCd()) {
 				return 1;
@@ -91,15 +92,18 @@ public class Unit {
 		}
 	}
 	
-	public boolean useSkill( int order ) {
-		if( this.skills.get(order).readySkill()==false ) {
+	public boolean useSkill( Skill skill ) {
+		if(!this.skills.contains(skill)) {
 			return false;
 		}
-		if(this.skills.get(order)==null) {
+		if( skill.readySkill()==false ) {
 			return false;
 		}
-		System.out.println("############# "+ this.getName()+" use skill " + this.skills.get(order).getName());
-		return this.skills.get(order).skillActive(this);
+		if( skill==null) {
+			return false;
+		}
+		System.out.println("############# "+ this.getName()+" use skill " + skill.getName());
+		return skill.skillActive(this);
 	}
 	
 	public ArrayList<Skill> getSkills() {
@@ -256,6 +260,16 @@ public class Unit {
 
 	public String toString() {
 		return "😆 "+ this.getName() + "\n💥 Atk : " + this.getTotalAttack() + " / " + this.getAttack() + "\n❤️ Health: " + this.getHealth() +" / "+ this.getMaxHealth() + "\n🔰 Def : " + this.getTotalDefense() + " / " + this.getDefense();
+	}
+
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 	
 

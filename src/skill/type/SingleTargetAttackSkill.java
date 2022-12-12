@@ -16,19 +16,19 @@ public class SingleTargetAttackSkill extends AttackSkill {
 	
 	private boolean target;
 	
-	public SingleTargetAttackSkill(String name, String text, int ratio, int cd , boolean target) {
-		super(name, text, ratio, cd);
+	public SingleTargetAttackSkill(String name, String text, int ratio, int cd , boolean target,String imagePath) {
+		super(name, text, ratio, cd,imagePath);
 		this.target = target;
 	}
 
 	@Override
-	public void skillEffect(ArrayList<Unit> units, int targetUnit, Unit owner) {
+	public void skillEffect(ArrayList<Unit> units, Unit targetUnit, Unit owner) {
 		Unit unit;
 		if(this.target) {
 			if(owner instanceof Monster) {
 				unit = GameLogic.getInstance().getBackLineUnit(units);
 			}else {
-				unit = GameLogic.getInstance().getUnitByPosition(targetUnit, units);
+				unit = targetUnit;
 			}
 			
 		}else {

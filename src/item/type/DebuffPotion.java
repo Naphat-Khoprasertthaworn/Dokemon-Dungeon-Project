@@ -6,15 +6,14 @@ import logic.GameLogic;
 
 public abstract class DebuffPotion extends Item {
 
-	public DebuffPotion(String name, String text, int amount) {
-		super(name, text, amount);
+	public DebuffPotion(String name, String text, int amount,String imagePath) {
+		super(name, text, amount,imagePath);
 		
 	}
 	
 	@Override
 	public void selectTarget() {
-		int index = GameLogic.getInstance().getTargetedMonster();
-		Unit monsterUnit = GameLogic.getInstance().getMonsters().get(index);
+		Unit monsterUnit = GameLogic.getInstance().getTargetedMonster();
 		this.activeEffect(monsterUnit);
 	}
 	public abstract void activeEffect(Unit u);

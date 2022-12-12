@@ -18,11 +18,13 @@ public abstract class Item {
 	private int amount;
 	private String name;
 	private String text;
+	private String imagePath;
 	
-	public Item(String name,String text,int amount) {
+	public Item(String name,String text,int amount,String imagePath) {
 		this.setAmount(amount);
 		this.setName(name);
 		this.setText(text);
+		this.setImagePath(imagePath);
 	}
 
 	public boolean active() {
@@ -98,5 +100,13 @@ public abstract class Item {
 	
 	public String toString() {
 		return this.getName() + " x " + this.getAmount();
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 }

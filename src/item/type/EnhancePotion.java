@@ -6,13 +6,14 @@ import entity.base.Unit;
 public class EnhancePotion extends BuffPotion{
 	
 	private Enhance enhanceBuff;
+	//private final String imagePath = "enhancePotion.png";
 	
 	public Enhance getBuff() {
 		return enhanceBuff;
 	}
 
 	public EnhancePotion(int amount,int turn,int ratio) {
-		super("Enhance Potion", "give enhance buff to a hero", amount);
+		super("Enhance Potion", "give enhance buff to a hero", amount,"enhancePotion.png");
 		enhanceBuff = new Enhance(turn, ratio);
 	}
 	
