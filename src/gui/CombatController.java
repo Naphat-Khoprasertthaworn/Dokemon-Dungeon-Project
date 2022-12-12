@@ -25,7 +25,8 @@ import component.CombatDisplay;
 import component.*;
 
 public class CombatController implements Initializable{
-	
+	@FXML
+	public HBox commandPane ;
 	@FXML
 	public HBox combatPane ;
 	@FXML
@@ -65,6 +66,12 @@ public class CombatController implements Initializable{
 		combatPane.getChildren().add(skillAndItemPane);
 	}
 	
+	public void initializeCommandPane() {
+		ItemGridPane itemGridPane = new ItemGridPane();
+		SkillPane skillPane = new SkillPane();
+		commandPane.getChildren().addAll(skillPane,itemGridPane);
+	}
+	
 	public void exitGame (ActionEvent event) {
 		Platform.exit();
 		System.exit(0);
@@ -79,6 +86,7 @@ public class CombatController implements Initializable{
 		// TODO Auto-generated method stub
 		System.out.println("Initialized");
 	    initializeCombatPane();
+	    //initializeCommandPane();
 	}
 
 }

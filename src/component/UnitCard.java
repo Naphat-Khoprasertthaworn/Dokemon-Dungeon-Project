@@ -34,16 +34,14 @@ public class UnitCard extends VBox {
 		
 
 		unitImage = new ImageView(new Image(blankUnitURL));
-		
+		unitImage.setFitHeight(100);
+		unitImage.setFitWidth(100);
 		ImageView pointerImageView = new ImageView(pointerImageURL);
-		pointerImageView.setFitWidth(50);
 		pointerImageView.setFitHeight(50);
+		pointerImageView.setFitWidth(50);
 		healthBar = new ProgressBar(100);
-		
-//		this.setPrefHeight(100);
-		this.setPrefWidth(100);
-		this.setPrefHeight(200);
-		
+		healthBar.setPrefHeight(10);
+		healthBar.setPrefWidth(100);
 		this.getChildren().add(pointerImageView);
 		this.getChildren().add(unitImage);
 		this.getChildren().add(healthBar);

@@ -25,31 +25,28 @@ public class CombatDisplay extends HBox {
 	
 	Image combatBackground = new Image(ClassLoader.getSystemResource("image/combatBackground.png").toString(), 1280,460, false, true);
 	
+	
 	public CombatDisplay(){
 		
-		HBox herosCardBox = new HBox();
+		HBox heroesCardBox = new HBox();
+		heroesCardBox.setPrefHeight(460);
+		heroesCardBox.setPrefWidth(640);
+		heroesCardBox.setAlignment(Pos.CENTER);
 		HBox monsterCardBox = new HBox();
-		String imgPath = ClassLoader.getSystemResource(backGroundImageURL).toString();
-	
-		herosCardBox.setBorder(new Border(new BorderStroke(Color.BLUE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(3))));
-		monsterCardBox.setBorder(new Border(new BorderStroke(Color.BLUE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(3))));
-
-		herosCardBox.setPrefWidth( 500);
-		herosCardBox.setPrefHeight(200);
-		monsterCardBox.setPrefWidth(500);
-		monsterCardBox.setPrefHeight(200);
+		monsterCardBox.setPrefHeight(460);
+		monsterCardBox.setPrefWidth(640);
+		monsterCardBox.setAlignment(Pos.CENTER);
+		//String imgPath = ClassLoader.getSystemResource(backGroundImageURL).toString();
 		
 		BackgroundImage bgImg = new BackgroundImage(combatBackground,BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT,BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT);
-		GameLogic.getInstance().generateMonsters();
-		ArrayList<Unit> heros = GameLogic.getInstance().getHeros();
-		
+		GameLogic.getInstance().generateBossStage();
+		ArrayList<Unit> heroes = GameLogic.getInstance().getHeros();
 		ArrayList<Unit> monsters = GameLogic.getInstance().getMonsters();
-		System.out.println(heros);
-		System.out.println(monsters);
-		for( int i = heros.size()-1;i>=0;i--) {
+		
+		for( int i = heroes.size()-1;i>=0;i--) {
 			UnitCard heroCard = new UnitCard();
-			heroCard.update(heros.get(i));
-			herosCardBox.getChildren().add(heroCard);
+			heroCard.update(heroes.get(i));
+			heroesCardBox.getChildren().add(heroCard);
 			
 		}
 		for(int i = 0;i<monsters.size();i++) {
@@ -57,13 +54,9 @@ public class CombatDisplay extends HBox {
 			monsterCard.update(monsters.get(i));
 			monsterCardBox.getChildren().add(monsterCard);
 		}
-		//this.setBackground(new Background(bgImg));
-		
-		herosCardBox.setAlignment(Pos.BOTTOM_LEFT);
-		monsterCardBox.setAlignment(Pos.BOTTOM_RIGHT);
-		
-		//this.setAlignment();
-		this.getChildren().add(herosCardBox);
+		this.setAlignment(Pos.CENTER);
+		this.setBackground(new Background(bgImg));
+		this.getChildren().add(heroesCardBox);
 		this.getChildren().add(monsterCardBox);
 		
 	}

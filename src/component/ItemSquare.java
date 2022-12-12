@@ -24,7 +24,7 @@ public class ItemSquare extends Pane {
 	private Text text;
 	private ImageView imageView;
 	private Item item;
-	private final String blankImagePath = "image/blank.png";
+	private final String blankImagePath = "image/overwatch-logo.png";
 	
 	
 	public ItemSquare() {
