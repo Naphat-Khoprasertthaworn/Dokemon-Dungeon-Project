@@ -22,8 +22,9 @@ import javafx.scene.image.Image ;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import logic.GameLogic;
 import sound.SoundManager;
-
+import application.Main;
 
 public class MenuController implements Initializable  {
 
@@ -51,12 +52,16 @@ public class MenuController implements Initializable  {
 	
 	public void switchToCombat (ActionEvent event) {
 		try {
+			GameLogic.getInstance().startGame();
 			root = FXMLLoader.load(getClass().getResource("/gui/CombatScene.fxml"));
 			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
 			stage.setScene(scene);
 			SoundManager.setCurrentBGM("audio/CombatBGM.wav",0.1);
+			
 			stage.show();
+			
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

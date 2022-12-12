@@ -48,6 +48,13 @@ public class GameLogic {
 	static final int MAX_PARTY = 3;
 	static final int ITEM_DROP = 3;
 	
+	private static boolean isGameActive;
+	private static boolean isCombatMode;
+	private static boolean isHeroTurn;
+	private static boolean isStageFail;
+	private static boolean isStageClear;
+	private static int heroOrder;
+	
 	private ArrayList<Item> inventory;
 	
 	private Comparator<Unit> compUnit = (Unit u1,Unit u2)->{
@@ -527,6 +534,108 @@ public class GameLogic {
 		}
 		
 		return itemDrop;
+	}
+	
+	
+	
+	public static void startGame() {
+		System.out.println("check this");
+		isGameActive = true;
+		GameLogic.getInstance().newGame();
+		startStageGame();
+	}
+	
+	public static void startStageGame() {
+		int ni = GameLogic.getInstance().rollDice();
+		Boolean isBossStage = GameLogic.getInstance().setDistance( GameLogic.getInstance().getDistance() + ni);
+		System.out.println( "distance NOW : "+GameLogic.getInstance().getDistance() );
+		
+		if(isBossStage) {
+			GameLogic.getInstance().generateBossStage();
+		}else {
+			GameLogic.getInstance().generateMonsters();
+		}
+		
+		GameLogic.getInstance().startStage();
+		isStageClear = false;
+		isStageFail = false;
+		isCombatMode = true;
+		heroOrder = 0;
+		//playerTurn();
+		GameLogic.getInstance().setCurrentHero( GameLogic.getInstance().getHeros().get(heroOrder) );
+	}
+	
+	public static void heroAction() {
+		//ArrayList<Unit> heros = GameLogic.getInstance().getHeros();
+		if(heroOrder > 2) {
+			heroOrder = 0;
+			monsterTurn();
+			return;
+		}
+		
+		updateStageGame();
+		if(isStageClear) {
+			startStageGame();
+			return;
+		}
+		
+		heroOrder++;
+		
+		Unit heroUnit;
+		while(heroOrder<3) {
+			heroUnit = GameLogic.getInstance().getHeros().get(heroOrder);
+			if(heroUnit.isAlive()) {
+				break;
+			}
+			else {
+				heroOrder++;
+			}
+		}
+		if(heroOrder > 2) {
+			heroOrder = 0;
+			monsterTurn();
+			return;
+		}
+		
+		
+		GameLogic.getInstance().setCurrentHero( GameLogic.getInstance().getHeros().get(heroOrder) );
+		
+	}
+	
+	public static void monsterTurn() {
+		ArrayList<Unit> monsters = GameLogic.getInstance().getMonsters();
+		Unit monster;
+		for(int i = 0;i<monsters.size();i++) {
+			
+			monster = GameLogic.getInstance().getUnitByPosition(i,monsters);
+			if(!monster.isAlive()) {
+				continue;
+			}
+			
+			monster.useSkill(null);
+			updateStageGame();
+			if(isStageFail) {
+				isGameActive = false;
+				return;
+			}
+			
+		}
+		
+		GameLogic.getInstance().countdownGame();
+	}
+
+	
+	
+	public static void updateStageGame() {
+		isStageClear = GameLogic.getInstance().stageClear();
+		isStageFail = GameLogic.getInstance().stageFail();
+	}
+	
+	public static void collectItem() {
+		GameLogic.getInstance().generateItemDrop();
+	//System.out.println("is work");
+	//GameLogic.getInstance().showInventory();
+	//System.out.println("is2 work");
 	}
 
 }

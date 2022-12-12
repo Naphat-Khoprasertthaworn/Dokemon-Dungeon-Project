@@ -53,7 +53,16 @@ public class CombatController implements Initializable{
 	
 	public void initializeCombatPane () {
 		CombatDisplay combatDisplay = new CombatDisplay() ;
+		HBox skillAndItemPane = new HBox();
+		SkillPane skillPane = new SkillPane();
+		ItemGridPane itemGridPane = new ItemGridPane();
+		
+		
+		skillPane.updateState();
+		skillAndItemPane.getChildren().add(skillPane);
+		skillAndItemPane.getChildren().add(itemGridPane);
 		combatPane.getChildren().add(combatDisplay);
+		combatPane.getChildren().add(skillAndItemPane);
 	}
 	
 	public void exitGame (ActionEvent event) {

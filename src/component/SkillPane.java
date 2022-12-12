@@ -4,7 +4,13 @@ import java.util.ArrayList;
 
 import entity.base.Skill;
 import entity.base.Unit;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import logic.GameLogic;
 
 public class SkillPane extends HBox {
@@ -15,11 +21,14 @@ public class SkillPane extends HBox {
 	
 	public SkillPane() {
 		skills = new ArrayList<Skill>();
+		this.skillPanes =  new SkillCard[3];
 		for(int i=0;i<MAX_SKILL;i++) {
 			SkillCard skillCard = new SkillCard();
 			skillPanes[i] = skillCard;
 			this.getChildren().add(skillCard);
 		}
+		this.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(3))));
+
 	}
 	
 	public void updateState() {

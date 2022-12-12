@@ -9,7 +9,7 @@ public class VulnetabilityPotion extends DebuffPotion {
 	//private final String imagePath = "vulnetabilityPotion.png";
 
 	public VulnetabilityPotion(int amount,int turn,int ratio) {
-		super("Vulnetability Potion", "give vulnetability to a monster", amount,"vulnetabilityPotion.png");
+		super("Vulnetability Potion", "give vulnetability to a monster", amount,"image/vulnetabilityPotion.png");
 		vulnetabilityBuff = new Vulnetability(turn, ratio);
 		
 	}

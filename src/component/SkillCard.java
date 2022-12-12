@@ -18,7 +18,7 @@ public class SkillCard extends VBox{
 	private Skill skill;
 	private Text name;
 	private Text textSkill;
-	private final String blankSkillURL = "blankSkill.png";
+	private final String blankSkillURL = "image/blank.png";
 	
 	public SkillCard() {
 		name = new Text();
