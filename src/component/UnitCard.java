@@ -61,7 +61,9 @@ public class UnitCard extends VBox {
 	}
 	
 	public void update(Unit u) {
+		
 		this.unit = u;
+
 		String imgPath = ClassLoader.getSystemResource(u.getImagePath()).toString();
 		
 		unitImage.setImage(new Image(imgPath)); 
@@ -71,9 +73,11 @@ public class UnitCard extends VBox {
 	
 	public void updateHealthBar() {
 		if(unit == null) {
+			System.err.println("test2");
 			return;
 		}
-		healthBar.setProgress( (unit.getHealth()*100) /unit.getMaxHealth() );
+
+		healthBar.setProgress( ((float)unit.getHealth()) /(float)unit.getMaxHealth() );
 	}
 	
 	

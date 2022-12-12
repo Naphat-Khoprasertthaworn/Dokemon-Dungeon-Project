@@ -1,5 +1,6 @@
 package logic;
 
+import java.io.NotActiveException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,10 +15,13 @@ import buff.type.Enhance;
 import buff.type.Exhaust;
 import buff.type.Regeneration;
 import buff.type.Vulnetability;
+import component.UnitCard;
 import entity.base.Buff;
 import entity.base.Item;
 import entity.base.Monster;
 import entity.base.Unit;
+import gui.CombatController;
+import gui.MenuController;
 import item.type.BuffPotion;
 import item.type.DamageReductionPotion;
 import item.type.EnhancePotion;
@@ -30,6 +34,7 @@ import skill.type.MultiTargetAttackSkill;
 import skill.type.MultiTargetDefenceSkill;
 import skill.type.SingleTargetAttackSkill;
 import skill.type.SingleTargetDefenceSkill;
+
 
 public class GameLogic {
 	private static GameLogic instance = null;
@@ -44,7 +49,7 @@ public class GameLogic {
 	private Unit currentHero;
 	
 	private int distance;
-	static final int MAX_DISTANCE = 20;
+	static final int MAX_DISTANCE = 5;
 	static final int MAX_PARTY = 3;
 	static final int ITEM_DROP = 3;
 	
@@ -54,6 +59,17 @@ public class GameLogic {
 	private static boolean isStageFail;
 	private static boolean isStageClear;
 	private static int heroOrder;
+	private CombatController combatController;
+	private static boolean notInitStage;
+	public CombatController getCombatController() {
+		return combatController;
+	}
+
+	public void setCombatController(CombatController combatController) {
+		this.combatController = combatController;
+	}
+
+	private MenuController menuController;
 	
 	private ArrayList<Item> inventory;
 	
@@ -66,6 +82,7 @@ public class GameLogic {
 	
 		//######## GAME LOGIC ########
 	private GameLogic() {
+		
 		this.newGame();
 		
 	}
@@ -332,6 +349,7 @@ public class GameLogic {
 		this.monsters = new ArrayList<Unit>();
 		this.generatePoolMonsters();
 		
+		//UnitCard.updateHealthBar();
 		
 		
 	}
@@ -539,7 +557,7 @@ public class GameLogic {
 	
 	
 	public static void startGame() {
-		System.out.println("check this");
+		//System.out.println("check this");
 		isGameActive = true;
 		GameLogic.getInstance().newGame();
 		startStageGame();
@@ -551,9 +569,17 @@ public class GameLogic {
 		System.out.println( "distance NOW : "+GameLogic.getInstance().getDistance() );
 		
 		if(isBossStage) {
+			System.out.print("gen boss");
+			System.out.println(GameLogic.getInstance().getMonsters());
 			GameLogic.getInstance().generateBossStage();
+			GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatUnit();
 		}else {
+			
 			GameLogic.getInstance().generateMonsters();
+			if(notInitStage) {
+				GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatUnit();
+			}
+			notInitStage = true;
 		}
 		
 		GameLogic.getInstance().startStage();
@@ -567,14 +593,17 @@ public class GameLogic {
 	
 	public static void heroAction() {
 		//ArrayList<Unit> heros = GameLogic.getInstance().getHeros();
-		if(heroOrder > 2) {
-			heroOrder = 0;
-			monsterTurn();
-			return;
-		}
+//		if(heroOrder > 2) {
+//			heroOrder = 0;
+//			monsterTurn();
+//			return;
+//		}
 		
 		updateStageGame();
 		if(isStageClear) {
+			System.out.println("it work");
+			GameLogic.getInstance().resetUnits();
+			GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
 			startStageGame();
 			return;
 		}
@@ -593,16 +622,19 @@ public class GameLogic {
 		}
 		if(heroOrder > 2) {
 			heroOrder = 0;
+			GameLogic.getInstance().setCurrentHero( GameLogic.getInstance().getHeros().get(heroOrder) );
 			monsterTurn();
 			return;
 		}
 		
 		
 		GameLogic.getInstance().setCurrentHero( GameLogic.getInstance().getHeros().get(heroOrder) );
+		System.out.println(GameLogic.getInstance().getHeros().get(heroOrder));
 		
 	}
 	
 	public static void monsterTurn() {
+		//System.out.println(heroOrder);
 		ArrayList<Unit> monsters = GameLogic.getInstance().getMonsters();
 		Unit monster;
 		for(int i = 0;i<monsters.size();i++) {

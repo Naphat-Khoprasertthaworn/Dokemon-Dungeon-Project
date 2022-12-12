@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -20,6 +21,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import logic.GameLogic;
 import sound.SoundManager;
 import component.CombatDisplay; 
 import component.*;
@@ -38,6 +40,36 @@ public class CombatController implements Initializable{
 	@FXML
 	public Parent root ;
 	
+	public CombatDisplay getCombatDisplay() {
+		return combatDisplay;
+	}
+
+	public void setCombatDisplay(CombatDisplay combatDisplay) {
+		this.combatDisplay = combatDisplay;
+	}
+
+	public SkillPane getSkillPane() {
+		return skillPane;
+	}
+
+	public void setSkillPane(SkillPane skillPane) {
+		this.skillPane = skillPane;
+	}
+
+	public ItemGridPane getItemGridPane() {
+		return itemGridPane;
+	}
+
+	public void setItemGridPane(ItemGridPane itemGridPane) {
+		this.itemGridPane = itemGridPane;
+	}
+
+	private CombatDisplay combatDisplay;
+	private HBox skillAndItemPane;
+	private SkillPane skillPane;
+	private ItemGridPane itemGridPane;
+	
+	
 	public void switchToMenu (ActionEvent event) {
 		try {
 			root = FXMLLoader.load(getClass().getResource("/gui/MenuScene.fxml"));
@@ -52,24 +84,20 @@ public class CombatController implements Initializable{
 		}
 	}
 	
+	
 	public void initializeCombatPane () {
-		CombatDisplay combatDisplay = new CombatDisplay() ;
-		HBox skillAndItemPane = new HBox();
-		SkillPane skillPane = new SkillPane();
-		ItemGridPane itemGridPane = new ItemGridPane();
-		
-		
-		skillPane.updateState();
-		skillAndItemPane.getChildren().add(skillPane);
-		skillAndItemPane.getChildren().add(itemGridPane);
+		combatDisplay = new CombatDisplay() ;
+//		GameLogic.getInstance().setCombatController(this);
 		combatPane.getChildren().add(combatDisplay);
-		combatPane.getChildren().add(skillAndItemPane);
+		
 	}
 	
 	public void initializeCommandPane() {
-		ItemGridPane itemGridPane = new ItemGridPane();
-		SkillPane skillPane = new SkillPane();
+		itemGridPane = new ItemGridPane();
+		skillPane = new SkillPane();
 		commandPane.getChildren().addAll(skillPane,itemGridPane);
+		skillPane.updateState();
+		commandPane.setAlignment(Pos.CENTER);
 	}
 	
 	public void exitGame (ActionEvent event) {
@@ -77,16 +105,21 @@ public class CombatController implements Initializable{
 		System.exit(0);
 	}
 	
-	public void updateCombatDisplay() {
+	public static void updateCombatDisplay() {
 		
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
+		
+		GameLogic.getInstance().setCombatController(this);
+		GameLogic.getInstance().startGame();
+		
 		System.out.println("Initialized");
+	    
+	    initializeCommandPane();
 	    initializeCombatPane();
-	    //initializeCommandPane();
 	}
 
 }
