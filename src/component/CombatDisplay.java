@@ -14,15 +14,17 @@ import logic.GameLogic;
 
 public class CombatDisplay extends HBox {
 	
-	private final String backGroundImageURL = "combatBackGround.png";
+	private String backGroundImageURL = "combatBackGround.png";
 	
+	Image combatBackground = new Image(ClassLoader.getSystemResource("image/combatBackground.png").toString(), 1280,460, false, true);
+
 	public CombatDisplay(){
 		
 		HBox herosCardBox = new HBox();
 		HBox monsterCardBox = new HBox();
-		String imgPath = ClassLoader.getSystemResource(backGroundImageURL).toString();
+		//String imgPath = ClassLoader.getSystemResource(backGroundImageURL).toString();
 		
-		BackgroundImage bgImg = new BackgroundImage(new Image(imgPath),BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT,BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT);
+		BackgroundImage bgImg = new BackgroundImage(combatBackground,BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT,BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT);
 		
 		ArrayList<Unit> heros = GameLogic.getInstance().getHeros();
 		ArrayList<Unit> monsters = GameLogic.getInstance().getMonsters();

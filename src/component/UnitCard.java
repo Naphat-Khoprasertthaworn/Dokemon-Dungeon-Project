@@ -13,23 +13,26 @@ import logic.GameLogic;
 
 public class UnitCard extends VBox {
 	
-	private final String pointerImageURL = "pointer.png";
-	private final String blankUnitURL = "blankUnit.png";
+	private final String pointerImageURL = "image/pointer.png";
+	private final String blankUnitURL = "image/overwatch-logo.png";
 	private Unit unit;
 	private ProgressBar healthBar;
 	private ImageView unitImage;
+	Image pointerImage = new Image(ClassLoader.getSystemResource("image/pointer.png").toString(), 20,20, false, true);
+	Image blankImage = new Image(ClassLoader.getSystemResource("image/overwatch-logo.png").toString(), 50,50, false, true);
 	
 	public UnitCard() {
 		
-		String imgPath = ClassLoader.getSystemResource(blankUnitURL).toString();
-		String pointerPath = ClassLoader.getSystemResource(pointerImageURL).toString();
-		unitImage = new ImageView(new Image(imgPath));
+		//String imgPath = ClassLoader.getSystemResource(blankUnitURL).toString();
+		//String pointerPath = ClassLoader.getSystemResource(pointerImageURL).toString();
+
+		unitImage = new ImageView(new Image(blankUnitURL));
 		
-		ImageView pointerImage = new ImageView(new Image(pointerPath));
+		ImageView pointerImageView = new ImageView(pointerImageURL);
 		
 		healthBar = new ProgressBar(100);
 		
-		this.getChildren().add(pointerImage);
+		this.getChildren().add(pointerImageView);
 		this.getChildren().add(unitImage);
 		this.getChildren().add(healthBar);
 		

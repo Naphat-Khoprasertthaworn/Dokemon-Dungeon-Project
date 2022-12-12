@@ -1,5 +1,8 @@
 package gui;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
@@ -14,11 +17,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image ;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import sound.SoundManager;
+import component.CombatDisplay; 
+import component.*;
 
-public class CombatController {
+public class CombatController implements Initializable{
+	
+	@FXML
+	public HBox combatPane ;
 	@FXML
 	public ProgressBar distanceProgressBar ;
 	@FXML
@@ -42,6 +51,11 @@ public class CombatController {
 		}
 	}
 	
+	public void initializeCombatPane () {
+		CombatDisplay combatDisplay = new CombatDisplay() ;
+		combatPane.getChildren().add(combatDisplay);
+	}
+	
 	public void exitGame (ActionEvent event) {
 		Platform.exit();
 		System.exit(0);
@@ -49,6 +63,13 @@ public class CombatController {
 	
 	public void updateCombatDisplay() {
 		
+	}
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		// TODO Auto-generated method stub
+		System.out.println("Initialized");
+	    initializeCombatPane();
 	}
 
 }
