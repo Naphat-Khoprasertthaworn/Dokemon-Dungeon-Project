@@ -9,7 +9,7 @@ public class ExhaustPotion extends DebuffPotion {
 	//private final String imagePath = "exhaustPotion.png";
 	
 	public ExhaustPotion( int amount,int turn,int ratio) {
-		super("Exhaust Potion", "give exhaust to a monster", amount,"exhaustPotion.png");
+		super("Exhaust Potion", "give exhaust to a monster", amount,"image/exhaustPotion.png");
 		exhaustBuff = new Exhaust(turn, ratio);
 	}
 	

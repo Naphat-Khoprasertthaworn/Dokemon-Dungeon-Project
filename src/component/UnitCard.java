@@ -27,11 +27,14 @@ public class UnitCard extends VBox {
 		//String pointerPath = ClassLoader.getSystemResource(pointerImageURL).toString();
 
 		unitImage = new ImageView(new Image(blankUnitURL));
-		
+		unitImage.setFitHeight(100);
+		unitImage.setFitWidth(100);
 		ImageView pointerImageView = new ImageView(pointerImageURL);
-		
+		pointerImageView.setFitHeight(50);
+		pointerImageView.setFitWidth(50);
 		healthBar = new ProgressBar(100);
-		
+		healthBar.setPrefHeight(10);
+		healthBar.setPrefWidth(100);
 		this.getChildren().add(pointerImageView);
 		this.getChildren().add(unitImage);
 		this.getChildren().add(healthBar);

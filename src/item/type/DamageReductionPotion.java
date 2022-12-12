@@ -13,7 +13,7 @@ public class DamageReductionPotion extends BuffPotion{
 	}
 
 	public DamageReductionPotion(int amount,int turn,int ratio) {
-		super("Damage Reduction", "give dmg reduction to hero", amount,"damageReductionPotion.png");
+		super("Damage Reduction", "give dmg reduction to hero", amount,"image/damageReductionPotion.png");
 		dmgRedBuff = new DamageReduction(turn, ratio);
 		
 	}

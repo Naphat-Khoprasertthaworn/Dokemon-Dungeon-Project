@@ -13,7 +13,7 @@ public class EnhancePotion extends BuffPotion{
 	}
 
 	public EnhancePotion(int amount,int turn,int ratio) {
-		super("Enhance Potion", "give enhance buff to a hero", amount,"enhancePotion.png");
+		super("Enhance Potion", "give enhance buff to a hero", amount,"image/enhancePotion.png");
 		enhanceBuff = new Enhance(turn, ratio);
 	}
 	

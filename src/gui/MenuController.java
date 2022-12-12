@@ -23,7 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import sound.SoundManager;
-
+import application.Main;
 
 public class MenuController implements Initializable  {
 
@@ -49,6 +49,7 @@ public class MenuController implements Initializable  {
             800, false, true);
 
 	
+	
 	public void switchToCombat (ActionEvent event) {
 		try {
 			root = FXMLLoader.load(getClass().getResource("/gui/CombatScene.fxml"));
@@ -57,6 +58,7 @@ public class MenuController implements Initializable  {
 			stage.setScene(scene);
 			SoundManager.setCurrentBGM("audio/CombatBGM.wav",0.1);
 			stage.show();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -93,8 +95,13 @@ public class MenuController implements Initializable  {
 		System.out.println("eiei");
 	}
 	
-	public void switchImage (ActionEvent event) {
-		gameLogo.setImage(image);
+//	public void switchImage (ActionEvent event) {
+//		gameLogo.setImage(image);
+//	}
+	
+	public void testAdjustImage(ActionEvent event) {
+		gameLogo.setFitWidth(300);
+		gameLogo.setFitHeight(300);
 	}
 	
 	
