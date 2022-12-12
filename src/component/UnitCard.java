@@ -64,6 +64,7 @@ public class UnitCard extends VBox {
 	
 	public void update(Unit u) {
 		this.unit = u;
+		System.out.println( u );
 		String imgPath = ClassLoader.getSystemResource(u.getImagePath()).toString();
 		
 		unitImage.setImage(new Image(imgPath)); 
