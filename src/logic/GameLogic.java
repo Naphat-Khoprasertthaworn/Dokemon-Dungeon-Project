@@ -47,17 +47,20 @@ public class GameLogic {
 	static final int MAX_DISTANCE = 20;
 	static final int MAX_PARTY = 3;
 	static final int ITEM_DROP = 3;
-	private Inventory inventory;
+	
+	private ArrayList<Item> inventory;
+	
 	private Comparator<Unit> compUnit = (Unit u1,Unit u2)->{
 		if(u1.getPosition() > u2.getPosition()) {
 			return 1;
 		}
 		return -1;
 	};
-
-	//######## GAME LOGIC ########
+	
+		//######## GAME LOGIC ########
 	private GameLogic() {
 		this.newGame();
+		
 	}
 	
 	public static GameLogic getInstance() {
@@ -66,6 +69,15 @@ public class GameLogic {
 		}
 		return instance;
 	}
+	
+	//######## GAME CONTROLLER ########
+	
+//	public void startStage() {
+//		
+//	}
+	
+
+
 	//######## DISTANCE & DICE ########
 	public int rollDice() {
 		int i = (int) ((Math.random()*5) +1);
@@ -111,6 +123,9 @@ public class GameLogic {
 	public void startStage() {
 		this.setTargetedHero( this.getFrontLineUnit(heros) );
 		this.setTargetedMonster( this.getFrontLineUnit(monsters) );
+		
+		
+		
 	}
 	
 	public boolean stageClear() {
@@ -152,12 +167,29 @@ public class GameLogic {
 		}
 	}
 	//######## INVENTORY ########
-	public Inventory getInventory() {
+	public ArrayList<Item> getInventory() {
 		return inventory;
 	}
 
-	public void setInventory(Inventory inventory) {
+	public void setInventory(ArrayList<Item> inventory) {
 		this.inventory = inventory;
+	}
+	
+	public void addItem(Item item) {
+		for(Item i:this.getInventory()) {
+			if( i.equals(item) ) {
+				i.setAmount( i.getAmount() + item.getAmount() );
+				return;
+			}
+		}
+		this.getInventory().add(item);
+	}
+
+	
+	public void showInventory() {
+		for(int i = 0;i<inventory.size();i++) {
+			System.out.println( inventory.get(i) );
+		}
 	}
 	
 	//######## TARGET POINTER HANDLER ########
@@ -287,11 +319,13 @@ public class GameLogic {
 	//######## INITIAL GAME ########
 	public void newGame() {
 		this.setDistance(0);
-		this.inventory = new Inventory();
+		this.inventory = new ArrayList<Item>();
 		this.gennerateHerosParty();
 		this.generatePoolItems();
 		this.monsters = new ArrayList<Unit>();
 		this.generatePoolMonsters();
+		
+		
 		
 	}
 	
@@ -349,27 +383,27 @@ public class GameLogic {
 		Monster gnomeUnit = new Monster("Gnome", "I am Gnome", 20, 10, 0, 50,"gnomeUnit.png");
 		
 		
-		SingleTargetAttackSkill golemAutoAttack = new SingleTargetAttackSkill("Auto attack","attack front line hero",100,2, false,"golemAutoAttack.png");
-		MultiTargetAttackSkill golemSkill1 = new MultiTargetAttackSkill("Eathquake","AOE attack",100,5,"golemSkill1.png");
+		SingleTargetAttackSkill golemAutoAttack = new SingleTargetAttackSkill("Auto attack","attack front line hero",100,2, false,"monsterSkill.png");
+		MultiTargetAttackSkill golemSkill1 = new MultiTargetAttackSkill("Eathquake","AOE attack",100,5,"monsterSkill.png");
 
-		SingleTargetAttackSkill slimeAutoAttack = new SingleTargetAttackSkill("Auto attack" , "heal self and give front line exhaust" , 100,0, false,"slimeAutoAttack.png");
+		SingleTargetAttackSkill slimeAutoAttack = new SingleTargetAttackSkill("Auto attack" , "heal self and give front line exhaust" , 100,0, false,"monsterSkill.png");
 		slimeAutoAttack.addBuffsSelf(new Regeneration(40));
 
-		SingleTargetAttackSkill slimeSkill1 = new SingleTargetAttackSkill("normal debuff","give debuff to front line",100,3, false,"slimeSkill1.png");
+		SingleTargetAttackSkill slimeSkill1 = new SingleTargetAttackSkill("normal debuff","give debuff to front line",100,3, false,"monsterSkill.png");
 		slimeSkill1.addBuffsTarget(new Exhaust(3, 20));
 		slimeSkill1.addBuffsTarget(new Vulnetability(2, 20));
 		
-		SingleTargetAttackSkill oniAutoAttack = new SingleTargetAttackSkill("Auto attack" , "target back line first" , 100,1, true,"oniAutoAttack.png");
-		SingleTargetAttackSkill oniSkill1 = new SingleTargetAttackSkill("heavy attack","attack front line",150,5, false,"oniSkill1.png");
+		SingleTargetAttackSkill oniAutoAttack = new SingleTargetAttackSkill("Auto attack" , "target back line first" , 100,1, true,"monsterSkill.png");
+		SingleTargetAttackSkill oniSkill1 = new SingleTargetAttackSkill("heavy attack","attack front line",150,5, false,"monsterSkill.png");
 		oniSkill1.addBuffsTarget(new Vulnetability(2, 30));
 		
-		SingleTargetAttackSkill bloodHawkAutoAttack = new SingleTargetAttackSkill("Auto attack" , "target back line first" , 100,0,true,"bloodHawkAutoAttack.png");
+		SingleTargetAttackSkill bloodHawkAutoAttack = new SingleTargetAttackSkill("Auto attack" , "target back line first" , 100,0,true,"monsterSkill.png");
 		bloodHawkAutoAttack.addBuffsTarget(new Vulnetability(4, 10));
-		SingleTargetAttackSkill bloodHawkSkill1 = new SingleTargetAttackSkill("super dangerous vulnetability" , "" , 100,2,true,"bloodHawkSkill1.png");
+		SingleTargetAttackSkill bloodHawkSkill1 = new SingleTargetAttackSkill("super dangerous vulnetability" , "" , 100,2,true,"monsterSkill.png");
 		bloodHawkSkill1.addBuffsTarget(new Vulnetability(2, 30));
 
-		SingleTargetDefenceSkill gnomeAutoAttack = new SingleTargetDefenceSkill("heal lowest hp monster","single heal",50,2,"gnomeAutoAttack.png");
-		MultiTargetDefenceSkill gnomeSkill1 = new MultiTargetDefenceSkill("Heal monster","AOE heal",30,4,"gnomeSkill1.png");
+		SingleTargetDefenceSkill gnomeAutoAttack = new SingleTargetDefenceSkill("heal lowest hp monster","single heal",50,2,"monsterSkill.png");
+		MultiTargetDefenceSkill gnomeSkill1 = new MultiTargetDefenceSkill("Heal monster","AOE heal",30,4,"monsterSkill.png");
 		
 		
 		golemUnit.addSkills(golemAutoAttack);
@@ -487,7 +521,8 @@ public class GameLogic {
 				System.out.println("Item Drop error");
 				newItem = null;
 			}
-			this.inventory.addItem(newItem);
+			
+			this.addItem(newItem);
 			itemDrop.add( item );
 		}
 		

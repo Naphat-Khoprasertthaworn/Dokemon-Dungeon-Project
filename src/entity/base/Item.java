@@ -12,7 +12,6 @@ import item.type.ExhaustPotion;
 import item.type.HealingPotion;
 import item.type.VulnetabilityPotion;
 import logic.GameLogic;
-import logic.Inventory;
 
 public abstract class Item {
 	private int amount;
@@ -44,8 +43,7 @@ public abstract class Item {
 
 	public void setAmount(int amount) {
 		if(amount <= 0) {
-			GameLogic.getInstance().getInventory().getInventory().remove(this);
-			//Inventory.getInstance().getInventory().remove(this);
+			GameLogic.getInstance().getInventory().remove(this);
 			return;
 		}
 		this.amount = amount;
