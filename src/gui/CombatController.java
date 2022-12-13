@@ -86,15 +86,9 @@ public class CombatController implements Initializable{
 	
 	
 	public void initializeCombatPane () {
-
-		CombatDisplay combatDisplay = new CombatDisplay() ;
-//		HBox skillAndItemPane = new HBox();
-//		SkillPane skillPane = new SkillPane();
-//		ItemGridPane itemGridPane = new ItemGridPane();
-		
-
+		combatDisplay = new CombatDisplay() ;
 		combatPane.getChildren().add(combatDisplay);
-		//combatPane.getChildren().add(skillAndItemPane);
+		
 	}
 	
 //	public void initializeCommandPane() {
@@ -111,7 +105,6 @@ public class CombatController implements Initializable{
 	public void initializeCommandPane() {
 		itemGridPane = new ItemGridPane();
 		skillPane = new SkillPane();
-
 		commandPane.getChildren().addAll(skillPane,itemGridPane);
 		skillPane.updateState();
 		commandPane.setAlignment(Pos.CENTER);

@@ -41,14 +41,10 @@ public class SkillCard extends VBox{
 		this.setBackground(new Background(bgImg));
 		this.getChildren().add(name);
 		this.getChildren().add(textSkill);
-
-		this.setPrefHeight(160);
-		this.setPrefWidth(85);
+		this.prefHeight(160);
+		this.prefWidth(85);
 		this.setAlignment(Pos.CENTER);
-
-
 		this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(3))));
-
 		this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent arg0) {
 				onClickHandler();
