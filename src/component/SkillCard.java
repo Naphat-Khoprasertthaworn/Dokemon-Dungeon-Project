@@ -116,9 +116,7 @@ public class SkillCard extends VBox{
 			GameLogic.getInstance().getCurrentHero().useSkill(this.skill);
 			GameLogic.getInstance().updateTargetPointer();
 			GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
-			GameLogic.getInstance().heroAction();
-		
-			//System.out.println( GameLogic.getInstance().getCurrentHero() );
+			GameLogic.heroAction();
 		
 			GameLogic.getInstance().getCombatController().getSkillPane().updateState();
 			GameLogic.getInstance().getCombatController().getCombatDisplay().updatePointer();

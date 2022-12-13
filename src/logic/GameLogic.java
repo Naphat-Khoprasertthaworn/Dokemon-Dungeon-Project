@@ -581,7 +581,6 @@ public class GameLogic {
 		isGameActive = true;
 		GameLogic.getInstance().newGame();
 		GameLogic.getInstance().setCurrentHero( GameLogic.getInstance().getHeros().get(heroOrder) );
-		
 		//startStageGame();
 	}
 	

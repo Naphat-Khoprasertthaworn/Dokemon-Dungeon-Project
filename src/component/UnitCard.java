@@ -11,6 +11,7 @@ import buff.type.Vulnetability;
 import entity.base.Buff;
 import entity.base.Monster;
 import entity.base.Unit;
+import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.ProgressBar;
@@ -26,6 +27,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import logic.GameLogic;
 
 public class UnitCard extends VBox {
@@ -49,7 +51,6 @@ public class UnitCard extends VBox {
 	private ImageView damageReductionBuff,enhanceBuff,exhaustBuff,vulnetabilityBuff,deadBuff;
 	
 	public UnitCard() {
-		
 		unitImage = new ImageView(new Image(blankUnitURL));
 		unitImage.setFitHeight(100);
 		unitImage.setFitWidth(100);
@@ -61,9 +62,6 @@ public class UnitCard extends VBox {
 		healthBar = new ProgressBar(100);
 		healthBar.setPrefHeight(10);
 		healthBar.setPrefWidth(100);
-		
-		
-		
 		
 		damageReductionBuff = new ImageView( new Image(ClassLoader.getSystemResource(damageReductionBuffURL).toString()) );
 		enhanceBuff = new ImageView( new Image(ClassLoader.getSystemResource(enhanceBuffURL).toString()) );
@@ -85,19 +83,15 @@ public class UnitCard extends VBox {
 		
 		HBox buffBox = new HBox();
 		buffBox.getChildren().addAll(deadBuff,damageReductionBuff,enhanceBuff,exhaustBuff,vulnetabilityBuff);
-		//buffBox.setPrefHeight(10);
-		
 		
 		this.getChildren().add(pointerImageView);
 		this.getChildren().add(buffBox);
 		this.getChildren().add(unitImage);
 		this.getChildren().add(healthBar);
 		this.setAlignment(Pos.BOTTOM_CENTER);
-		
+		this.healthBar.setVisible(false);
 		unitImage.setFitWidth(100);
 		
-		//pointerImageView.setA
-		//healthBar.ali
 		this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent arg0) {
 				onClickHandler();
@@ -110,11 +104,13 @@ public class UnitCard extends VBox {
 	public void update(Unit u) {
 		
 		this.unit = u;
-
+		this.healthBar.setVisible(true);
+		if(u instanceof Monster) {
+			this.healthBar.setStyle( "-fx-accent:red" );
+		}
 		String imgPath = ClassLoader.getSystemResource(u.getImagePath()).toString();
 		
 		unitImage.setImage(new Image(imgPath)); 
-		
 		
 	}
 	
@@ -157,18 +153,28 @@ public class UnitCard extends VBox {
 		healthBar.setProgress( ((float)unit.getHealth()) /(float)unit.getMaxHealth() );
 	}
 	
-	
+	public void useSkillAction() {
+		TranslateTransition translate = new TranslateTransition();
+		translate.setNode(unitImage);
+		
+		translate.setDuration( Duration.millis(1000) );
+		translate.setByX(250);
+		translate.setByX(0);
+		
+		translate.play();
+		
+		
+	}
 	
 	public void onClickHandler() {
 		if(unit instanceof Monster) {
-			//System.out.println(this.unit);
 			GameLogic.getInstance().setTargetedMonster(this.unit);
-			//System.out.println( GameLogic.getInstance().getTargetedMonster() );
-			//System.out.println(this.unit.isTargeted());
 		}else if(unit instanceof Unit) {
 			GameLogic.getInstance().setTargetedHero(this.unit);
 		}
 		GameLogic.getInstance().getCombatController().getCombatDisplay().updatePointer();
+		this.useSkillAction();
+		
 	}
 
 	public Unit getUnit() {

@@ -99,15 +99,14 @@ public class CombatController implements Initializable{
 		circle.setRadius(75);
 		circle.setFill(Color.WHITE);
 		circle.setStroke(Color.BLACK);
-		//circle.
+
 		dice = new Dice() ;
 		itemGridPane = new ItemGridPane();
 		skillPane = new SkillPane();
 		
 		skillPane.updateState();
 		commandPane.getChildren().addAll(skillPane,itemGridPane,dice);
-		commandPane.setAlignment(Pos.CENTER);
-		
+		commandPane.setAlignment(Pos.CENTER);	
 
 	}
 	
@@ -115,10 +114,6 @@ public class CombatController implements Initializable{
 		Platform.exit();
 		System.exit(0);
 	}
-	
-//	public static void updateCombatDisplay() {
-//		
-//	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -129,12 +124,8 @@ public class CombatController implements Initializable{
 		System.out.println("Initialized");
 	    initializeCombatPane();
 	    initializeCommandPane();
-	    //initializeProgressBar();
+
 	}
-	
-//	public void initializeProgressBar() {
-//		this.distanceProgressBar = new ProgressBar();
-//	}
 	
 	public CombatDisplay getCombatDisplay() {
 		return combatDisplay;
@@ -163,7 +154,6 @@ public class CombatController implements Initializable{
 	
 	//@FXML
 	public void updateProgressBar() {
-		//System.out.println(distanceProgressBar);
 		float dis = GameLogic.getInstance().getDistance();
 		float max = GameLogic.MAX_DISTANCE;
 		distanceProgress.setProgress( dis/max );
