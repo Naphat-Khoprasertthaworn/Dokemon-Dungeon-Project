@@ -55,6 +55,6 @@
             <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
          </opaqueInsets>
       </VBox>
-      <Button fx:id="eieiButton" layoutX="127.0" layoutY="491.0" mnemonicParsing="false" onAction="#testAdjustImage" prefHeight="158.0" prefWidth="79.0" text="Button" />
+      <Button fx:id="eieiButton" layoutX="127.0" layoutY="491.0" mnemonicParsing="false" onAction="#switchtoGameOver" prefHeight="158.0" prefWidth="79.0" text="Button" />
    </children>
 </Pane>
