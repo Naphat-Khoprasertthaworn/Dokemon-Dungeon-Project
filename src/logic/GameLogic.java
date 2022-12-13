@@ -42,25 +42,26 @@ public class GameLogic {
 	private ArrayList<Unit> monsters;
 	private ArrayList<Monster> poolMonsters;
 	private ArrayList<Item> poolItems;
-//	private int targetedHero;
-//	private int targetedMonster;
+
 	private Unit targetedHero;
 	private Unit targetedMonster;
 	private Unit currentHero;
 	
 	private int distance;
-	static final int MAX_DISTANCE = 5;
+	static final int MAX_DISTANCE = 7;
 	static final int MAX_PARTY = 3;
 	static final int ITEM_DROP = 3;
 	
-	private static boolean isGameActive;
-	private static boolean isCombatMode;
-	private static boolean isHeroTurn;
-	private static boolean isStageFail;
-	private static boolean isStageClear;
+	public static boolean isGameActive;
+	public static boolean isCombatMode;
+	public static boolean isHeroTurn;
+	public static boolean isStageFail;
+	public static boolean isStageClear;
 	private static int heroOrder;
 	private CombatController combatController;
-	private static boolean notInitStage;
+	public static boolean notInitStage;
+	public static boolean isBossStage;
+	
 	public CombatController getCombatController() {
 		return combatController;
 	}
@@ -94,18 +95,10 @@ public class GameLogic {
 		return instance;
 	}
 	
-	//######## GAME CONTROLLER ########
-	
-//	public void startStage() {
-//		
-//	}
-	
-
 
 	//######## DISTANCE & DICE ########
 	public int rollDice() {
 		int i = (int) ((Math.random()*5) +1);
-		//this.setDistance(this.getDistance() + i);
 		return i;
 	}
 	
@@ -147,9 +140,7 @@ public class GameLogic {
 	public void startStage() {
 		this.setTargetedHero( this.getFrontLineUnit(heros) );
 		this.setTargetedMonster( this.getFrontLineUnit(monsters) );
-		
-		
-		
+
 	}
 	
 	public boolean stageClear() {
@@ -233,7 +224,15 @@ public class GameLogic {
 	}
 
 	public void setTargetedHero(Unit targetedHero) {
+		if(targetedHero == null) {
+			return;//add disable all pointer
+		}
 		if(targetedHero.isAlive()) {
+			if( !(this.getTargetedHero() == null) ) {
+				this.getTargetedHero().setTargeted(false);
+			}
+			
+			targetedHero.setTargeted(true);
 			this.targetedHero = targetedHero;
 		}
 	}
@@ -243,7 +242,16 @@ public class GameLogic {
 	}
 
 	public void setTargetedMonster(Unit targetedMonster) {
+		if(targetedMonster == null) {
+			return;//add disable all pointer
+		}
 		if(targetedMonster.isAlive()) {
+			
+			if( !(this.getTargetedMonster() == null) ) {
+				this.getTargetedMonster().setTargeted(false);
+			}
+			
+			targetedMonster.setTargeted(true);
 			this.targetedMonster = targetedMonster;
 		}
 	}
@@ -482,7 +490,7 @@ public class GameLogic {
 		int i = 0;
 		while(true) {
 			rand = (int) ((Math.random()*5));
-			//System.out.println(rand);
+			
 			if(nums.contains(rand)) {
 				
 			}else {
@@ -509,6 +517,7 @@ public class GameLogic {
 		bossAutoAttack.addBuffsTarget( new Vulnetability(3, 30) );
 		bossAutoAttack.addBuffsTarget( new Exhaust(3, 30) );
 		
+		
 		MultiTargetAttackSkill bossSkill1 = new MultiTargetAttackSkill("AOE DMG", "aoe", 100 , 4,"image/monsterSkill.png");
 		bossSkill1.addBuffsSelf( new Vulnetability(3,50) );
 		
@@ -519,7 +528,13 @@ public class GameLogic {
 		bossMonster.addSkills(bossSkill1);
 		bossMonster.addSkills(bossSkill2);
 		bossMonster.reset();
+		
+		//Monster blankUnitMonster = new Monster("blank unit", "donothing", 0, 0, 0, 0, "image/blank.png");
+		
+		
 		this.monsters.add(bossMonster);
+		//this.monsters.add(blankUnitMonster);
+		//this.monsters.add(blankUnitMonster);
 	}
 	
 	//######## END STAGE ########
@@ -557,7 +572,7 @@ public class GameLogic {
 	
 	
 	public static void startGame() {
-		//System.out.println("check this");
+		
 		isGameActive = true;
 		GameLogic.getInstance().newGame();
 		startStageGame();
@@ -565,12 +580,10 @@ public class GameLogic {
 	
 	public static void startStageGame() {
 		int ni = GameLogic.getInstance().rollDice();
-		Boolean isBossStage = GameLogic.getInstance().setDistance( GameLogic.getInstance().getDistance() + ni);
+		isBossStage = GameLogic.getInstance().setDistance( GameLogic.getInstance().getDistance() + ni);
 		System.out.println( "distance NOW : "+GameLogic.getInstance().getDistance() );
 		
 		if(isBossStage) {
-			System.out.print("gen boss");
-			System.out.println(GameLogic.getInstance().getMonsters());
 			GameLogic.getInstance().generateBossStage();
 			GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatUnit();
 		}else {
@@ -592,16 +605,15 @@ public class GameLogic {
 	}
 	
 	public static void heroAction() {
-		//ArrayList<Unit> heros = GameLogic.getInstance().getHeros();
-//		if(heroOrder > 2) {
-//			heroOrder = 0;
-//			monsterTurn();
-//			return;
-//		}
 		
 		updateStageGame();
 		if(isStageClear) {
-			System.out.println("it work");
+			if(isBossStage) {
+				System.out.println("YOU WIN!!!");
+				isBossStage = false;
+				isGameActive = false;
+				return;
+			}
 			GameLogic.getInstance().resetUnits();
 			GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
 			startStageGame();
@@ -629,22 +641,23 @@ public class GameLogic {
 		
 		
 		GameLogic.getInstance().setCurrentHero( GameLogic.getInstance().getHeros().get(heroOrder) );
-		System.out.println(GameLogic.getInstance().getHeros().get(heroOrder));
+		//System.out.println(GameLogic.getInstance().getHeros().get(heroOrder));
 		
 	}
 	
 	public static void monsterTurn() {
-		//System.out.println(heroOrder);
 		ArrayList<Unit> monsters = GameLogic.getInstance().getMonsters();
 		Unit monster;
 		for(int i = 0;i<monsters.size();i++) {
 			
 			monster = GameLogic.getInstance().getUnitByPosition(i,monsters);
-			if(!monster.isAlive()) {
+			//System.out.println(monster+" turn !!!");
+			if( monster == null || !monster.isAlive() ) {
 				continue;
 			}
 			
 			monster.useSkill(null);
+			GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
 			updateStageGame();
 			if(isStageFail) {
 				isGameActive = false;
@@ -654,6 +667,7 @@ public class GameLogic {
 		}
 		
 		GameLogic.getInstance().countdownGame();
+		
 	}
 
 	
@@ -665,9 +679,9 @@ public class GameLogic {
 	
 	public static void collectItem() {
 		GameLogic.getInstance().generateItemDrop();
-	//System.out.println("is work");
-	//GameLogic.getInstance().showInventory();
-	//System.out.println("is2 work");
+
+		GameLogic.getInstance().showInventory();
+	
 	}
 
 }

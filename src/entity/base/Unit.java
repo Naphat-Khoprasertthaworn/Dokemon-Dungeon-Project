@@ -25,6 +25,19 @@ public class Unit {
 	private int buffAttack;
 	private int buffDefense;
 	private Comparator<Skill> compSkill;
+	
+	private boolean isTargeted;
+	
+	
+	public boolean isTargeted() {
+		return isTargeted;
+	}
+
+
+	public void setTargeted(boolean isTargeted) {
+		this.isTargeted = isTargeted;
+	}
+
 
 	public Unit( String name, String text, int attack, int defense , int position,int maxHealth,String imagePath ) {
 		this.setName(name);
@@ -144,7 +157,7 @@ public class Unit {
 	}
 	
 	public void setHealth(int health) {
-		if(health < 0) {
+		if(health <= 0) {
 			this.setAlive(false);
 			this.health = 0;
 		}else if(health > this.maxHealth) {
@@ -172,7 +185,7 @@ public class Unit {
 		this.text = text;
 	}
 
-	public int getPosition() { //0 = Leader ,1 = DPS, 2 = support
+	public int getPosition() {
 		return position;
 	}
 

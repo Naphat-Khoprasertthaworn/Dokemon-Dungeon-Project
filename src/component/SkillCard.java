@@ -1,5 +1,7 @@
 package component;
 
+import org.junit.Ignore;
+
 import entity.base.Skill;
 import gui.CombatController;
 import javafx.event.EventHandler;
@@ -45,7 +47,6 @@ public class SkillCard extends VBox{
 		this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(3))));
 		this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent arg0) {
-				//System.out.println("it work");
 				onClickHandler();
 			}
 		});
@@ -53,7 +54,7 @@ public class SkillCard extends VBox{
 	
 	public void updateSkillCard(Skill s) {
 		this.skill = s;
-		this.name.setText(s.getName());
+		this.name.setText(s.getName() + " " + s.getInCombatCd());
 		this.textSkill.setText(s.getText());
 		String imgPath = ClassLoader.getSystemResource( s.getImagePath() ).toString();
 		BackgroundImage bgImg = new BackgroundImage(new Image(imgPath),BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT,BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT);
@@ -61,18 +62,28 @@ public class SkillCard extends VBox{
 	}
 	
 	public void onClickHandler() {
-		if(this.skill == null) {
-			System.out.println("this");
+		if(!GameLogic.getInstance().isGameActive) {
+			System.out.println("game END");
 			return;
 		}
-		System.out.println("ot this");
-		GameLogic.getInstance().getCurrentHero().useSkill(this.skill);
-		GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
-		GameLogic.getInstance().heroAction();
 		
-		System.out.println( GameLogic.getInstance().getCurrentHero() );
+		if(this.skill == null) {
+			return;
+		}
+		if(this.skill.readySkill()==false) {
+			System.out.println("i am cd");
+		}else {
+			GameLogic.getInstance().getCurrentHero().useSkill(this.skill);
+			GameLogic.getInstance().updateTargetPointer();
+			GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
+			GameLogic.getInstance().heroAction();
 		
-		GameLogic.getInstance().getCombatController().getSkillPane().updateState();
+			//System.out.println( GameLogic.getInstance().getCurrentHero() );
+		
+			GameLogic.getInstance().getCombatController().getSkillPane().updateState();
+			GameLogic.getInstance().getCombatController().getCombatDisplay().updatePointer();
+		}
+
 		
 	}
 	

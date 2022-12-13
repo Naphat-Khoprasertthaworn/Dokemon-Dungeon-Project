@@ -87,7 +87,6 @@ public class CombatController implements Initializable{
 	
 	public void initializeCombatPane () {
 		combatDisplay = new CombatDisplay() ;
-//		GameLogic.getInstance().setCombatController(this);
 		combatPane.getChildren().add(combatDisplay);
 		
 	}
@@ -114,12 +113,13 @@ public class CombatController implements Initializable{
 		// TODO Auto-generated method stub
 		
 		GameLogic.getInstance().setCombatController(this);
+		
+	    
 		GameLogic.getInstance().startGame();
 		
 		System.out.println("Initialized");
-	    
-	    initializeCommandPane();
 	    initializeCombatPane();
+	    initializeCommandPane();
 	}
 
 }

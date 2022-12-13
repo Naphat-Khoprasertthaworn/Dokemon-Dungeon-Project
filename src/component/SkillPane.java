@@ -23,7 +23,6 @@ public class SkillPane extends HBox {
 	public SkillPane() {
 		this.setPrefHeight(230);
 		this.setPrefWidth(640);
-		//this.setAlignment(Pos.CENTER);
 		this.setSpacing(20);
 		skills = new ArrayList<Skill>();
 		this.skillPanes =  new SkillCard[3];
@@ -42,4 +41,5 @@ public class SkillPane extends HBox {
 			skillPanes[i].updateSkillCard( skills.get(i) );
 		}
 	}
+	
 }

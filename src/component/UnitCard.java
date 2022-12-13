@@ -30,13 +30,18 @@ public class UnitCard extends VBox {
 	//Image pointerImage = new Image(ClassLoader.getSystemResource("image/pointer.png").toString(), 20,20, false, true);
 	Image blankImage = new Image(ClassLoader.getSystemResource("image/overwatch-logo.png").toString(), 50,50, false, true);
 	
+	private ImageView pointerImageView;
+	
+
 	public UnitCard() {
 		
 
 		unitImage = new ImageView(new Image(blankUnitURL));
 		unitImage.setFitHeight(100);
 		unitImage.setFitWidth(100);
-		ImageView pointerImageView = new ImageView(pointerImageURL);
+		pointerImageView = new ImageView(pointerImageURL);
+		pointerImageView.setVisible(false);
+		
 		pointerImageView.setFitHeight(50);
 		pointerImageView.setFitWidth(50);
 		healthBar = new ProgressBar(100);
@@ -73,7 +78,6 @@ public class UnitCard extends VBox {
 	
 	public void updateHealthBar() {
 		if(unit == null) {
-			System.err.println("test2");
 			return;
 		}
 
@@ -81,12 +85,32 @@ public class UnitCard extends VBox {
 	}
 	
 	
+	
 	public void onClickHandler() {
 		if(unit instanceof Monster) {
+			//System.out.println(this.unit);
 			GameLogic.getInstance().setTargetedMonster(this.unit);
+			//System.out.println( GameLogic.getInstance().getTargetedMonster() );
+			System.out.println(this.unit.isTargeted());
 		}else if(unit instanceof Unit) {
 			GameLogic.getInstance().setTargetedHero(this.unit);
 		}
+		GameLogic.getInstance().getCombatController().getCombatDisplay().updatePointer();
+	}
+
+	public Unit getUnit() {
+		return unit;
+	}
+
+	public void setUnit(Unit unit) {
+		this.unit = unit;
 	}
 	
+	public ImageView getPointerImageView() {
+		return pointerImageView;
+	}
+
+	public void setPointerImageView(ImageView pointerImageView) {
+		this.pointerImageView = pointerImageView;
+	}
 }
