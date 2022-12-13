@@ -34,8 +34,7 @@ public class ItemSquare extends VBox {
 	private Text text;
 	private ImageView imageView;
 	private Item item;
-	private final String blankImagePath = "image/overwatch-logo.png";
-	
+	private final String blankImagePath = "image/blank.png" ;
 	
     public ItemSquare() {
         this.setPrefHeight(100);
