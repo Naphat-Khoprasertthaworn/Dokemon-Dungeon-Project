@@ -25,22 +25,23 @@ public class Main  extends Application{
 	private static boolean isHeroTurn;
 	private static boolean isStageFail;
 	private static boolean isStageClear;
-	
-	public void start(Stage primaryStage) throws Exception {
-		// TODO Auto-generated method stub
-		try {
-			Parent root = FXMLLoader.load(getClass().getResource("/gui/MenuScene.fxml"));
-			Scene scene = new Scene(root);
-			primaryStage.setScene(scene);
-			primaryStage.setTitle("Progmeth-project");
-			primaryStage.setResizable(false);
-			SoundManager.setCurrentBGM("audio/MenuBGM.wav",0.1);
-			primaryStage.show();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+    public static Stage primaryStage ;
+    public void start(Stage primaryStage) throws Exception {
+        // TODO Auto-generated method stub
+        try {
+            this.primaryStage = primaryStage ;
+            Parent root = FXMLLoader.load(getClass().getResource("/gui/MenuScene.fxml"));
+            Scene scene = new Scene(root);
+            this.primaryStage.setScene(scene);
+            this.primaryStage.setTitle("Progmeth-project");
+            this.primaryStage.setResizable(false);
+            SoundManager.setCurrentBGM("audio/MenuBGM.wav",0.1);
+            this.primaryStage.show();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 	
 	public static void main(String[] args) {
 		launch(args);
