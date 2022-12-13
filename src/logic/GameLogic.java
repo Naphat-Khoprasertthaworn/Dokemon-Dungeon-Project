@@ -48,7 +48,7 @@ public class GameLogic {
 	private Unit currentHero;
 	
 	private int distance;
-	static final int MAX_DISTANCE = 7;
+	public static final int MAX_DISTANCE = 20;
 	static final int MAX_PARTY = 3;
 	static final int ITEM_DROP = 3;
 	
@@ -580,8 +580,10 @@ public class GameLogic {
 	
 	public static void startStageGame() {
 		int ni = GameLogic.getInstance().rollDice();
+		
 		isBossStage = GameLogic.getInstance().setDistance( GameLogic.getInstance().getDistance() + ni);
 		System.out.println( "distance NOW : "+GameLogic.getInstance().getDistance() );
+		GameLogic.getInstance().getCombatController().updateProgressBar();
 		
 		if(isBossStage) {
 			GameLogic.getInstance().generateBossStage();
@@ -600,7 +602,6 @@ public class GameLogic {
 		isStageFail = false;
 		isCombatMode = true;
 		heroOrder = 0;
-		//playerTurn();
 		GameLogic.getInstance().setCurrentHero( GameLogic.getInstance().getHeros().get(heroOrder) );
 	}
 	
@@ -616,6 +617,8 @@ public class GameLogic {
 			}
 			GameLogic.getInstance().resetUnits();
 			GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
+			GameLogic.getInstance().generateItemDrop();
+			GameLogic.getInstance().getCombatController().getItemGridPane().updateState();
 			startStageGame();
 			return;
 		}
@@ -641,7 +644,7 @@ public class GameLogic {
 		
 		
 		GameLogic.getInstance().setCurrentHero( GameLogic.getInstance().getHeros().get(heroOrder) );
-		//System.out.println(GameLogic.getInstance().getHeros().get(heroOrder));
+
 		
 	}
 	

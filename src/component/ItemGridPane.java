@@ -16,23 +16,33 @@ public class ItemGridPane extends GridPane{
 	
 	public ItemGridPane() {
 		
-		for(int i = 0;i<MAX_COL;i++) {
-			for(int j = 0;j<MAX_ROW;j++) {
+		for(int i = 0;i<MAX_ROW;i++) {
+			for(int j = 0;j<MAX_COL;j++) {
 				ItemSquare itemSquare = new ItemSquare();
-				this.add(itemSquare, i, j);
+				this.add(itemSquare, j, i);
 			}
 		}
 		//inventory = new Item[MAX_COL][MAX_ROW];
 		inventory = GameLogic.getInstance().getInventory();
 	}
 	
-	public void updateState(Item item) {
+	public void updateState() {
 		int col,row;
+		System.out.println(inventory);
+		
+		for(int i = 0;i<this.getChildren().size();i++) {
+			Node node = this.getChildren().get(i);
+			if( node instanceof ItemSquare ) {
+				((ItemSquare)node).removeItem();
+			}
+		}
+		
 		for(int i = 0;i<inventory.size();i++) {
 			row = i/MAX_COL;
 			col = i-(row*MAX_COL);
 			Node node = this.getChildren().get(i);
 			if( node instanceof ItemSquare ) {
+				//System.out.println("it work");
 				((ItemSquare)node).addItem( inventory.get(i) );
 			}
 			

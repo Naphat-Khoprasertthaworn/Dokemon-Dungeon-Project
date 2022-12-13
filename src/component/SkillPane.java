@@ -31,7 +31,7 @@ public class SkillPane extends HBox {
 			skillPanes[i] = skillCard;
 			this.getChildren().add(skillCard);
 		}
-		this.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(3))));
+		//this.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(3))));
 
 	}
 	
