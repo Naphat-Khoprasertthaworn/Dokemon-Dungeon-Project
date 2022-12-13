@@ -65,6 +65,8 @@ public class SingleTargetAttackSkill extends AttackSkill {
 				
 			}
 		}
+		System.out.println(unit);
+		System.out.println(owner);
 	}
 
 }

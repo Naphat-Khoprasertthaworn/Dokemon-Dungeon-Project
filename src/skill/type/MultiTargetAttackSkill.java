@@ -36,6 +36,7 @@ public class MultiTargetAttackSkill extends AttackSkill {
 					
 				}
 			}
+			System.out.println(unit);
 		}
 		for(Buff b:this.getBuffsSelf()) {
 			if (b instanceof DamageReduction) {
@@ -53,6 +54,7 @@ public class MultiTargetAttackSkill extends AttackSkill {
 			}
 		
 		}
+		System.out.println(owner);
 
 	}
 }
