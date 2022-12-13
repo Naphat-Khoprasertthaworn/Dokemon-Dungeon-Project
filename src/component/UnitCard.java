@@ -3,6 +3,7 @@ package component;
 
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import buff.type.DamageReduction;
 import buff.type.Enhance;
@@ -11,6 +12,9 @@ import buff.type.Vulnetability;
 import entity.base.Buff;
 import entity.base.Monster;
 import entity.base.Unit;
+import javafx.animation.RotateTransition;
+import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.ProgressBar;
@@ -26,12 +30,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.transform.Rotate;
+import javafx.util.Duration;
 import logic.GameLogic;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 
 public class UnitCard extends VBox {
 	
 	private final String pointerImageURL = "image/pointer.png";
-	private final String blankUnitURL = "image/overwatch-logo.png";
+	private final String blankUnitURL = "image/blank.png";
 	private final String damageReductionBuffURL = "image/damageReductionBuffURL.png";
 	private final String enhanceBuffURL = "image/enhanceBuffURL.png";
 	private final String exhaustBuffURL = "image/exhaustBuffURL.png";
@@ -51,8 +59,10 @@ public class UnitCard extends VBox {
 	public UnitCard() {
 		
 		unitImage = new ImageView(new Image(blankUnitURL));
-		unitImage.setFitHeight(100);
-		unitImage.setFitWidth(100);
+		//unitImage.setOpacity(0);
+		unitImage.setFitHeight(200);
+		unitImage.setFitWidth(170);
+		
 		pointerImageView = new ImageView(pointerImageURL);
 		pointerImageView.setVisible(false);
 		
@@ -94,7 +104,7 @@ public class UnitCard extends VBox {
 		this.getChildren().add(healthBar);
 		this.setAlignment(Pos.BOTTOM_CENTER);
 		
-		unitImage.setFitWidth(100);
+		
 		
 		//pointerImageView.setA
 		//healthBar.ali
@@ -169,6 +179,74 @@ public class UnitCard extends VBox {
 			GameLogic.getInstance().setTargetedHero(this.unit);
 		}
 		GameLogic.getInstance().getCombatController().getCombatDisplay().updatePointer();
+		this.attackAnimation();
+		//this.gotDamagedAnimation();
+	}
+	
+
+	
+	protected void attackAnimation() {
+		
+		Random random = new Random();
+		Thread thread = new Thread() {
+			public void run () {
+				System.out.println("Thread Running");
+				TranslateTransition translate = new TranslateTransition() ;
+				translate.setNode(unitImage);
+				translate.setDuration(Duration.millis(20));
+				translate.setCycleCount(4);
+				translate.setByX(20);
+				translate.setAutoReverse(true);
+				translate.play();		
+			}
+		};
+		thread.start();
+
+	}
+	
+	public void gotDamagedAnimation() {
+		//unitImage.setVisible(false);
+		float round = 11 ;
+		round = (float) (((round+0.5)*2)/2) ;
+		round = (int)round ;
+		int newRound = (int) round ;
+		//boolean blink = false ;
+		TranslateTransition translate = new TranslateTransition() ;
+		translate.setNode(unitImage);
+		translate.setDuration(Duration.millis(30));
+		translate.setCycleCount(8);
+		translate.setByY(20);
+		translate.setAutoReverse(true);
+		translate.play();	
+
+//		RotateTransition rotateTransition = new RotateTransition() ;
+//		rotateTransition.setNode(unitImage);
+//		rotateTransition.setDuration(Duration.millis(100));
+//		rotateTransition.setCycleCount(2);
+//		//rotateTransition.setFromAngle(90);
+//		rotateTransition.set
+//		rotateTransition.setByAngle(90);
+//		rotateTransition.setAutoReverse(true);
+//	
+//		rotateTransition.play();
+		
+		Random random = new Random();
+		Thread thread = new Thread() {
+			public void run () {
+				System.out.println("Thread Running");
+				try {
+					for (int i = 0 ;  i < newRound ; i ++) {
+						System.out.println(i);
+						unitImage.setVisible(i%2 == 0);
+						Thread.sleep(50); 
+					}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		thread.start();
+		//unitImage.setVisible(true) ;
 	}
 
 	public Unit getUnit() {
