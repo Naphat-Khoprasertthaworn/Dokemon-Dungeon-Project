@@ -67,8 +67,9 @@ public class Dice extends Pane{
 				System.out.println("Thread Running");
 				try {
 					for (int i = 0 ; i < 15 ; i++) {
-						File file = new File("image/Dice"+ (random.nextInt(6)+1)+".png");
-						diceImageView.setImage(new Image(file.toURI().toString()));
+
+						String imgPath = ClassLoader.getSystemResource("image/Dice"+(random.nextInt(6)+1) + ".png").toString();
+						diceImageView.setImage(new Image(imgPath));
 						Thread.sleep(50);
 					}
 					isDisable = true ;
