@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import application.Main;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
@@ -168,5 +169,27 @@ public class CombatController implements Initializable{
 		float max = GameLogic.MAX_DISTANCE;
 		distanceProgress.setProgress( dis/max );
 	}
+	
+	////////////////////////////
+	
+	public void switchtoGameOver () throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GameOverScene.fxml"));
+		root = loader.load();
+		stage = Main.primaryStage; 
+		scene = new Scene(root,1280,720);
+		stage.setScene(scene);
+		stage.show();
+		
+	}
+	
+	public void switchtoGameClear() throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GameClearScene.fxml"));
+		root = loader.load();
+		stage = Main.primaryStage; 
+		scene = new Scene(root,1280,720);
+		stage.setScene(scene);
+		stage.show();
+	}
+	
 
 }

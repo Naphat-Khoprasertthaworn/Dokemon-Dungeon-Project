@@ -107,6 +107,27 @@ public class MenuController implements Initializable  {
 		testVBOX.getChildren().add(dice);
 	}
 	
+	public void switchtoGameOver () throws IOException {
+		System.out.println("haha");
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GameOverScene.fxml"));
+		root = loader.load();
+		stage = Main.primaryStage; 
+		scene = new Scene(root,1280,720);
+		stage.setScene(scene);
+		stage.show();
+		
+	}
+	
+	public void switchtoGameClear() throws IOException {
+		System.out.println("huhu");
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GameClearScene.fxml"));
+		root = loader.load();
+		stage = Main.primaryStage; 
+		scene = new Scene(root,1280,720);
+		stage.setScene(scene);
+		stage.show();
+	}
+	
 	
 	
 
