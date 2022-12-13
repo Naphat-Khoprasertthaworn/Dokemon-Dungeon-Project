@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -54,21 +55,20 @@ public class CombatController implements Initializable{
 	
 	public void initializeCombatPane () {
 		CombatDisplay combatDisplay = new CombatDisplay() ;
-		HBox skillAndItemPane = new HBox();
-		SkillPane skillPane = new SkillPane();
-		ItemGridPane itemGridPane = new ItemGridPane();
+//		HBox skillAndItemPane = new HBox();
+//		SkillPane skillPane = new SkillPane();
+//		ItemGridPane itemGridPane = new ItemGridPane();
 		
-		
-		skillPane.updateState();
-		skillAndItemPane.getChildren().add(skillPane);
-		skillAndItemPane.getChildren().add(itemGridPane);
+
 		combatPane.getChildren().add(combatDisplay);
-		combatPane.getChildren().add(skillAndItemPane);
+		//combatPane.getChildren().add(skillAndItemPane);
 	}
 	
 	public void initializeCommandPane() {
 		ItemGridPane itemGridPane = new ItemGridPane();
 		SkillPane skillPane = new SkillPane();
+		skillPane.updateState();
+		commandPane.setAlignment(Pos.CENTER);
 		commandPane.getChildren().addAll(skillPane,itemGridPane);
 	}
 	
@@ -86,7 +86,7 @@ public class CombatController implements Initializable{
 		// TODO Auto-generated method stub
 		System.out.println("Initialized");
 	    initializeCombatPane();
-	    //initializeCommandPane();
+	    initializeCommandPane();
 	}
 
 }

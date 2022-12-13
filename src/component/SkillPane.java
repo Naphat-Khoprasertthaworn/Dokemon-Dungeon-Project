@@ -22,12 +22,17 @@ public class SkillPane extends HBox {
 	public SkillPane() {
 		skills = new ArrayList<Skill>();
 		this.skillPanes =  new SkillCard[3];
+		
 		for(int i=0;i<MAX_SKILL;i++) {
 			SkillCard skillCard = new SkillCard();
+			
 			skillPanes[i] = skillCard;
 			this.getChildren().add(skillCard);
 		}
-		this.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(3))));
+		this.setSpacing(20);
+		this.setPrefHeight(230);
+		this.setPrefWidth(640);
+		//this.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(3))));
 
 	}
 	

@@ -25,9 +25,9 @@ import javafx.stage.Stage;
 import logic.GameLogic;
 import sound.SoundManager;
 import application.Main;
-
+import component.*;
 public class MenuController implements Initializable  {
-
+    
 	@FXML
 	public Button eieiButton ;
 	@FXML
@@ -103,8 +103,8 @@ public class MenuController implements Initializable  {
 //	}
 	
 	public void testAdjustImage(ActionEvent event) {
-		gameLogo.setFitWidth(300);
-		gameLogo.setFitHeight(300);
+		Dice dice = new Dice() ;
+		testVBOX.getChildren().add(dice);
 	}
 	
 	

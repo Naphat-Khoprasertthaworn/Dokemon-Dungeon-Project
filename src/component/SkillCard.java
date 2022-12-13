@@ -2,6 +2,7 @@ package component;
 
 import entity.base.Skill;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -28,7 +29,9 @@ public class SkillCard extends VBox{
 		this.setBackground(new Background(bgImg));
 		this.getChildren().add(name);
 		this.getChildren().add(textSkill);
-		
+		this.setPrefHeight(160);
+		this.setPrefWidth(85);
+		this.setAlignment(Pos.CENTER);
 		this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent arg0) {
 				onClickHandler();
