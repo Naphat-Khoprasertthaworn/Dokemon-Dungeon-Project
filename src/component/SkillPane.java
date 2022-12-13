@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import entity.base.Skill;
 import entity.base.Unit;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
@@ -21,6 +22,11 @@ public class SkillPane extends HBox {
 	static final int MAX_SKILL = 3;
 	
 	public SkillPane() {
+		this.setPrefHeight(230);
+		this.setPrefWidth(640);
+		//this.setAlignment(Pos.CENTER);
+		
+		this.setSpacing(20);
 		skills = new ArrayList<Skill>();
 		this.skillPanes =  new SkillCard[3];
 		
@@ -28,12 +34,9 @@ public class SkillPane extends HBox {
 			SkillCard skillCard = new SkillCard();
 			
 			skillPanes[i] = skillCard;
+			this.setMargin( skillCard,new Insets(20,0,20,0) );
 			this.getChildren().add(skillCard);
 		}
-		this.setAlignment(Pos.CENTER);
-		this.setPrefHeight(230);
-		this.setPrefWidth(600);
-		this.setSpacing(20);
 		this.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(3))));
 
 	}
