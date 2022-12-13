@@ -64,6 +64,16 @@ public class GameLogic {
 	public static boolean notInitStage;
 	public static boolean isBossStage;
 	
+	public boolean isAnimationRunning() {
+		return animationRunning;
+	}
+
+	public static void setAnimationRunning(boolean animationRunning) {
+		GameLogic.animationRunning = animationRunning;
+	}
+
+	public static boolean animationRunning;
+	
 	public CombatController getCombatController() {
 		return combatController;
 	}

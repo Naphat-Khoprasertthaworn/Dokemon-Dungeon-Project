@@ -29,6 +29,22 @@ public class CombatDisplay extends HBox {
 	Image combatBackground = new Image(ClassLoader.getSystemResource("image/combatBackground.png").toString(), 1280,460, false, true);
 	
 	private HBox monsterCardBox;
+	public HBox getMonsterCardBox() {
+		return monsterCardBox;
+	}
+
+	public void setMonsterCardBox(HBox monsterCardBox) {
+		this.monsterCardBox = monsterCardBox;
+	}
+
+	public HBox getHeroesCardBox() {
+		return heroesCardBox;
+	}
+
+	public void setHeroesCardBox(HBox heroesCardBox) {
+		this.heroesCardBox = heroesCardBox;
+	}
+
 	private HBox heroesCardBox;
 	
 	public CombatDisplay(){

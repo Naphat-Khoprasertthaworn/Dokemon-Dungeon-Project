@@ -94,11 +94,8 @@ public class Dice extends VBox{
 					@Override
 					public void run() {
 						endThread();
-						
 					}
 				});
-				
-				
 			}
 		};
 		thread.start();

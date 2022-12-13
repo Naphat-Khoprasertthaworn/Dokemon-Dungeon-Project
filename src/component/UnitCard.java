@@ -33,6 +33,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import logic.GameLogic;
+import sound.SoundManager;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 
@@ -190,10 +191,12 @@ public class UnitCard extends VBox {
 
 	
 	protected void attackAnimation() {
-		
+		//SoundManager.playSound("audio/unitAttackSound.mp3",50);
 		Random random = new Random();
 		Thread thread = new Thread() {
 			public void run () {
+				//SoundManager.playSound("audio/unitAttackSound.mp3",50);
+				GameLogic.getInstance().animationRunning = true;
 				System.out.println("Thread Running");
 				TranslateTransition translate = new TranslateTransition() ;
 				translate.setNode(unitImage);
@@ -201,7 +204,8 @@ public class UnitCard extends VBox {
 				translate.setCycleCount(4);
 				translate.setByX(20);
 				translate.setAutoReverse(true);
-				translate.play();		
+				translate.play();	
+				GameLogic.getInstance().animationRunning = false;
 			}
 		};
 		thread.start();
@@ -236,7 +240,10 @@ public class UnitCard extends VBox {
 		
 		Random random = new Random();
 		Thread thread = new Thread() {
+			
 			public void run () {
+				
+				GameLogic.getInstance().animationRunning = true;
 				System.out.println("Thread Running");
 				try {
 					for (int i = 0 ;  i < newRound ; i ++) {
@@ -247,6 +254,7 @@ public class UnitCard extends VBox {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+				GameLogic.getInstance().animationRunning = false;
 			}
 		};
 		thread.start();

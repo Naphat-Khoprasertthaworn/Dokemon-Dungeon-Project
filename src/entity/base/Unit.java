@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Vector;
 
+import component.UnitCard;
+import javafx.scene.Node;
 import logic.GameLogic;
 
 
@@ -79,6 +81,24 @@ public class Unit {
 	}
 
 	public int takeDamage(int dmg) {
+		
+		if( this instanceof Monster ) {
+		    for( Node unitCard :GameLogic.getInstance().getCombatController().getCombatDisplay().getMonsterCardBox().getChildren() ) {
+		    	if ( ((UnitCard)unitCard).getUnit() == this ) {
+		    		((UnitCard)unitCard).gotDamagedAnimation();
+		    		break;
+		    	}
+		    }
+			
+		}else {
+			for( Node unitCard :GameLogic.getInstance().getCombatController().getCombatDisplay().getHeroesCardBox().getChildren() ) {
+		    	if ( ((UnitCard)unitCard).getUnit() == this ) {
+		    		((UnitCard)unitCard).gotDamagedAnimation();
+		    		break;
+		    	}
+		    }
+		}
+		
 		dmg = dmg - this.getTotalDefense();
 		if(dmg<=0) {
 			return 0;

@@ -1,12 +1,17 @@
 package component;
 
+import java.util.ArrayList;
+
 import org.junit.Ignore;
 
+import entity.base.Monster;
 import entity.base.Skill;
+import entity.base.Unit;
 import gui.CombatController;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -105,6 +110,9 @@ public class SkillCard extends VBox{
 			System.out.println("Roll dice !!");
 			return;
 		}
+		if(GameLogic.getInstance().animationRunning) {
+			return;
+		}
 		
 		
 		if(this.skill == null) {
@@ -113,7 +121,27 @@ public class SkillCard extends VBox{
 		if(this.skill.readySkill()==false) {
 			System.out.println("i am cd");
 		}else {
-			GameLogic.getInstance().getCurrentHero().useSkill(this.skill);
+			
+			Unit unit = GameLogic.getInstance().getCurrentHero();
+			unit.useSkill(this.skill);
+			if( unit instanceof Monster ) {
+			    for( Node unitCard :GameLogic.getInstance().getCombatController().getCombatDisplay().getMonsterCardBox().getChildren() ) {
+			    	if ( ((UnitCard)unitCard).getUnit() == unit ) {
+			    		((UnitCard)unitCard).attackAnimation();
+			    		break;
+			    	}
+			    }
+				
+			}else {
+				for( Node unitCard :GameLogic.getInstance().getCombatController().getCombatDisplay().getHeroesCardBox().getChildren() ) {
+			    	if ( ((UnitCard)unitCard).getUnit() == unit ) {
+			    		((UnitCard)unitCard).attackAnimation();
+			    		break;
+			    	}
+			    }
+			}
+			//GameLogic.getInstance().getCombatController().getCombatDisplay().get
+			
 			GameLogic.getInstance().updateTargetPointer();
 			GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
 			GameLogic.heroAction();
