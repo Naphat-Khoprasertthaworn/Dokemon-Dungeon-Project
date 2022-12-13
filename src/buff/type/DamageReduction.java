@@ -6,7 +6,7 @@ import entity.base.Unit;
 
 public class DamageReduction extends Buff{
 	private int increasingDefense;
-	
+	//private final String imagePath = "image/damageReductionBuff.png";
 	public DamageReduction(int turn, int ratio) {
 		super(turn, ratio);
 		super.setName("DamageReduction");

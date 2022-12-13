@@ -4,7 +4,7 @@ public class Buff implements Countdownable {
 	private int turn;
 	private int ratio;
 	private String name;
-	
+	private String imagePath;
 	public Buff(int turn,int ratio) {
 		this.setTurn(turn);
 		this.setRatio(ratio);
@@ -72,6 +72,14 @@ public class Buff implements Countdownable {
 	
 	public void removeSelf(Unit unit) {
 		
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	};
 	
 }

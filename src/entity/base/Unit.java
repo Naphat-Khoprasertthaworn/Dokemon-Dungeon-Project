@@ -88,13 +88,13 @@ public class Unit {
 	}
 	
 	public void receiveHeal(int heal) {
-		System.out.println("heal"+heal);
+		//System.out.println("heal"+heal);
 		System.out.println(this);
 		if(heal<=0) {
 			return;
 		}
 		this.setHealth(this.getHealth()+ heal);
-		System.out.println("after heal"+this);
+		//System.out.println("after heal"+this);
 	}
 	
 	public void reset() {

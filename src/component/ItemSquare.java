@@ -7,10 +7,13 @@ import java.util.logging.Handler;
 
 import entity.base.Item;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -36,21 +39,21 @@ public class ItemSquare extends VBox {
 	
     public ItemSquare() {
         this.setPrefHeight(100);
-        this.setPrefWidth(100);
-        
+        this.setPrefWidth(150);
+        this.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY,Insets.EMPTY)));
         this.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(3))));
         
         
         this.text = new Text("test");
         this.text.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 10));
         this.text.setWrappingWidth( 80 );
-        this.text.setFill(Color.BLACK);
+        this.text.setFill(Color.WHITE);
         
         
         String imgPath = ClassLoader.getSystemResource( blankImagePath ).toString();
         this.imageView = new ImageView(new Image(imgPath));
-        this.imageView.setFitHeight(70);
-        this.imageView.setFitWidth(70);
+        this.imageView.setFitHeight(60);
+        this.imageView.setFitWidth(60);
         
         
         
@@ -70,6 +73,10 @@ public class ItemSquare extends VBox {
 	
 	public void onClickHandler() {
 		if(this.item==null) {
+			return;
+		}
+		if(GameLogic.getInstance().stageClear() || GameLogic.getInstance().stageFail() ) {
+			System.out.println("cant use item please row a dice");
 			return;
 		}
 		System.out.println("use item");

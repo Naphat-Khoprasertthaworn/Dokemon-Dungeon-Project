@@ -101,6 +101,11 @@ public class SkillCard extends VBox{
 			System.out.println("game END");
 			return;
 		}
+		if(GameLogic.getInstance().stageClear() || GameLogic.getInstance().stageFail()) {
+			System.out.println("Roll dice !!");
+			return;
+		}
+		
 		
 		if(this.skill == null) {
 			return;
