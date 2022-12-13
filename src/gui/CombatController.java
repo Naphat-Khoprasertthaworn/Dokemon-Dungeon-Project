@@ -19,7 +19,10 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image ;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import logic.GameLogic;
 import sound.SoundManager;
@@ -40,6 +43,9 @@ public class CombatController implements Initializable{
 	@FXML
 	public Parent root ;
 	
+	public Dice dice ; 
+	
+	public StackPane dicePane ;
 
 
 	private CombatDisplay combatDisplay;
@@ -68,6 +74,15 @@ public class CombatController implements Initializable{
 		
 	}
 	
+	public void showGameOver () {
+		//root = FXMLLoader.load(getClass().getResource("/gui/MenuScene.fxml"));
+		
+		scene = new Scene(root);
+		stage.setScene(scene);
+		SoundManager.setCurrentBGM("audio/MenuBGM.wav",0.1);
+		stage.show();
+	}
+	
 //	public void initializeCommandPane() {
 //		ItemGridPane itemGridPane = new ItemGridPane();
 //		SkillPane skillPane = new SkillPane();
@@ -80,11 +95,19 @@ public class CombatController implements Initializable{
 //	}
 	
 	public void initializeCommandPane() {
+		Circle circle = new Circle() ;
+		circle.setRadius(75);
+		circle.setFill(Color.WHITE);
+		circle.setStroke(Color.BLACK);
+		//circle.
+		dice = new Dice() ;
 		itemGridPane = new ItemGridPane();
 		skillPane = new SkillPane();
-		commandPane.getChildren().addAll(skillPane,itemGridPane);
+		
 		skillPane.updateState();
+		commandPane.getChildren().addAll(skillPane,itemGridPane,dice);
 		commandPane.setAlignment(Pos.CENTER);
+		
 
 	}
 	

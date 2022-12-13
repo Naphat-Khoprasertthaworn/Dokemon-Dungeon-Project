@@ -7,17 +7,23 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.File;
 import java.util.Random;
+import java.util.Stack;
+
+import javax.naming.spi.DirStateFactory.Result;
 
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
-public class Dice extends Pane{
+public class Dice extends VBox{
 	private ImageView diceImageView ; 
 	private boolean isDisable;
-	private int rolling ;
+	private int resultRoll ;
 //	private final String bigDice ;
 //	private final String dice1 ; 
 //	private final String dice2 ; 
@@ -33,19 +39,22 @@ public class Dice extends Pane{
 //		dice4 = ClassLoader.getSystemResource("image/dice4.png").toString();
 //		dice5 = ClassLoader.getSystemResource("image/dice5.png").toString();
 //		dice6 = ClassLoader.getSystemResource("image/dice6.png").toString();
+		setMaxHeight(100);
+		setMinHeight(100);
 		diceImageView = new ImageView();
-		diceImageView.setFitHeight(100);
-		diceImageView.setFitWidth(100);
+		
+		
 		String imgPath = ClassLoader.getSystemResource("image/Bigdice.png").toString();
 		
 		this.diceImageView = new ImageView(new Image(imgPath));
-
+		diceImageView.setFitHeight(100);
+		diceImageView.setFitWidth(100);
 		this.getChildren().add(diceImageView);
 		this.isDisable = false ;
-		setPrefHeight(100);
-		setPrefWidth(100);
-		setMinHeight(100);
-		setMinHeight(100);
+		
+		setAlignment(Pos.CENTER);
+		
+		
 		
 		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
@@ -61,18 +70,25 @@ public class Dice extends Pane{
 
 	protected void onClickHandler() {
 		// TODO Auto-generated method stub
+		
 		Random random = new Random();
 		Thread thread = new Thread() {
 			public void run () {
+				//int resultRoll ; 
 				System.out.println("Thread Running");
 				try {
 					for (int i = 0 ; i < 15 ; i++) {
-
-						String imgPath = ClassLoader.getSystemResource("image/Dice"+(random.nextInt(6)+1) + ".png").toString();
+						resultRoll = random.nextInt(6)+1 ;
+						String imgPath = ClassLoader.getSystemResource("image/Dice"+resultRoll + ".png").toString();
 						diceImageView.setImage(new Image(imgPath));
 						Thread.sleep(50);
 					}
+					//return resultRoll;
+//					String finalImagePath = ClassLoader.getSystemResource("image/Dice"+resultRoll + ".png").toString();
+//					diceImageView.setImage(new Image(imgPath));
+					//return resultRoll ;
 					isDisable = true ;
+					System.out.println(resultRoll);
 				} catch (InterruptedException e) {
 					// TODO: handle exception
 					e.printStackTrace();
@@ -80,18 +96,19 @@ public class Dice extends Pane{
 			}
 		};
 		thread.start();
+		
+	}
+
+	public int getResultRoll() {
+		return resultRoll;
 	}
 
 
-
-
-	public int getRolling() {
-		return rolling;
+	public void setResultRoll(int resultRoll) {
+		this.resultRoll = resultRoll;
 	}
 
-	public void setRolling(int rolling) {
-		this.rolling = rolling;
-	}
+
 	
 	
 }
