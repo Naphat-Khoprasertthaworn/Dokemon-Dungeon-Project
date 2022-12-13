@@ -61,7 +61,7 @@ public class CombatDisplay extends HBox {
 	            this.monsterCards.add(monsterCard);
 	        }
 	        this.setAlignment(Pos.CENTER);
-	        this.setBackground(new Background(bgImg));
+	        //this.setBackground(new Background(bgImg));
 	        this.getChildren().add(heroesCardBox);
 	        this.getChildren().add(monsterCardBox); 
 	        updateCombatUnit();

@@ -36,7 +36,7 @@
                   </DisplacementMap>
                </effect>
             </VBox>
-            <VBox alignment="CENTER" prefHeight="405.0" prefWidth="500.0" spacing="100.0">
+            <VBox fx:id="testVBOX" alignment="CENTER" prefHeight="405.0" prefWidth="500.0" spacing="100.0">
                <children>
                   <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToCombat" prefHeight="75.0" prefWidth="300.0" text="Start">
                      <font>
@@ -55,6 +55,6 @@
             <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
          </opaqueInsets>
       </VBox>
-      <Button fx:id="eieiButton" layoutX="166.0" layoutY="360.0" mnemonicParsing="false" onAction="#testAdjustImage" text="Button" />
+      <Button fx:id="eieiButton" layoutX="127.0" layoutY="491.0" mnemonicParsing="false" onAction="#testAdjustImage" prefHeight="158.0" prefWidth="79.0" text="Button" />
    </children>
 </Pane>

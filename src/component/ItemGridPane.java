@@ -3,6 +3,7 @@ package component;
 import java.util.ArrayList;
 
 import entity.base.Item;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import logic.GameLogic;
@@ -23,6 +24,7 @@ public class ItemGridPane extends GridPane{
 			}
 		}
 		//inventory = new Item[MAX_COL][MAX_ROW];
+		this.setAlignment(Pos.CENTER);
 		inventory = GameLogic.getInstance().getInventory();
 	}
 	

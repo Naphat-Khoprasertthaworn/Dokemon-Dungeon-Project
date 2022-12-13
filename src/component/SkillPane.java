@@ -29,8 +29,10 @@ public class SkillPane extends HBox {
 		this.setSpacing(20);
 		skills = new ArrayList<Skill>();
 		this.skillPanes =  new SkillCard[3];
+		
 		for(int i=0;i<MAX_SKILL;i++) {
 			SkillCard skillCard = new SkillCard();
+			
 			skillPanes[i] = skillCard;
 			this.setMargin( skillCard,new Insets(20,0,20,0) );
 			this.getChildren().add(skillCard);
