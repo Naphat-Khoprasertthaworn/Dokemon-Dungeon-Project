@@ -32,13 +32,75 @@ public class CombatController implements Initializable{
 	@FXML
 	public HBox combatPane ;
 	@FXML
-	public ProgressBar distanceProgressBar ;
+	public ProgressBar distanceProgress ;
 	@FXML
 	public Stage stage ;
 	@FXML
 	public Scene scene ;
 	@FXML
 	public Parent root ;
+	
+
+
+	private CombatDisplay combatDisplay;
+	private HBox skillAndItemPane;
+	private SkillPane skillPane;
+	private ItemGridPane itemGridPane;
+	
+	
+	public void switchToMenu (ActionEvent event) {
+		try {
+			root = FXMLLoader.load(getClass().getResource("/gui/MenuScene.fxml"));
+			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+			scene = new Scene(root);
+			stage.setScene(scene);
+			SoundManager.setCurrentBGM("audio/MenuBGM.wav",0.1);
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void initializeCombatPane () {
+		combatDisplay = new CombatDisplay() ;
+		combatPane.getChildren().add(combatDisplay);
+		
+	}
+	
+	public void initializeCommandPane() {
+		itemGridPane = new ItemGridPane();
+		skillPane = new SkillPane();
+		commandPane.getChildren().addAll(skillPane,itemGridPane);
+		skillPane.updateState();
+		commandPane.setAlignment(Pos.CENTER);
+
+	}
+	
+	public void exitGame (ActionEvent event) {
+		Platform.exit();
+		System.exit(0);
+	}
+	
+//	public static void updateCombatDisplay() {
+//		
+//	}
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		GameLogic.getInstance().setCombatController(this);
+		GameLogic.getInstance().startGame();
+		
+		System.out.println("Initialized");
+	    initializeCombatPane();
+	    initializeCommandPane();
+	    //initializeProgressBar();
+	}
+	
+//	public void initializeProgressBar() {
+//		this.distanceProgressBar = new ProgressBar();
+//	}
 	
 	public CombatDisplay getCombatDisplay() {
 		return combatDisplay;
@@ -63,63 +125,14 @@ public class CombatController implements Initializable{
 	public void setItemGridPane(ItemGridPane itemGridPane) {
 		this.itemGridPane = itemGridPane;
 	}
-
-	private CombatDisplay combatDisplay;
-	private HBox skillAndItemPane;
-	private SkillPane skillPane;
-	private ItemGridPane itemGridPane;
 	
 	
-	public void switchToMenu (ActionEvent event) {
-		try {
-			root = FXMLLoader.load(getClass().getResource("/gui/MenuScene.fxml"));
-			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-			scene = new Scene(root);
-			stage.setScene(scene);
-			SoundManager.setCurrentBGM("audio/MenuBGM.wav",0.1);
-			stage.show();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	
-	public void initializeCombatPane () {
-		combatDisplay = new CombatDisplay() ;
-		combatPane.getChildren().add(combatDisplay);
-		
-	}
-	
-	public void initializeCommandPane() {
-		itemGridPane = new ItemGridPane();
-		skillPane = new SkillPane();
-		commandPane.getChildren().addAll(skillPane,itemGridPane);
-		skillPane.updateState();
-		commandPane.setAlignment(Pos.CENTER);
-	}
-	
-	public void exitGame (ActionEvent event) {
-		Platform.exit();
-		System.exit(0);
-	}
-	
-	public static void updateCombatDisplay() {
-		
-	}
-
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
-		
-		GameLogic.getInstance().setCombatController(this);
-		
-	    
-		GameLogic.getInstance().startGame();
-		
-		System.out.println("Initialized");
-	    initializeCombatPane();
-	    initializeCommandPane();
+	//@FXML
+	public void updateProgressBar() {
+		//System.out.println(distanceProgressBar);
+		float dis = GameLogic.getInstance().getDistance();
+		float max = GameLogic.MAX_DISTANCE;
+		distanceProgress.setProgress( dis/max );
 	}
 
 }
