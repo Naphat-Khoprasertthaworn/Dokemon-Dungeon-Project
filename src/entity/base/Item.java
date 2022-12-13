@@ -31,7 +31,8 @@ public abstract class Item {
 			return false;
 		}
 		this.selectTarget();
-		this.setAmount(getAmount()-1);
+		this.setAmount(this.getAmount()-1);
+		//System.out.println(getAmount());
 		return true;
 	}
 	
@@ -44,8 +45,10 @@ public abstract class Item {
 	public void setAmount(int amount) {
 		if(amount <= 0) {
 			GameLogic.getInstance().getInventory().remove(this);
+			this.amount = 0;
 			return;
 		}
+		
 		this.amount = amount;
 	}
 
