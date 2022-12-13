@@ -53,7 +53,7 @@ public class MenuController implements Initializable  {
 	
 	public void switchToCombat (ActionEvent event) {
 		try {
-			GameLogic.getInstance().startGame();
+			
 			root = FXMLLoader.load(getClass().getResource("/gui/CombatScene.fxml"));
 			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
