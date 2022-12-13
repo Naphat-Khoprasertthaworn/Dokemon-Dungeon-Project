@@ -7,7 +7,7 @@ import entity.base.Unit;
 public class Exhaust extends Buff{
 	
 	private int decreasingAttack;
-	
+	//private final String imagePath = "image/exhaustBuff.png";
 	public Exhaust(int turn, int ratio) {
 		super(turn, ratio);
 		super.setName("Exhaust");

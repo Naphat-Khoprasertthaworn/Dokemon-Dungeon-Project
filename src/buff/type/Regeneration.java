@@ -9,6 +9,7 @@ import entity.base.Unit;
 
 public class Regeneration extends Buff{
 
+
 	public Regeneration(int ratio) {
 		super(0, ratio);
 	}

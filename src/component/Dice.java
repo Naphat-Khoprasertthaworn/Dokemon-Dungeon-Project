@@ -11,6 +11,7 @@ import java.util.Stack;
 
 import javax.naming.spi.DirStateFactory.Result;
 
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.layout.Background;
@@ -19,10 +20,11 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import logic.GameLogic;
 
 public class Dice extends VBox{
 	private ImageView diceImageView ; 
-	private boolean isDisable;
+	private boolean isEnable;
 	private int resultRoll ;
 //	private final String bigDice ;
 //	private final String dice1 ; 
@@ -42,39 +44,36 @@ public class Dice extends VBox{
 		setMaxHeight(100);
 		setMinHeight(100);
 		diceImageView = new ImageView();
-		
-		
+
 		String imgPath = ClassLoader.getSystemResource("image/Bigdice.png").toString();
 		
 		this.diceImageView = new ImageView(new Image(imgPath));
 		diceImageView.setFitHeight(100);
 		diceImageView.setFitWidth(100);
 		this.getChildren().add(diceImageView);
-		this.isDisable = false ;
+		this.isEnable = true ;
 		
 		setAlignment(Pos.CENTER);
-		
-		
 		
 		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			@Override
 			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				onClickHandler();
+				if(isEnable) {
+					onClickHandler();
+				}else {
+					
+				}
 			}
-			
 		});
 	}
 	
 
 	protected void onClickHandler() {
-		// TODO Auto-generated method stub
 		
 		Random random = new Random();
 		Thread thread = new Thread() {
 			public void run () {
-				//int resultRoll ; 
 				System.out.println("Thread Running");
 				try {
 					for (int i = 0 ; i < 15 ; i++) {
@@ -83,20 +82,27 @@ public class Dice extends VBox{
 						diceImageView.setImage(new Image(imgPath));
 						Thread.sleep(50);
 					}
-					//return resultRoll;
-//					String finalImagePath = ClassLoader.getSystemResource("image/Dice"+resultRoll + ".png").toString();
-//					diceImageView.setImage(new Image(imgPath));
-					//return resultRoll ;
-					isDisable = true ;
+
+					isEnable = true ;
 					System.out.println(resultRoll);
 				} catch (InterruptedException e) {
-					// TODO: handle exception
 					e.printStackTrace();
 				}
+				
+				Platform.runLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						endThread();
+						
+					}
+				});
+				
+				
 			}
 		};
 		thread.start();
-		
+
 	}
 
 	public int getResultRoll() {
@@ -108,7 +114,26 @@ public class Dice extends VBox{
 		this.resultRoll = resultRoll;
 	}
 
+	public void endThread() {
+		int ni = this.getResultRoll();
+		GameLogic.getInstance().isBossStage = GameLogic.getInstance().setDistance( GameLogic.getInstance().getDistance() + ni);
+		GameLogic.getInstance().resetUnits();
+		GameLogic.getInstance().startStageGame();
+		GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
+		GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatUnit();
+		
+		GameLogic.getInstance().getCombatController().getCombatDisplay().updatePointer();
+		GameLogic.getInstance().getCombatController().getSkillPane().updateState();
+		GameLogic.getInstance().getCombatController().updateProgressBar();
+		isEnable = false;
+	}
 
-	
+	public boolean isEnable() {
+		return isEnable;
+	}
+
+	public void setEnable(boolean isEnable) {
+		this.isEnable = isEnable;
+	}
 	
 }

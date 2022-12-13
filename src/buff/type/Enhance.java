@@ -7,7 +7,7 @@ import entity.base.Unit;
 public class Enhance extends Buff{
 
 	private int increasingAttack;
-	
+	//private final String imagePath = "image/enhanceBuff.png";
 	public Enhance(int turn,int ratio) {
 		super(turn, ratio);
 		super.setName("Enhance");

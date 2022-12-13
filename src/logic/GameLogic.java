@@ -9,6 +9,7 @@ import java.util.Comparator;
 import javax.annotation.processing.Generated;
 
 import org.junit.jupiter.params.shadow.com.univocity.parsers.conversions.EnumSelector;
+import org.junit.validator.PublicClassValidator;
 
 import buff.type.DamageReduction;
 import buff.type.Enhance;
@@ -97,11 +98,11 @@ public class GameLogic {
 	
 
 	//######## DISTANCE & DICE ########
-	public int rollDice() {
-		int i = (int) ((Math.random()*5) +1);
-		return i;
-	}
-	
+//	public int rollDice() {
+//		int i = (int) ((Math.random()*5) +1);
+//		return i;
+//	}
+//	
 	public int getDistance() {
 		return distance;
 	}
@@ -363,6 +364,7 @@ public class GameLogic {
 	}
 	
 	public void gennerateHerosParty() {
+		//System.out.println("gen heros");
 		this.heros = new ArrayList<Unit>();
 		
 		Unit warriorUnit = new Unit("Warrior", "I am warrior.", 50, 30, 0, 100,"image/warriorUnit.png");
@@ -405,6 +407,9 @@ public class GameLogic {
 		medicUnit.addSkills(medicAutoAttack);
 		medicUnit.addSkills(medicSkill1);
 		medicUnit.addSkills(medicSkill2);
+		
+		//System.out.println(this.getHeros());
+		//System.out.println(this.getCurrentHero());
 	}
 	
 	public void generatePoolMonsters() {
@@ -575,17 +580,26 @@ public class GameLogic {
 		
 		isGameActive = true;
 		GameLogic.getInstance().newGame();
-		startStageGame();
+		GameLogic.getInstance().setCurrentHero( GameLogic.getInstance().getHeros().get(heroOrder) );
+		
+		//startStageGame();
 	}
 	
+//	public static void rollDiceStage() {
+//		
+//		
+//		
+//	}
+	
 	public static void startStageGame() {
-		int ni = GameLogic.getInstance().rollDice();
-		
-		isBossStage = GameLogic.getInstance().setDistance( GameLogic.getInstance().getDistance() + ni);
+//		int ni = GameLogic.getInstance().rollDice();
+//		
+//		isBossStage = GameLogic.getInstance().setDistance( GameLogic.getInstance().getDistance() + ni);
 		System.out.println( "distance NOW : "+GameLogic.getInstance().getDistance() );
 		GameLogic.getInstance().getCombatController().updateProgressBar();
 		
 		if(isBossStage) {
+			System.out.println("boss gen");
 			GameLogic.getInstance().generateBossStage();
 			GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatUnit();
 		}else {
@@ -596,13 +610,14 @@ public class GameLogic {
 			}
 			notInitStage = true;
 		}
-		
+		GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatUnit();
 		GameLogic.getInstance().startStage();
 		isStageClear = false;
 		isStageFail = false;
 		isCombatMode = true;
 		heroOrder = 0;
 		GameLogic.getInstance().setCurrentHero( GameLogic.getInstance().getHeros().get(heroOrder) );
+		
 	}
 	
 	public static void heroAction() {
@@ -615,18 +630,19 @@ public class GameLogic {
 				isGameActive = false;
 				return;
 			}
-			GameLogic.getInstance().resetUnits();
+			
 			GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
 			GameLogic.getInstance().generateItemDrop();
 			GameLogic.getInstance().getCombatController().getItemGridPane().updateState();
-			startStageGame();
+			GameLogic.getInstance().getCombatController().dice.setEnable(true);
+			//startStageGame();
 			return;
 		}
 		
 		heroOrder++;
 		
 		Unit heroUnit;
-		while(heroOrder<3) {
+		while(heroOrder<MAX_PARTY) {
 			heroUnit = GameLogic.getInstance().getHeros().get(heroOrder);
 			if(heroUnit.isAlive()) {
 				break;
@@ -635,7 +651,7 @@ public class GameLogic {
 				heroOrder++;
 			}
 		}
-		if(heroOrder > 2) {
+		if(heroOrder >= MAX_PARTY) {
 			heroOrder = 0;
 			GameLogic.getInstance().setCurrentHero( GameLogic.getInstance().getHeros().get(heroOrder) );
 			monsterTurn();
@@ -670,7 +686,7 @@ public class GameLogic {
 		}
 		
 		GameLogic.getInstance().countdownGame();
-		
+		GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
 	}
 
 	

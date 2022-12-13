@@ -6,6 +6,8 @@ import entity.base.Unit;
 
 public class Vulnetability extends Buff{
 	
+	//private final String imagePath = "image/vulnetabilityBuff.png";
+	
 	private int decreasingDefense;
 	
 	public Vulnetability(int turn, int ratio) {

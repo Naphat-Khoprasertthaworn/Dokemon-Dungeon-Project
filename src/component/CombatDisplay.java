@@ -55,7 +55,8 @@ public class CombatDisplay extends HBox {
 	            this.unitCards.add(heroCard);
 	            
 	        }
-	        for(int i = 0;i<monsters.size();i++) {
+	        for(int i = 0;i<3;i++) {
+	        	
 	            UnitCard monsterCard = new UnitCard();
 	            monsterCardBox.getChildren().add(monsterCard);
 	            this.monsterCards.add(monsterCard);
@@ -91,6 +92,7 @@ public class CombatDisplay extends HBox {
             monsterCardBox.getChildren().add(monsterCard);
             this.monsterCards.add(monsterCard);
 		}
+
 		for(int i = 0;i<monsterArrayList.size();i++) {
 			this.monsterCards.get(i).update(monsterArrayList.get(i) );
 		}
@@ -105,6 +107,9 @@ public class CombatDisplay extends HBox {
 			}
 		}
 		for(UnitCard u:this.monsterCards) {
+			if(u.getUnit()==null) {
+				continue;
+			}
 			if( u.getUnit().isTargeted() ) {
 				u.getPointerImageView().setVisible(true);
 			}else {
