@@ -1,5 +1,6 @@
 package logic;
 
+import java.io.IOException;
 import java.io.NotActiveException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -138,7 +139,7 @@ public class GameLogic {
 		this.getMonsters().clear();
 	}
 	
-	public void startStage() {
+	public void initPointer() {
 		this.setTargetedHero( this.getFrontLineUnit(heros) );
 		this.setTargetedMonster( this.getFrontLineUnit(monsters) );
 
@@ -164,6 +165,10 @@ public class GameLogic {
 	
 	public void updateTargetPointer() {
 		Unit unit;
+
+		if(this.getTargetedHero() == null) {
+			return;
+		}
 		if(!this.getTargetedHero().isAlive()) {
 			unit = this.getFrontLineUnit(heros);
 			if(unit == null) {
@@ -172,6 +177,9 @@ public class GameLogic {
 				this.setTargetedHero( unit );
 			}
 
+		}
+		if(this.getTargetedMonster() == null) {
+			return;
 		}
 		if(!this.getTargetedMonster().isAlive()) {
 			unit = this.getFrontLineUnit(monsters);
@@ -307,16 +315,6 @@ public class GameLogic {
 	public void setCurrentHero(Unit currentHero) {
 		this.currentHero = currentHero;
 	}
-//
-//public void reviveUnit(Unit u) {
-//	u.setAlive(true);
-//	ArrayList<Unit> party = findParty(u, true);
-//	for(Unit unit:party) {
-//		if(unit.getPosition()>=u.getPosition()) {
-//			unit.setPosition(0);
-//		}
-//	}
-//}
 	
 	//######## PARTY HANDLER ########
 
@@ -576,44 +574,37 @@ public class GameLogic {
 	
 	
 	
-	public static void startGame() {
+	public static void initGame() {
 		
 		isGameActive = true;
 		GameLogic.getInstance().newGame();
 		GameLogic.getInstance().setCurrentHero( GameLogic.getInstance().getHeros().get(heroOrder) );
-		//startStageGame();
 	}
 	
-//	public static void rollDiceStage() {
-//		
-//		
-//		
-//	}
-	
 	public static void startStageGame() {
-//		int ni = GameLogic.getInstance().rollDice();
-//		
-//		isBossStage = GameLogic.getInstance().setDistance( GameLogic.getInstance().getDistance() + ni);
+
 		System.out.println( "distance NOW : "+GameLogic.getInstance().getDistance() );
-		GameLogic.getInstance().getCombatController().updateProgressBar();
+
 		
 		if(isBossStage) {
-			System.out.println("boss gen");
 			GameLogic.getInstance().generateBossStage();
-			GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatUnit();
+//			GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatUnit();
 		}else {
 			
 			GameLogic.getInstance().generateMonsters();
-			if(notInitStage) {
-				GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatUnit();
-			}
-			notInitStage = true;
+//			if(notInitStage) {
+//				GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatUnit();
+//			}
+//			notInitStage = true;
+//			GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatUnit();
 		}
+		GameLogic.getInstance().initPointer();
 		GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatUnit();
-		GameLogic.getInstance().startStage();
+		GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
+		
 		isStageClear = false;
 		isStageFail = false;
-		isCombatMode = true;
+		//isCombatMode = true;
 		heroOrder = 0;
 		GameLogic.getInstance().setCurrentHero( GameLogic.getInstance().getHeros().get(heroOrder) );
 		
@@ -625,16 +616,22 @@ public class GameLogic {
 		if(isStageClear) {
 			if(isBossStage) {
 				System.out.println("YOU WIN!!!");
+				try {
+					GameLogic.getInstance().getCombatController().switchtoGameClear();
+				} catch (IOException e) {
+					System.out.println("game over error");
+					e.printStackTrace();
+				}
 				isBossStage = false;
 				isGameActive = false;
 				return;
 			}
 			
-			GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
+			//GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
 			GameLogic.getInstance().generateItemDrop();
 			GameLogic.getInstance().getCombatController().getItemGridPane().updateState();
 			GameLogic.getInstance().getCombatController().dice.setEnable(true);
-			//startStageGame();
+
 			return;
 		}
 		
@@ -678,6 +675,12 @@ public class GameLogic {
 			GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
 			updateStageGame();
 			if(isStageFail) {
+				try {
+					GameLogic.getInstance().getCombatController().switchtoGameOver();
+				} catch (IOException e) {
+					System.out.println("game over error");
+					e.printStackTrace();
+				}
 				isGameActive = false;
 				return;
 			}

@@ -159,7 +159,7 @@ public class UnitCard extends VBox {
 		
 		translate.setDuration( Duration.millis(1000) );
 		translate.setByX(250);
-		translate.setByX(0);
+		//translate.setByX(0);
 		
 		translate.play();
 		
