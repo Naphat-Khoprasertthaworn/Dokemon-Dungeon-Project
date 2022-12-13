@@ -72,7 +72,10 @@ public class CombatController implements Initializable{
 	public void initializeCombatPane () {
 		combatDisplay = new CombatDisplay() ;
 		combatPane.getChildren().add(combatDisplay);
-		
+		//System.err.println("it work com bat pane");
+		GameLogic.getInstance().initPointer();
+		GameLogic.getInstance().updateTargetPointer();
+		this.getCombatDisplay().updatePointer();
 	}
 	
 	public void showGameOver () {
@@ -84,31 +87,19 @@ public class CombatController implements Initializable{
 		stage.show();
 	}
 	
-//	public void initializeCommandPane() {
-//		ItemGridPane itemGridPane = new ItemGridPane();
-//		SkillPane skillPane = new SkillPane();
-//		skillPane.updateState();
-//		commandPane.setAlignment(Pos.CENTER);
-//
-//		combatDisplay = new CombatDisplay() ;
-//		combatPane.getChildren().add(combatDisplay);
-//		
-//	}
-	
 	public void initializeCommandPane() {
 		Circle circle = new Circle() ;
 		circle.setRadius(75);
 		circle.setFill(Color.WHITE);
 		circle.setStroke(Color.BLACK);
-		//circle.
+
 		dice = new Dice() ;
 		itemGridPane = new ItemGridPane();
 		skillPane = new SkillPane();
 		
 		skillPane.updateState();
 		commandPane.getChildren().addAll(skillPane,itemGridPane,dice);
-		commandPane.setAlignment(Pos.CENTER);
-		
+		commandPane.setAlignment(Pos.CENTER);	
 
 	}
 	
@@ -116,26 +107,18 @@ public class CombatController implements Initializable{
 		Platform.exit();
 		System.exit(0);
 	}
-	
-//	public static void updateCombatDisplay() {
-//		
-//	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		GameLogic.getInstance().setCombatController(this);
-		GameLogic.getInstance().startGame();
+		GameLogic.getInstance().initGame();
 		
 		System.out.println("Initialized");
 	    initializeCombatPane();
 	    initializeCommandPane();
-	    //initializeProgressBar();
+	    
 	}
-	
-//	public void initializeProgressBar() {
-//		this.distanceProgressBar = new ProgressBar();
-//	}
 	
 	public CombatDisplay getCombatDisplay() {
 		return combatDisplay;
@@ -164,13 +147,11 @@ public class CombatController implements Initializable{
 	
 	//@FXML
 	public void updateProgressBar() {
-		//System.out.println(distanceProgressBar);
 		float dis = GameLogic.getInstance().getDistance();
 		float max = GameLogic.MAX_DISTANCE;
 		distanceProgress.setProgress( dis/max );
 	}
 	
-	////////////////////////////
 	
 	public void switchtoGameOver () throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GameOverScene.fxml"));

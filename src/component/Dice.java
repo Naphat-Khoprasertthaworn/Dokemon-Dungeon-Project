@@ -94,11 +94,8 @@ public class Dice extends VBox{
 					@Override
 					public void run() {
 						endThread();
-						
 					}
 				});
-				
-				
 			}
 		};
 		thread.start();
@@ -116,15 +113,17 @@ public class Dice extends VBox{
 
 	public void endThread() {
 		int ni = this.getResultRoll();
+		
 		GameLogic.getInstance().isBossStage = GameLogic.getInstance().setDistance( GameLogic.getInstance().getDistance() + ni);
+		GameLogic.getInstance().getCombatController().updateProgressBar();
 		GameLogic.getInstance().resetUnits();
 		GameLogic.getInstance().startStageGame();
-		GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
-		GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatUnit();
+//		GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
+		//GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatUnit();
 		
 		GameLogic.getInstance().getCombatController().getCombatDisplay().updatePointer();
 		GameLogic.getInstance().getCombatController().getSkillPane().updateState();
-		GameLogic.getInstance().getCombatController().updateProgressBar();
+		
 		isEnable = false;
 	}
 
