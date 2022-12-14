@@ -122,6 +122,7 @@ public class Dice extends VBox{
 	
 	/**
 	 * Getter random number from dice.
+	 * @return resultRoll random number from dice
 	 */
 	public int getResultRoll() {
 		return resultRoll;
@@ -129,6 +130,7 @@ public class Dice extends VBox{
 
 	/**
 	 * Setter random number from dice.
+	 * @param resultRoll random number from dice
 	 */
 	public void setResultRoll(int resultRoll) {
 		this.resultRoll = resultRoll;
@@ -155,7 +157,7 @@ public class Dice extends VBox{
 	
 	/**
 	 * Getter dice enable
-	 * @param isEnable dice is enable
+	 * @return isEnable dice is enable
 	 */
 	public boolean isEnable() {
 		return isEnable;
@@ -163,7 +165,7 @@ public class Dice extends VBox{
 	
 	/**
 	 * Setter dice enable
-	 * @return isEnable dice is enable
+	 * @param isEnable dice enable
 	 */
 	public void setEnable(boolean isEnable) {
 		this.isEnable = isEnable;
