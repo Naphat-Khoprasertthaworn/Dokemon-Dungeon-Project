@@ -6,11 +6,11 @@ import buff.type.DamageReduction;
 import buff.type.Enhance;
 import buff.type.Exhaust;
 import buff.type.Regeneration;
-import buff.type.Vulnetability;
+import buff.type.Vulnerability;
 import entity.base.Buff;
 import entity.base.Unit;
 
-public class MultiTargetDefenceSkill extends DefenceSkill {
+public class MultiTargetDefenceSkill extends DefenseSkill {
 
 	public MultiTargetDefenceSkill(String name, String text, int ratio, int cd,String imagePath) {
 		super(name, text, ratio, cd,imagePath);
@@ -30,8 +30,8 @@ public class MultiTargetDefenceSkill extends DefenceSkill {
 					unit.addBuff(new Exhaust((Exhaust)b));
 				}else if(b instanceof Regeneration) {
 					unit.addBuff(new Regeneration((Regeneration)b));
-				}else if(b instanceof Vulnetability) {
-					unit.addBuff(new Vulnetability((Vulnetability)b));
+				}else if(b instanceof Vulnerability) {
+					unit.addBuff(new Vulnerability((Vulnerability)b));
 				}else {
 					
 				}
@@ -48,8 +48,8 @@ public class MultiTargetDefenceSkill extends DefenceSkill {
 				owner.addBuff(new Exhaust((Exhaust)b));
 			}else if(b instanceof Regeneration) {
 				owner.addBuff(new Regeneration((Regeneration)b));
-			}else if(b instanceof Vulnetability) {
-				owner.addBuff(new Vulnetability((Vulnetability)b));
+			}else if(b instanceof Vulnerability) {
+				owner.addBuff(new Vulnerability((Vulnerability)b));
 			}else {
 				
 			}

@@ -6,9 +6,9 @@ import entity.base.Skill;
 import entity.base.Unit;
 import logic.GameLogic;
 
-public abstract class DefenceSkill extends Skill {
+public abstract class DefenseSkill extends Skill {
 	
-	public DefenceSkill(String name, String text, int ratio, int cd,String imagePath) {
+	public DefenseSkill(String name, String text, int ratio, int cd,String imagePath) {
 		super(name, text, ratio, cd,imagePath);
 	}
 

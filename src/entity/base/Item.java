@@ -4,7 +4,7 @@ import item.type.DamageReductionPotion;
 import item.type.EnhancePotion;
 import item.type.ExhaustPotion;
 import item.type.HealingPotion;
-import item.type.VulnetabilityPotion;
+import item.type.VulnerabilityPotion;
 import logic.GameLogic;
 
 /**
@@ -141,8 +141,8 @@ public abstract class Item {
 		if( this instanceof ExhaustPotion ) {
 			return ((ExhaustPotion)this).getBuff().equals(((ExhaustPotion)o).getBuff());
 		}
-		if( this instanceof VulnetabilityPotion ) {
-			return ((VulnetabilityPotion)this).getBuff().equals(((VulnetabilityPotion)o).getBuff());
+		if( this instanceof VulnerabilityPotion ) {
+			return ((VulnerabilityPotion)this).getBuff().equals(((VulnerabilityPotion)o).getBuff());
 		}
 		
 		return false;

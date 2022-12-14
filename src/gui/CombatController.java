@@ -15,7 +15,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
+import javafx.scene.control.Alert;
 import javafx.scene.control.ProgressBar;
 
 import javafx.scene.layout.HBox;
@@ -169,6 +169,28 @@ public class CombatController implements Initializable{
 	    initializeCombatPane();
 	    initializeCommandPane();
 	    
+	}
+	
+	/**
+	  * Show dice alert
+	  */
+	public void showRollDiceAlert() {
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setTitle("Error");
+		alert.setHeaderText("Can't use this right now");
+		alert.setContentText("Please roll the dice first !");
+		alert.showAndWait();
+	}
+	
+	/**
+	  * show cooldown alert
+	  */
+	public void showOnCooldown() {
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setTitle("Error");
+		alert.setHeaderText("Skill is on cooldown");
+		alert.setContentText("Use other skills !");
+		alert.showAndWait();
 	}
 	
 	/**

@@ -16,7 +16,7 @@ import buff.type.DamageReduction;
 import buff.type.Enhance;
 import buff.type.Exhaust;
 import buff.type.Regeneration;
-import buff.type.Vulnetability;
+import buff.type.Vulnerability;
 import component.UnitCard;
 import entity.base.Buff;
 import entity.base.Item;
@@ -29,11 +29,11 @@ import item.type.DamageReductionPotion;
 import item.type.EnhancePotion;
 import item.type.ExhaustPotion;
 import item.type.HealingPotion;
-import item.type.VulnetabilityPotion;
+import item.type.VulnerabilityPotion;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 import skill.type.AttackSkill;
-import skill.type.DefenceSkill;
+import skill.type.DefenseSkill;
 import skill.type.MultiTargetAttackSkill;
 import skill.type.MultiTargetDefenceSkill;
 import skill.type.SingleTargetAttackSkill;
@@ -410,12 +410,12 @@ public class GameLogic {
 		medicSkill2.addBuffsTarget( new Enhance(2, 100) );
 		
 		SingleTargetAttackSkill archerAutoAttack = new SingleTargetAttackSkill("Auto Attack","can target an enemy",100,0, true,"image/archerAutoAttack.png");
-		archerAutoAttack.addBuffsTarget(new Vulnetability(2, 20));
+		archerAutoAttack.addBuffsTarget(new Vulnerability(2, 20));
 		SingleTargetAttackSkill archerSkill1 = new SingleTargetAttackSkill("DPS skill","can target an enemy",200,2, true,"image/archerSkill1.png");
-		archerSkill1.addBuffsTarget(new Vulnetability(2, 30));
+		archerSkill1.addBuffsTarget(new Vulnerability(2, 30));
 		archerSkill1.addBuffsSelf( new Enhance(3, 20) );
 		MultiTargetAttackSkill archerSkill2 = new MultiTargetAttackSkill("Debuff","AOE",100,4,"image/archerSkill2.png");
-		archerSkill2.addBuffsTarget(new Vulnetability(2, 30));
+		archerSkill2.addBuffsTarget(new Vulnerability(2, 30));
 		archerSkill2.addBuffsTarget(new Exhaust(1, 30));
 
 		warriorUnit.addSkills(warriorAutoAttack);
@@ -451,16 +451,16 @@ public class GameLogic {
 		SingleTargetAttackSkill slimeSkill1 = new SingleTargetAttackSkill("normal debuff","give debuff to front line",100,3, false,"image/monsterSkill.png");
 		
 		slimeSkill1.addBuffsTarget(new Exhaust(3, 20));
-		slimeSkill1.addBuffsTarget(new Vulnetability(2, 20));
+		slimeSkill1.addBuffsTarget(new Vulnerability(2, 20));
 		
 		SingleTargetAttackSkill oniAutoAttack = new SingleTargetAttackSkill("Auto attack" , "target back line first" , 100,1, true,"image/monsterSkill.png");
 		SingleTargetAttackSkill oniSkill1 = new SingleTargetAttackSkill("heavy attack","attack front line",150,5, false,"image/monsterSkill.png");
-		oniSkill1.addBuffsTarget(new Vulnetability(2, 30));
+		oniSkill1.addBuffsTarget(new Vulnerability(2, 30));
 		
 		SingleTargetAttackSkill bloodHawkAutoAttack = new SingleTargetAttackSkill("Auto attack" , "target back line first" , 100,0,true,"image/monsterSkill.png");
-		bloodHawkAutoAttack.addBuffsTarget(new Vulnetability(4, 10));
+		bloodHawkAutoAttack.addBuffsTarget(new Vulnerability(4, 10));
 		SingleTargetAttackSkill bloodHawkSkill1 = new SingleTargetAttackSkill("super dangerous vulnetability" , "" , 100,2,true,"image/monsterSkill.png");
-		bloodHawkSkill1.addBuffsTarget(new Vulnetability(2, 30));
+		bloodHawkSkill1.addBuffsTarget(new Vulnerability(2, 30));
 
 		SingleTargetDefenceSkill gnomeAutoAttack = new SingleTargetDefenceSkill("heal lowest hp monster","single heal",100,1,"image/monsterSkill.png");
 		MultiTargetDefenceSkill gnomeSkill1 = new MultiTargetDefenceSkill("Heal monster","AOE heal",100,4,"image/monsterSkill.png");
@@ -500,7 +500,7 @@ public class GameLogic {
 		EnhancePotion enhancePotion = new EnhancePotion(1, 3, 30);
 		ExhaustPotion exhaustPotion = new ExhaustPotion(1, 3, 30);
 		HealingPotion healingPotion = new HealingPotion(1, 30);
-		VulnetabilityPotion vulnetabilityPotion = new VulnetabilityPotion(1, 3, 30);
+		Vulnerability vulnetabilityPotion = new Vulnerability(1, 3, 30);
 		
 		this.poolItems.add(damageReductionPotion);
 		this.poolItems.add(enhancePotion);
@@ -541,15 +541,15 @@ public class GameLogic {
 		MultiTargetAttackSkill bossAutoAttack = new MultiTargetAttackSkill("boss auto attack", "AOE debuff and buff self", 10, 3,"image/monsterSkill.png");
 		bossAutoAttack.addBuffsSelf( new Enhance(3, 30) );
 		bossAutoAttack.addBuffsSelf( new DamageReduction(3, 30) );
-		bossAutoAttack.addBuffsTarget( new Vulnetability(3, 30) );
+		bossAutoAttack.addBuffsTarget( new Vulnerability(3, 30) );
 		bossAutoAttack.addBuffsTarget( new Exhaust(3, 30) );
 		
 		
 		MultiTargetAttackSkill bossSkill1 = new MultiTargetAttackSkill("AOE DMG", "aoe", 100 , 4,"image/monsterSkill.png");
-		bossSkill1.addBuffsSelf( new Vulnetability(3,50) );
+		bossSkill1.addBuffsSelf( new Vulnerability(3,50) );
 		
 		MultiTargetAttackSkill bossSkill2 = new MultiTargetAttackSkill("ULT", "AOE", 150, 5,"image/monsterSkill.png");
-		bossSkill2.addBuffsSelf( new Vulnetability(2,50) );
+		bossSkill2.addBuffsSelf( new Vulnerability(2,50) );
 		
 		bossMonster.addSkills(bossAutoAttack);
 		bossMonster.addSkills(bossSkill1);
@@ -580,8 +580,8 @@ public class GameLogic {
 				newItem = new ExhaustPotion((ExhaustPotion)item);
 			}else if(item instanceof HealingPotion) {
 				newItem = new HealingPotion((HealingPotion)item);
-			}else if(item instanceof VulnetabilityPotion) {
-				newItem = new VulnetabilityPotion((VulnetabilityPotion)item);
+			}else if(item instanceof Vulnerability) {
+				newItem = new Vulnerability((Vulnerability)item);
 			}else {
 				System.out.println("Item Drop error");
 				newItem = null;
