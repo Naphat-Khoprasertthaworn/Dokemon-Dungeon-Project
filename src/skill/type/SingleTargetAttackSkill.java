@@ -6,22 +6,43 @@ import buff.type.DamageReduction;
 import buff.type.Enhance;
 import buff.type.Exhaust;
 import buff.type.Regeneration;
-import buff.type.Vulnetability;
+import buff.type.Vulnerability;
 import entity.base.Buff;
 import entity.base.Monster;
 import entity.base.Unit;
 import logic.GameLogic;
 
+/**
+ * SingleTargetAttackSkill Class
+ */
 public class SingleTargetAttackSkill extends AttackSkill {
-	
+	/**
+	  * target is true if this skill can target unit
+	  */
 	private boolean target;
 	
+	
+	/**
+	  * Constructor of SingleTargetAttackSkill Class.
+	  * @param name name.
+	  * @param text text.
+	  * @param ratio ratio.
+	  * @param cd cooldown.
+	  * @param target targetable.
+	  * @param imagePath path of skill image.
+	  */
 	public SingleTargetAttackSkill(String name, String text, int ratio, int cd , boolean target,String imagePath) {
 		super(name, text, ratio, cd,imagePath);
 		this.target = target;
 	}
 
 	@Override
+	/**
+	  * active skill.
+	  * @param units arraylist of targeted party.
+	  * @param targetUnit targeted unit.
+	  * @param owner unit that call this skill.
+	  */
 	public void skillEffect(ArrayList<Unit> units, Unit targetUnit, Unit owner) {
 		Unit unit;
 		if(this.target) {
@@ -44,8 +65,8 @@ public class SingleTargetAttackSkill extends AttackSkill {
 				owner.addBuff(new Exhaust((Exhaust)b));
 			}else if(b instanceof Regeneration) {
 				owner.addBuff(new Regeneration((Regeneration)b));
-			}else if(b instanceof Vulnetability) {
-				owner.addBuff(new Vulnetability((Vulnetability)b));
+			}else if(b instanceof Vulnerability) {
+				owner.addBuff(new Vulnerability((Vulnerability)b));
 			}else {
 				
 			}
@@ -59,8 +80,8 @@ public class SingleTargetAttackSkill extends AttackSkill {
 				unit.addBuff(new Exhaust((Exhaust)b));
 			}else if(b instanceof Regeneration) {
 				unit.addBuff(new Regeneration((Regeneration)b));
-			}else if(b instanceof Vulnetability) {
-				unit.addBuff(new Vulnetability((Vulnetability)b));
+			}else if(b instanceof Vulnerability) {
+				unit.addBuff(new Vulnerability((Vulnerability)b));
 			}else {
 				
 			}

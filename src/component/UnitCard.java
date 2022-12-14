@@ -8,7 +8,7 @@ import java.util.Random;
 import buff.type.DamageReduction;
 import buff.type.Enhance;
 import buff.type.Exhaust;
-import buff.type.Vulnetability;
+import buff.type.Vulnerability;
 import entity.base.Buff;
 import entity.base.Monster;
 import entity.base.Unit;
@@ -148,7 +148,7 @@ public class UnitCard extends VBox {
 				this.enhanceBuff.setVisible(true);
 			}else if(b instanceof Exhaust) {
 				this.exhaustBuff.setVisible(true);
-			}else if(b instanceof Vulnetability) {
+			}else if(b instanceof Vulnerability) {
 				this.vulnetabilityBuff.setVisible(true);
 			}else {
 				
