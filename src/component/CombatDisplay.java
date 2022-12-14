@@ -29,21 +29,6 @@ public class CombatDisplay extends HBox {
 	Image combatBackground = new Image(ClassLoader.getSystemResource("image/combatBackground.png").toString(), 1280,460, false, true);
 	
 	private HBox monsterCardBox;
-	public HBox getMonsterCardBox() {
-		return monsterCardBox;
-	}
-
-	public void setMonsterCardBox(HBox monsterCardBox) {
-		this.monsterCardBox = monsterCardBox;
-	}
-
-	public HBox getHeroesCardBox() {
-		return heroesCardBox;
-	}
-
-	public void setHeroesCardBox(HBox heroesCardBox) {
-		this.heroesCardBox = heroesCardBox;
-	}
 
 	private HBox heroesCardBox;
 	
@@ -71,7 +56,7 @@ public class CombatDisplay extends HBox {
 	            this.unitCards.add(heroCard);
 	            
 	        }
-	        for(int i = 0;i<3;i++) {
+	        for(int i = 0;i<GameLogic.MAX_PARTY;i++) {
 	        	
 	            UnitCard monsterCard = new UnitCard();
 	            monsterCardBox.getChildren().add(monsterCard);
@@ -132,6 +117,22 @@ public class CombatDisplay extends HBox {
 				u.getPointerImageView().setVisible(false);
 			}
 		}
+	}
+	
+	public HBox getMonsterCardBox() {
+		return monsterCardBox;
+	}
+
+	public void setMonsterCardBox(HBox monsterCardBox) {
+		this.monsterCardBox = monsterCardBox;
+	}
+
+	public HBox getHeroesCardBox() {
+		return heroesCardBox;
+	}
+
+	public void setHeroesCardBox(HBox heroesCardBox) {
+		this.heroesCardBox = heroesCardBox;
 	}
 
 }

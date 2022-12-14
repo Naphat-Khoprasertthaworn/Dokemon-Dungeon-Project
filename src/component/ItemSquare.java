@@ -43,7 +43,7 @@ public class ItemSquare extends VBox {
         this.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(3))));
         
         
-        this.text = new Text("test");
+        this.text = new Text();
         this.text.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 10));
         this.text.setWrappingWidth( 80 );
         this.text.setFill(Color.WHITE);
@@ -78,9 +78,9 @@ public class ItemSquare extends VBox {
 			System.out.println("cant use item please row a dice");
 			return;
 		}
-		System.out.println("use item");
+		System.out.println("use item "+this.item.getName());
 		this.item.active();
-		System.out.println(this.item.getAmount());
+		//System.out.println(this.item.getAmount());
 		GameLogic.getInstance().getCombatController().getItemGridPane().updateState();
 		GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
 

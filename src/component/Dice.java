@@ -84,17 +84,13 @@ public class Dice extends VBox{
 					}
 
 					isEnable = true ;
-					System.out.println(resultRoll);
+					//System.out.println(resultRoll);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 				
-				Platform.runLater(new Runnable() {
-					
-					@Override
-					public void run() {
-						endThread();
-					}
+				Platform.runLater(()-> {
+					endThread();
 				});
 			}
 		};

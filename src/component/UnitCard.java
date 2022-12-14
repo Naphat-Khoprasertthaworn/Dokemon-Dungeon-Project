@@ -71,28 +71,28 @@ public class UnitCard extends VBox {
 		healthBar = new ProgressBar(100);
 		healthBar.setPrefHeight(10);
 		healthBar.setPrefWidth(100);
-		
+		healthBar.setVisible(false);
 		damageReductionBuff = new ImageView( new Image(ClassLoader.getSystemResource(damageReductionBuffURL).toString()) );
 		enhanceBuff = new ImageView( new Image(ClassLoader.getSystemResource(enhanceBuffURL).toString()) );
 		exhaustBuff = new ImageView( new Image(ClassLoader.getSystemResource(exhaustBuffURL).toString() ));
 		vulnetabilityBuff = new ImageView( new Image(ClassLoader.getSystemResource(vulnetabilityBuffURL).toString()) );
 		deadBuff = new ImageView( new Image(ClassLoader.getSystemResource(deadURL).toString()) );
 		
-		damageReductionBuff.setFitHeight(20);
-		enhanceBuff.setFitHeight(20);
-		exhaustBuff.setFitHeight(20);
-		vulnetabilityBuff.setFitHeight(20);
-		deadBuff.setFitHeight(20);
+		damageReductionBuff.setFitHeight(30);
+		enhanceBuff.setFitHeight(30);
+		exhaustBuff.setFitHeight(30);
+		vulnetabilityBuff.setFitHeight(30);
+		deadBuff.setFitHeight(30);
 		
-		damageReductionBuff.setFitWidth(20);
-		enhanceBuff.setFitWidth(20);
-		exhaustBuff.setFitWidth(20);
-		vulnetabilityBuff.setFitWidth(20);
-		deadBuff.setFitWidth(20);
+		damageReductionBuff.setFitWidth(30);
+		enhanceBuff.setFitWidth(30);
+		exhaustBuff.setFitWidth(30);
+		vulnetabilityBuff.setFitWidth(30);
+		deadBuff.setFitWidth(30);
 		
 		HBox buffBox = new HBox();
 		buffBox.getChildren().addAll(deadBuff,damageReductionBuff,enhanceBuff,exhaustBuff,vulnetabilityBuff);
-		
+		buffBox.setAlignment(Pos.CENTER);
 		this.getChildren().add(pointerImageView);
 		this.getChildren().add(buffBox);
 		this.getChildren().add(unitImage);
@@ -108,12 +108,12 @@ public class UnitCard extends VBox {
 				onClickHandler();
 			}
 		});
-		this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(3))));
+		//this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(3))));
 		this.resetBuffBox();
 	}
 	
 	public void update(Unit u) {
-		
+		healthBar.setVisible(true);
 		this.unit = u;
 		this.healthBar.setVisible(true);
 		if(u instanceof Monster) {
@@ -163,19 +163,7 @@ public class UnitCard extends VBox {
 		
 		healthBar.setProgress( ((float)unit.getHealth()) /(float)unit.getMaxHealth() );
 	}
-	
-	public void useSkillAction() {
-		TranslateTransition translate = new TranslateTransition();
-		translate.setNode(unitImage);
-		
-		translate.setDuration( Duration.millis(1000) );
-		translate.setByX(250);
-		//translate.setByX(0);
-		
-		translate.play();
-		
-		
-	}
+
 	
 	public void onClickHandler() {
 		if(unit instanceof Monster) {
@@ -190,21 +178,29 @@ public class UnitCard extends VBox {
 	
 
 	
-	protected void attackAnimation() {
-		//SoundManager.playSound("audio/unitAttackSound.mp3",50);
+	public void attackAnimation() {
+		SoundManager.playSound("audio/unitAttackSound.mp3",50);
 		Random random = new Random();
 		Thread thread = new Thread() {
 			public void run () {
 				//SoundManager.playSound("audio/unitAttackSound.mp3",50);
 				GameLogic.getInstance().animationRunning = true;
-				System.out.println("Thread Running");
-				TranslateTransition translate = new TranslateTransition() ;
-				translate.setNode(unitImage);
-				translate.setDuration(Duration.millis(20));
-				translate.setCycleCount(4);
-				translate.setByX(20);
-				translate.setAutoReverse(true);
-				translate.play();	
+				System.out.println("Atk Thread Running");
+//				try {
+//					Thread.sleep(1000);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+				Platform.runLater( ()->{
+					TranslateTransition translate = new TranslateTransition() ;
+					translate.setNode(unitImage);
+					translate.setDuration(Duration.millis(20));
+					translate.setCycleCount(4);
+					translate.setByX(50);
+					translate.setAutoReverse(true);
+					translate.play();	
+				});
+				
 				GameLogic.getInstance().animationRunning = false;
 			}
 		};
@@ -214,29 +210,22 @@ public class UnitCard extends VBox {
 	
 	public void gotDamagedAnimation() {
 		//unitImage.setVisible(false);
+
 		float round = 11 ;
 		round = (float) (((round+0.5)*2)/2) ;
 		round = (int)round ;
-		int newRound = (int) round ;
-		//boolean blink = false ;
-		TranslateTransition translate = new TranslateTransition() ;
-		translate.setNode(unitImage);
-		translate.setDuration(Duration.millis(30));
-		translate.setCycleCount(8);
-		translate.setByY(20);
-		translate.setAutoReverse(true);
-		translate.play();	
+		int newRound = (int) round ;	
+		Platform.runLater(()->{
+			
+			TranslateTransition translate = new TranslateTransition() ;
+			translate.setNode(unitImage);
+			translate.setDuration(Duration.millis(30));
+			translate.setCycleCount(8);
+			translate.setByY(20);
+			translate.setAutoReverse(true);
+			translate.play();	
+		});
 
-//		RotateTransition rotateTransition = new RotateTransition() ;
-//		rotateTransition.setNode(unitImage);
-//		rotateTransition.setDuration(Duration.millis(100));
-//		rotateTransition.setCycleCount(2);
-//		//rotateTransition.setFromAngle(90);
-//		rotateTransition.set
-//		rotateTransition.setByAngle(90);
-//		rotateTransition.setAutoReverse(true);
-//	
-//		rotateTransition.play();
 		
 		Random random = new Random();
 		Thread thread = new Thread() {
@@ -244,11 +233,22 @@ public class UnitCard extends VBox {
 			public void run () {
 				
 				GameLogic.getInstance().animationRunning = true;
-				System.out.println("Thread Running");
+				System.out.println("Take Dmg Thread Running");
 				try {
 					for (int i = 0 ;  i < newRound ; i ++) {
 						System.out.println(i);
-						unitImage.setVisible(i%2 == 0);
+						if(i%2 == 0) {
+							Platform.runLater(()->{
+								unitImage.setVisible(true);
+							});
+						}else {
+							Platform.runLater(()->{
+								unitImage.setVisible(false);
+							});
+						}
+						
+
+						
 						Thread.sleep(50); 
 					}
 				} catch (InterruptedException e) {
