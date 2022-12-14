@@ -110,7 +110,7 @@ public class MenuController implements Initializable  {
 			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
 			stage.setScene(scene);
-			//SoundManager.setCurrentBGM("audio/MenuBGM.wav",0.1);
+			SoundManager.setCurrentBGM("audio/MenuBGM.wav",0.1);
 			stage.show();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

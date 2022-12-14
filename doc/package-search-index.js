@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"buff.type"},{"l":"logic"},{"l":"skill.type"}];updateSearchResults();
