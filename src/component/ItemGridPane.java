@@ -8,13 +8,29 @@ import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import logic.GameLogic;
 
+/**
+ * ItemGridPane Class.
+ */
 public class ItemGridPane extends GridPane{
 	
+	/**
+	 * column of inventory grid.
+	 */
 	static final int MAX_COL = 3;
-	static final int MAX_ROW = 2;
-	private ArrayList<Item> inventory;
-	//private Item[][] inventory;
 	
+	/**
+	 * row of inventory grid.
+	 */
+	static final int MAX_ROW = 2;
+	
+	/**
+	 * inventory from game logic
+	 */
+	private ArrayList<Item> inventory;
+	
+	/**
+	 * Constructor ItemGridPane
+	 */
 	public ItemGridPane() {
 		
 		for(int i = 0;i<MAX_ROW;i++) {
@@ -28,6 +44,10 @@ public class ItemGridPane extends GridPane{
 		inventory = GameLogic.getInstance().getInventory();
 	}
 	
+	
+	/**
+	 * update grid inventory GUI
+	 */
 	public void updateState() {
 		int col,row;
 		System.out.println(inventory);
@@ -44,7 +64,6 @@ public class ItemGridPane extends GridPane{
 			col = i-(row*MAX_COL);
 			Node node = this.getChildren().get(i);
 			if( node instanceof ItemSquare ) {
-				//System.out.println("it work");
 				((ItemSquare)node).addItem( inventory.get(i) );
 			}
 			

@@ -35,15 +35,38 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import logic.GameLogic;
 
+/**
+ * SkillCard Class
+ */
 public class SkillCard extends VBox{
+	/**
+	 * skill in this SkillCard
+	 */
 	private Skill skill;
+	/**
+	 * skill name
+	 */
 	private Text name;
+	/**
+	 * skill text
+	 */
 	private Text textSkill;
+	/**
+	 * cooldown of this skill
+	 */
 	private Text cdSkill;
+	/**
+	 * blank skill image url
+	 */
 	private final String blankSkillURL = "image/overwatch-logo.png";
-	//private Background bg;
+	/**
+	 * skill image
+	 */
 	private ImageView imgView;
 	
+	/**
+	 * Constructor SkillCard
+	 */
 	public SkillCard() {
 		name = new Text();
 		name.setFill(Color.WHITE);
@@ -52,7 +75,6 @@ public class SkillCard extends VBox{
 		textSkill.setFill(Color.WHITE);
 		cdSkill = new Text();
 		cdSkill.setFill(Color.WHITE);
-		
 		
 		String imgPath = ClassLoader.getSystemResource( blankSkillURL ).toString();
 		
@@ -86,11 +108,12 @@ public class SkillCard extends VBox{
 			}
 		});
 		
-
-		
 	}
 	
-	
+	/**
+	 * Update skill card according to current hero.
+	 * @param s skill that add to this Skillcard.
+	 */
 	public void updateSkillCard(Skill s) {
 		this.skill = s;
 		this.name.setText(s.getName());
@@ -100,7 +123,9 @@ public class SkillCard extends VBox{
 		imgView.setImage(new Image(imgPath));
 
 	}
-	
+	/**
+	 * SkillCard on click event.
+	 */
 	public void onClickHandler() {
 		if(!GameLogic.getInstance().isGameActive) {
 			System.out.println("game END");
