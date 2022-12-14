@@ -36,47 +36,77 @@ import logic.GameLogic;
 import sound.SoundManager;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
-
+/**
+ * UnitCard Class
+ */
 public class UnitCard extends VBox {
-	
-	private final String pointerImageURL = "image/pointer.png";
-	private final String blankUnitURL = "image/blank.png";
-	private final String damageReductionBuffURL = "image/damageReductionBuffURL.png";
-	private final String enhanceBuffURL = "image/enhanceBuffURL.png";
-	private final String exhaustBuffURL = "image/exhaustBuffURL.png";
-	private final String vulnetabilityBuffURL = "image/vulnetabilityBuffURL.png";
-	private final String deadURL = "image/deadURL.png";
-	
+
+	/**
+	 * unit in this UnitCard
+	 */
 	private Unit unit;
+	
+	/**
+	 * health unit bar
+	 */
 	private ProgressBar healthBar;
+	
+	/**
+	 * unit image
+	 */
 	private ImageView unitImage;
-	//Image pointerImage = new Image(ClassLoader.getSystemResource("image/pointer.png").toString(), 20,20, false, true);
-	Image blankImage = new Image(ClassLoader.getSystemResource("image/overwatch-logo.png").toString(), 50,50, false, true);
 	
-	private ImageView pointerImageView;
+	/**
+	 * blank image
+	 */
+	private Image blankImage = new Image(ClassLoader.getSystemResource("image/blank.png").toString(), 50,50, false, true);
 	
-	private ImageView damageReductionBuff,enhanceBuff,exhaustBuff,vulnetabilityBuff,deadBuff;
+	/**
+	 * pointer image
+	 */
+	private ImageView pointerImageView = new ImageView( new Image(ClassLoader.getSystemResource("image/pointer.png").toString()) );
 	
+	/**
+	 * damage reduction buff image
+	 */
+	private ImageView damageReductionBuff = new ImageView( new Image(ClassLoader.getSystemResource("image/damageReductionBuffURL.png").toString()) );
+	
+	/**
+	 * enhance buff image
+	 */
+	private ImageView enhanceBuff = new ImageView( new Image(ClassLoader.getSystemResource("image/enhanceBuffURL.png").toString()) );
+	
+	/**
+	 * exhaust buff image
+	 */
+	private ImageView exhaustBuff = new ImageView( new Image(ClassLoader.getSystemResource("image/exhaustBuffURL.png").toString() ));
+	
+	/**
+	 * vulnerability buff image
+	 */
+	private ImageView vulnetabilityBuff = new ImageView( new Image(ClassLoader.getSystemResource("image/vulnetabilityBuffURL.png").toString()) );
+	
+	/**
+	 * dead icon image
+	 */
+	private ImageView deadBuff = new ImageView( new Image(ClassLoader.getSystemResource("image/deadURL.png").toString()) );
+	
+	/**
+	 * Constructor UnitCard.
+	 */
 	public UnitCard() {
-		unitImage = new ImageView(new Image(blankUnitURL));
-		//unitImage.setOpacity(0);
+		unitImage = new ImageView(blankImage);
 		unitImage.setFitHeight(200);
 		unitImage.setFitWidth(170);
 		
-		pointerImageView = new ImageView(pointerImageURL);
 		pointerImageView.setVisible(false);
-		
 		pointerImageView.setFitHeight(50);
 		pointerImageView.setFitWidth(50);
+		
 		healthBar = new ProgressBar(100);
 		healthBar.setPrefHeight(10);
 		healthBar.setPrefWidth(100);
-		healthBar.setVisible(false);
-		damageReductionBuff = new ImageView( new Image(ClassLoader.getSystemResource(damageReductionBuffURL).toString()) );
-		enhanceBuff = new ImageView( new Image(ClassLoader.getSystemResource(enhanceBuffURL).toString()) );
-		exhaustBuff = new ImageView( new Image(ClassLoader.getSystemResource(exhaustBuffURL).toString() ));
-		vulnetabilityBuff = new ImageView( new Image(ClassLoader.getSystemResource(vulnetabilityBuffURL).toString()) );
-		deadBuff = new ImageView( new Image(ClassLoader.getSystemResource(deadURL).toString()) );
+		healthBar.setVisible(false);	
 		
 		damageReductionBuff.setFitHeight(30);
 		enhanceBuff.setFitHeight(30);
@@ -99,19 +129,18 @@ public class UnitCard extends VBox {
 		this.getChildren().add(healthBar);
 		this.setAlignment(Pos.BOTTOM_CENTER);
 		
-		
-		
-		//pointerImageView.setA
-		//healthBar.ali
 		this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent arg0) {
 				onClickHandler();
 			}
 		});
-		//this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(3))));
 		this.resetBuffBox();
 	}
 	
+	/**
+	 * update unit in unit card.
+	 * @param u unit
+	 */
 	public void update(Unit u) {
 		healthBar.setVisible(true);
 		this.unit = u;
@@ -122,9 +151,11 @@ public class UnitCard extends VBox {
 		String imgPath = ClassLoader.getSystemResource(u.getImagePath()).toString();
 		
 		unitImage.setImage(new Image(imgPath)); 
-		
 	}
 	
+	/**
+	 * reset all unit buff
+	 */
 	public void resetBuffBox() {
 		this.damageReductionBuff.setVisible(false);
 		this.enhanceBuff.setVisible(false);
@@ -133,6 +164,9 @@ public class UnitCard extends VBox {
 		this.deadBuff.setVisible(false);
 	}
 	
+	/**
+	 * update HealthBar according to unit health.
+	 */
 	public void updateHealthBar() {
 		if(unit == null) {
 			return;
@@ -163,8 +197,10 @@ public class UnitCard extends VBox {
 		
 		healthBar.setProgress( ((float)unit.getHealth()) /(float)unit.getMaxHealth() );
 	}
-
 	
+	/**
+	 * unit card on click event.
+	 */
 	public void onClickHandler() {
 		if(unit instanceof Monster) {
 			GameLogic.getInstance().setTargetedMonster(this.unit);
@@ -173,11 +209,11 @@ public class UnitCard extends VBox {
 		}
 		GameLogic.getInstance().getCombatController().getCombatDisplay().updatePointer();
 		this.attackAnimation();
-		//this.gotDamagedAnimation();
 	}
 	
-
-	
+	/**
+	 * unit card on click event.
+	 */
 	public void attackAnimation() {
 		SoundManager.playSound("audio/unitAttackSound.mp3",50);
 		Random random = new Random();
@@ -186,11 +222,7 @@ public class UnitCard extends VBox {
 				//SoundManager.playSound("audio/unitAttackSound.mp3",50);
 				GameLogic.getInstance().animationRunning = true;
 				System.out.println("Atk Thread Running");
-//				try {
-//					Thread.sleep(1000);
-//				} catch (InterruptedException e) {
-//					e.printStackTrace();
-//				}
+
 				Platform.runLater( ()->{
 					TranslateTransition translate = new TranslateTransition() ;
 					translate.setNode(unitImage);
@@ -205,18 +237,17 @@ public class UnitCard extends VBox {
 			}
 		};
 		thread.start();
-
 	}
 	
+	/**
+	 * unit card on click event.
+	 */
 	public void gotDamagedAnimation() {
-		//unitImage.setVisible(false);
-
 		float round = 11 ;
 		round = (float) (((round+0.5)*2)/2) ;
 		round = (int)round ;
 		int newRound = (int) round ;	
 		Platform.runLater(()->{
-			
 			TranslateTransition translate = new TranslateTransition() ;
 			translate.setNode(unitImage);
 			translate.setDuration(Duration.millis(30));
@@ -226,13 +257,10 @@ public class UnitCard extends VBox {
 			translate.play();	
 		});
 
-		
-		Random random = new Random();
 		Thread thread = new Thread() {
 			
 			public void run () {
-				
-				GameLogic.getInstance().animationRunning = true;
+				GameLogic.animationRunning = true;
 				System.out.println("Take Dmg Thread Running");
 				try {
 					for (int i = 0 ;  i < newRound ; i ++) {
@@ -246,33 +274,46 @@ public class UnitCard extends VBox {
 								unitImage.setVisible(false);
 							});
 						}
-						
 
-						
 						Thread.sleep(50); 
 					}
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				GameLogic.getInstance().animationRunning = false;
+				GameLogic.animationRunning = false;
 			}
 		};
 		thread.start();
-		//unitImage.setVisible(true) ;
 	}
-
+	
+	/**
+	 * Getter unit in this UnitCard.
+	 * @return unit unit
+	 */
 	public Unit getUnit() {
 		return unit;
 	}
-
+	
+	/**
+	 * Setter unit in this UnitCard.
+	 * @param unit unit
+	 */
 	public void setUnit(Unit unit) {
 		this.unit = unit;
 	}
 	
+	/**
+	 * Getter pointer image in this UnitCard.
+	 * @return pointerImageView pointer image
+	 */
 	public ImageView getPointerImageView() {
 		return pointerImageView;
 	}
 
+	/**
+	 * Setter pointer in this UnitCard.
+	 * @param pointerImageView pointer image
+	 */
 	public void setPointerImageView(ImageView pointerImageView) {
 		this.pointerImageView = pointerImageView;
 	}
