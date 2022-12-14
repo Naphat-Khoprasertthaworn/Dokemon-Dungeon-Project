@@ -3,6 +3,8 @@ package item.type;
 import buff.type.Exhaust;
 import entity.base.Unit;
 
+
+
 public class ExhaustPotion extends DebuffPotion {
 
 	private Exhaust exhaustBuff;
