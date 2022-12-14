@@ -1,9 +1,7 @@
 package entity.base;
 
 import component.UnitCard;
-import javafx.application.Platform;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
 import logic.GameLogic;
 /**
  * Monster class

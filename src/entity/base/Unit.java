@@ -1,13 +1,9 @@
 package entity.base;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Vector;
-
 import component.UnitCard;
-import javafx.application.Platform;
 import javafx.scene.Node;
 import logic.GameLogic;
 
@@ -477,7 +473,7 @@ public class Unit {
 	  * to string method
 	  */
 	public String toString() {
-		return "😆 "+ this.getName() + "\n💥 Atk : " + this.getTotalAttack() + " / " + this.getAttack() + "\n❤️ Health: " + this.getHealth() +" / "+ this.getMaxHealth() + "\n🔰 Def : " + this.getTotalDefense() + " / " + this.getDefense();
+		return " "+ this.getName() + "\n Atk : " + this.getTotalAttack() + " / " + this.getAttack() + "\n Health: " + this.getHealth() +" / "+ this.getMaxHealth() + "\n Def : " + this.getTotalDefense() + " / " + this.getDefense();
 	}
 
 	/**

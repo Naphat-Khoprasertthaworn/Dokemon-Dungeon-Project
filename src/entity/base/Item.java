@@ -1,11 +1,5 @@
 package entity.base;
 
-import java.util.Objects;
-
-import org.junit.validator.PublicClassValidator;
-
-import buff.type.Exhaust;
-import item.type.BuffPotion;
 import item.type.DamageReductionPotion;
 import item.type.EnhancePotion;
 import item.type.ExhaustPotion;

@@ -6,9 +6,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +20,6 @@ import javafx.scene.image.Image ;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import logic.GameLogic;
 import sound.SoundManager;
 import application.Main;
 import component.*;
@@ -32,31 +29,59 @@ import component.*;
  */
 public class MenuController implements Initializable  {
 	/**
-	  *
+	  * One of button
 	  */
 	@FXML
 	public Button eieiButton ;
+	/**
+	  * One of button  
+	  */
 	@FXML
 	public Button testButton ;
+	/**
+	  *  Vbox for showing game logo
+	  */
 	@FXML
 	public VBox testVBOX ;
+	/**
+	  *  Progressbar to show distance
+	  */
 	@FXML
 	public ProgressBar distanceProgressBar ;
+	/**
+	  *  stage
+	  */
 	@FXML
 	public Stage stage ;
 	@FXML
+	/**
+	  * scene 
+	  */
 	public Scene scene ;
+	/**
+	  * root 
+	  */
 	@FXML
 	public Parent root ;
+	/**
+	  * Imageview contains game logo 
+	  */
 	@FXML
 	public ImageView gameLogo ;
+	
+	/**
+	  *  Game logo image
+	  */
 	@FXML
 	//Image dota2 = new Image(getClass().getResourceAsStream("image/monsterSkill.png"));
 	Image image = new Image(ClassLoader.getSystemResource("image/monsterSkill.png").toString(), 1200,
             800, false, true);
 
 	
-	
+	/**
+	  *  switch to combat scene
+	  *  @param event mouse cliked event
+	  */
 	public void switchToCombat (ActionEvent event) {
 		try {
 			
@@ -74,6 +99,10 @@ public class MenuController implements Initializable  {
 		}
 	}
 	
+	/**
+	  * switch to main menu scene
+	  * @param event mouse clicked event 
+	  */
 	public void switchToMenu (ActionEvent event) {
 		try {
 			root = FXMLLoader.load(getClass().getResource("/gui/MenuScene.fxml"));
@@ -88,15 +117,16 @@ public class MenuController implements Initializable  {
 		}
 	}
 	
+	/**
+	  *  exit game
+	  *  @param event mouse clicked event
+	  */
 	public void exitGame (ActionEvent event) {
 		Platform.exit();
 		System.exit(0);
 	}
 	
-	public void addButtonOnVBOX (ActionEvent event) {
-		Button newButt = new Button();
-		testVBOX.getChildren().add(newButt);
-	}
+
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -108,11 +138,14 @@ public class MenuController implements Initializable  {
 //		gameLogo.setImage(image);
 //	}
 	
-	public void testAdjustImage(ActionEvent event) {
-		Dice dice = new Dice() ;
-		testVBOX.getChildren().add(dice);
-	}
+//	public void testAdjustImage(ActionEvent event) {
+//		Dice dice = new Dice() ;
+//		testVBOX.getChildren().add(dice);
+//	}
 	
+	/**
+	  * switch to game over scene 
+	  */
 	public void switchtoGameOver () throws IOException {
 		System.out.println("haha");
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GameOverScene.fxml"));
@@ -124,6 +157,9 @@ public class MenuController implements Initializable  {
 		
 	}
 	
+	/**
+	  * switch to game clear scene 
+	  */
 	public void switchtoGameClear() throws IOException {
 		System.out.println("huhu");
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GameClearScene.fxml"));
