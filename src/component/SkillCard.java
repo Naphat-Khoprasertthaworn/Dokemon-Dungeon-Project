@@ -132,6 +132,7 @@ public class SkillCard extends VBox{
 			return;
 		}
 		if(GameLogic.getInstance().stageClear() || GameLogic.getInstance().stageFail()) {
+			GameLogic.getInstance().getCombatController().showRollDiceAlert();
 			System.out.println("Roll dice !!");
 			return;
 		}
@@ -148,6 +149,7 @@ public class SkillCard extends VBox{
 			return;
 		}
 		if(this.skill.readySkill()==false) {
+			GameLogic.getInstance().getCombatController().showOnCooldown();
 			System.out.println("i am cd");
 		}else {
 			

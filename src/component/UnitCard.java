@@ -202,6 +202,10 @@ public class UnitCard extends VBox {
 	 * unit card on click event.
 	 */
 	public void onClickHandler() {
+		if(GameLogic.getInstance().stageClear()) {
+			GameLogic.getInstance().getCombatController().showRollDiceAlert();
+			return;
+		}
 		if(unit instanceof Monster) {
 			GameLogic.getInstance().setTargetedMonster(this.unit);
 		}else if(unit instanceof Unit) {
@@ -212,7 +216,7 @@ public class UnitCard extends VBox {
 	}
 	
 	/**
-	 * unit card on click event.
+	 * unit card attack animation.
 	 */
 	public void attackAnimation() {
 		SoundManager.playSound("audio/unitAttackSound.mp3",50);
@@ -240,7 +244,7 @@ public class UnitCard extends VBox {
 	}
 	
 	/**
-	 * unit card on click event.
+	 * unit got damage animation.
 	 */
 	public void gotDamagedAnimation() {
 		float round = 11 ;
