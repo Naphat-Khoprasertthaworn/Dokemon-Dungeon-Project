@@ -39,7 +39,9 @@ import skill.type.MultiTargetDefenceSkill;
 import skill.type.SingleTargetAttackSkill;
 import skill.type.SingleTargetDefenceSkill;
 
-
+/**
+ * GameLogic
+ */
 public class GameLogic {
 	/**
 	  * GameLogic is game controller of this game.
@@ -169,6 +171,7 @@ public class GameLogic {
 	
 	/**
 	  * Getter of combat controller of this game.
+	  * @return combatController Combat controller.
 	  */
 	public CombatController getCombatController() {
 		return combatController;
@@ -184,6 +187,7 @@ public class GameLogic {
 	
 	/**
 	  * Getter of isMonsterTurn of this game.
+	  * @return isMonsterTurn.
 	  */
 	public static boolean isMonsterTurn() {
 		return isMonsterTurn;
@@ -199,6 +203,7 @@ public class GameLogic {
 	
 	/**
 	  * Getter of isAnimationRunning of this game.
+	  * @return animationRunning
 	  */
 	public boolean isAnimationRunning() {
 		return animationRunning;
@@ -224,6 +229,7 @@ public class GameLogic {
 	
 	/**
 	  * Getter of GameLogic.
+	  * @return instance
 	  */
 	public static GameLogic getInstance() {
 		if(instance == null) {
@@ -236,6 +242,7 @@ public class GameLogic {
 	//######## DISTANCE & DICE ########
 	/**
 	  * Getter of game distance.
+	  * @return distance
 	  */
 	public int getDistance() {
 		return distance;
@@ -244,6 +251,7 @@ public class GameLogic {
 	/**
 	  * Setter of game distance.
 	  * @param distance game distance.
+	  * @return isBossStage.
 	  */
 	public boolean setDistance(int distance) {
 		
@@ -293,6 +301,7 @@ public class GameLogic {
 	
 	/**
 	  * check stage clear of combat mode.
+	  * @return isStageClear
 	  */
 	public boolean stageClear() {
 		for(Unit unit :this.getMonsters()) {
@@ -305,6 +314,7 @@ public class GameLogic {
 	
 	/**
 	  * check stage fail of combat mode.
+	  * @return isStageFail
 	  */
 	public boolean stageFail() {
 		for(Unit unit :this.getHeros()) {
@@ -349,6 +359,7 @@ public class GameLogic {
 	//######## INVENTORY ########
 	/**
 	  * getter of inventory.
+	  * @return inventory
 	  */
 	public ArrayList<Item> getInventory() {
 		return inventory;
@@ -363,8 +374,8 @@ public class GameLogic {
 	}
 	
 	/**
-	  * setter of inventory.
-	  * @param inventory ArrayList of Item.
+	  * add item to inventory
+	  * @param item item
 	  */
 	public void addItem(Item item) {
 		for(Item i:this.getInventory()) {
@@ -391,6 +402,7 @@ public class GameLogic {
 	  * find targeted unit in hero party or monster party.
 	  * @param unit used skill unit.
 	  * @param b b is true if we want to find target unit is in same party.
+	  * @return targetedUnit
 	  */
 	public Unit findTarget(Unit unit,boolean b) {
 		if(this.getHeros().contains(unit) == b) {
@@ -404,6 +416,7 @@ public class GameLogic {
 	
 	/**
 	  * Getter of targeted hero.
+	  * @return targetHero
 	  */
 	public Unit getTargetedHero() {
 		return targetedHero;
@@ -429,6 +442,7 @@ public class GameLogic {
 	
 	/**
 	  * Getter of targeted monster.
+	  * @return targetedMonster
 	  */
 	public Unit getTargetedMonster() {
 		return targetedMonster;
@@ -458,6 +472,7 @@ public class GameLogic {
 	  * Getter unit in array of unit by position.
 	  * @param p position.
 	  * @param units array of unit.
+	  * @return unit
 	  */
 	public Unit getUnitByPosition(int p,ArrayList<Unit> units) {
 		for(int i = 0;i<MAX_PARTY;i++) {
@@ -471,6 +486,7 @@ public class GameLogic {
 	/**
 	  * Getter less position unit in array of unit.
 	  * @param units array of unit.
+	  * @return frontLineUnit
 	  */
 	public Unit getFrontLineUnit(ArrayList<Unit> units) {
 		for( int i = 0;i<MAX_PARTY;i++ ) {
@@ -486,6 +502,7 @@ public class GameLogic {
 	/**
 	  * Getter greater position unit in array of unit.
 	  * @param units array of unit.
+	  * @return unit
 	  */
 	public Unit getBackLineUnit(ArrayList<Unit> units) {
 		for( int i = MAX_PARTY-1;i>=0;i-- ) {
@@ -501,6 +518,7 @@ public class GameLogic {
 	/**
 	  * Getter less health unit in array of unit.
 	  * @param units array of unit.
+	  * @return unit
 	  */
 	public Unit getLowestHealthUnit( ArrayList<Unit> units ) {
 		Unit u = getFrontLineUnit(units);
@@ -514,6 +532,7 @@ public class GameLogic {
 	
 	/**
 	  * Getter of hero unit in this turn.
+	  * @return currentHero
 	  */
 	public Unit getCurrentHero() {
 		return currentHero;
@@ -530,6 +549,7 @@ public class GameLogic {
 	//######## PARTY HANDLER ########
 	/**
 	  * Getter of arraylist of hero unit.
+	  * @return heros arraylist of hero
 	  */
 	public ArrayList<Unit> getHeros() {
 		return heros;
@@ -546,6 +566,7 @@ public class GameLogic {
 
 	/**
 	  * Getter of arraylist of monster unit.
+	  * @return monsters arraylist of monsters
 	  */
 	public ArrayList<Unit> getMonsters() {
 		return monsters;
@@ -564,6 +585,7 @@ public class GameLogic {
 	  * find arraylist of monsters or arraylist of heros.
 	  * @param u unit.
 	  * @param b b is true if we want to find party that contain this unit.
+	  * @return units arraylist of units
 	  */
 	public ArrayList<Unit> findParty(Unit u,boolean b){
 		if( this.getHeros().contains(u)==b ) {
@@ -776,6 +798,7 @@ public class GameLogic {
 	//######## END STAGE ########
 	/**
 	  * generate item when we clear each stage and add to inventory.
+	  * @return itemDrop arraylist item drop.
 	  */
 	public ArrayList<Item> generateItemDrop(){
 		
