@@ -36,7 +36,7 @@ public class Main  extends Application{
             this.primaryStage.setScene(scene);
             this.primaryStage.setTitle("Progmeth-project");
             this.primaryStage.setResizable(false);
-            //SoundManager.setCurrentBGM("audio/MenuBGM.wav",0.1);
+            SoundManager.setCurrentBGM("audio/MenuBGM.wav",0.1);
             this.primaryStage.show();
             
         } catch (Exception e) {

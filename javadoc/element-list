@@ -1,5 +1,6 @@
 application
 buff.type
+component
 entity.base
 gui
 item.type

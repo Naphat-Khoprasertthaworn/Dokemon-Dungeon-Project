@@ -146,7 +146,7 @@ public class MenuController implements Initializable  {
 	
 	/**
 	  * switch to game over scene 
-	  * @throws IOException
+	  * @throws IOException throws exception
 	  */
 	public void switchtoGameOver () throws IOException {
 		System.out.println("haha");
@@ -161,7 +161,7 @@ public class MenuController implements Initializable  {
 	
 	/**
 	  * switch to game clear scene 
-	  * @throws IOException
+	  * @throws IOException throws exception
 	  */
 	public void switchtoGameClear() throws IOException {
 		System.out.println("huhu");

@@ -169,6 +169,7 @@ public abstract class Item {
 	
 	/**
 	  * Setter of image path
+	  * @param imagePath image path of this item
 	  */
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;

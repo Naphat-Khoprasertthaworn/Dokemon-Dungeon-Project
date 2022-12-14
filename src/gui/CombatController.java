@@ -203,6 +203,7 @@ public class CombatController implements Initializable{
 
 	/**
 	  * Setter of combatDisplay
+	  * @param combatDisplay combat display
 	  */
 	public void setCombatDisplay(CombatDisplay combatDisplay) {
 		this.combatDisplay = combatDisplay;
@@ -218,6 +219,7 @@ public class CombatController implements Initializable{
 
 	/**
 	  * Setter of skillPane
+	  * @param skillPane skill pane
 	  */
 	public void setSkillPane(SkillPane skillPane) {
 		this.skillPane = skillPane;
@@ -251,7 +253,7 @@ public class CombatController implements Initializable{
 	
 	/**
 	  *  switch to GameOverScene
-	  *  @throws IOException
+	  *  @throws IOException throws exception
 	  */
 	public void switchtoGameOver () throws IOException {
 		//System.out.println("its work");
@@ -266,7 +268,7 @@ public class CombatController implements Initializable{
 	
 	/**
 	  * switch to GameClearScene
-	  * @throws IOException
+	  * @throws IOException throws exception
 	  */
 	public void switchtoGameClear() throws IOException {
 		Thread switchToGameClearDelayThread = new Thread() {
