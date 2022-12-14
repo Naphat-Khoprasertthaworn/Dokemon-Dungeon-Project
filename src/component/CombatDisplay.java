@@ -147,6 +147,7 @@ public class CombatDisplay extends HBox {
 	
 	/**
 	 * Getter of monsterCardBox.
+	 * @return monsterCardBox monster card HBox
 	 */
 	public HBox getMonsterCardBox() {
 		return monsterCardBox;
@@ -154,6 +155,7 @@ public class CombatDisplay extends HBox {
 	
 	/**
 	 * Setter of monsterCardBox.
+	 * @param monsterCardBox monster card HBox
 	 */
 	public void setMonsterCardBox(HBox monsterCardBox) {
 		this.monsterCardBox = monsterCardBox;
@@ -161,12 +163,14 @@ public class CombatDisplay extends HBox {
 	
 	/**
 	 * Getter of heroesCardBox.
+	 * @return heroesCardBox hero card HBox
 	 */
 	public HBox getHeroesCardBox() {
 		return heroesCardBox;
 	}
 	/**
 	 * Setter of heroesCardBox.
+	 * @param heroesCardBox hero card HBox
 	 */
 	public void setHeroesCardBox(HBox heroesCardBox) {
 		this.heroesCardBox = heroesCardBox;

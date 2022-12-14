@@ -29,13 +29,30 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import logic.GameLogic;
 
+/**
+ * ItemSquare Class
+ */
 public class ItemSquare extends VBox {
-	
+	/**
+	 * item name
+	 */
 	private Text text;
+	/**
+	 * item image
+	 */
 	private ImageView imageView;
+	/**
+	 * item object
+	 */
 	private Item item;
+	/**
+	 * blank image
+	 */
 	private final String blankImagePath = "image/blank.png" ;
 	
+	/**
+	 * Constructor of ItemSquare
+	 */
     public ItemSquare() {
         this.setPrefHeight(100);
         this.setPrefWidth(150);
@@ -70,6 +87,9 @@ public class ItemSquare extends VBox {
         });
     }
 	
+	/**
+	 * item square click event.
+	 */
 	public void onClickHandler() {
 		if(this.item==null) {
 			return;
@@ -85,14 +105,19 @@ public class ItemSquare extends VBox {
 		GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
 
 	}
-	
+	/**
+	 * add item object to this ItemSquare
+	 * @param item item object
+	 */
 	public void addItem(Item item){
 		text.setText(item.getName() + " x " + item.getAmount());
 		String imgPath = ClassLoader.getSystemResource( item.getImagePath() ).toString();
 		this.imageView.setImage( new Image(imgPath) );
 		this.item = item;
 	}
-	
+	/**
+	 * remove item from this ItemSquare
+	 */
 	public void removeItem() {
 		this.text.setText("");
 		String imgPath = ClassLoader.getSystemResource( blankImagePath ).toString();

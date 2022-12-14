@@ -22,9 +22,25 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import logic.GameLogic;
 
+
+/**
+ * Dice Class.
+ */
 public class Dice extends VBox{
+	
+	/**
+	 * dice image
+	 */
 	private ImageView diceImageView ; 
+	
+	/**
+	 * dice enable
+	 */
 	private boolean isEnable;
+	
+	/**
+	 * random number from dice
+	 */
 	private int resultRoll ;
 //	private final String bigDice ;
 //	private final String dice1 ; 
@@ -33,6 +49,10 @@ public class Dice extends VBox{
 //	private final String dice4 ; 
 //	private final String dice5 ; 
 //	private final String dice6 ; 
+	
+	/**
+	 * Constructor of Dice
+	 */
 	public Dice() {
 //		bigDice = ClassLoader.getSystemResource("image/Bigdice.png").toString();
 //		dice1 = ClassLoader.getSystemResource("image/dice1.png").toString();
@@ -68,7 +88,9 @@ public class Dice extends VBox{
 		});
 	}
 	
-
+	/**
+	 * Dice on click event. 
+	 */
 	protected void onClickHandler() {
 		
 		Random random = new Random();
@@ -97,16 +119,26 @@ public class Dice extends VBox{
 		thread.start();
 
 	}
-
+	
+	/**
+	 * Getter random number from dice.
+	 * @return resultRoll random number from dice
+	 */
 	public int getResultRoll() {
 		return resultRoll;
 	}
 
-
+	/**
+	 * Setter random number from dice.
+	 * @param resultRoll random number from dice
+	 */
 	public void setResultRoll(int resultRoll) {
 		this.resultRoll = resultRoll;
 	}
-
+	
+	/**
+	 * GUI update after roll dice.
+	 */
 	public void endThread() {
 		int ni = this.getResultRoll();
 		
@@ -122,11 +154,19 @@ public class Dice extends VBox{
 		
 		isEnable = false;
 	}
-
+	
+	/**
+	 * Getter dice enable
+	 * @return isEnable dice is enable
+	 */
 	public boolean isEnable() {
 		return isEnable;
 	}
-
+	
+	/**
+	 * Setter dice enable
+	 * @param isEnable dice enable
+	 */
 	public void setEnable(boolean isEnable) {
 		this.isEnable = isEnable;
 	}
