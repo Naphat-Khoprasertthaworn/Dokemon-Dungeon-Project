@@ -58,6 +58,7 @@ public abstract class Skill implements Countdownable {
 	
 	/**
 	  * Copy constructor of skill 
+	  * @param s skill to copy
 	  */
 	public Skill(Skill s) {
 		this.setName(s.getName());
@@ -81,6 +82,7 @@ public abstract class Skill implements Countdownable {
 	
 	/**
 	  * Check skill is ready or not
+	  * 
 	  */
 	public boolean readySkill() {
 		return this.inCombatCd == 0;
@@ -91,12 +93,14 @@ public abstract class Skill implements Countdownable {
 	
 	/**
 	  * Getter of ratio
+	  * @return ratio
 	  */
 	public int getRatio() {
 		return ratio;
 	}
 	/**
 	  * Getter of getBuffsTarget
+	  * @return buffstarget
 	  */
 	public ArrayList<Buff> getBuffsTarget() {
 		return buffsTarget;
@@ -110,6 +114,7 @@ public abstract class Skill implements Countdownable {
 	}
 	/**
 	  * Getter of buffsSelf 
+	  * @return buffsSelf
 	  */
 	public ArrayList<Buff> getBuffsSelf() {
 		return buffsSelf;
@@ -131,6 +136,7 @@ public abstract class Skill implements Countdownable {
 	
 	/**
 	  * Getter of name
+	  * @return name
 	  */
 	public String getName() {
 		return name;
@@ -145,6 +151,7 @@ public abstract class Skill implements Countdownable {
 	
 	/**
 	  * Getter of text
+	  * @return text
 	  */
 	public String getText() {
 		return text;
@@ -160,6 +167,7 @@ public abstract class Skill implements Countdownable {
 	
 	/**
 	  * Getter of Cd
+	  * @return cooldown
 	  */
 	public int getCd() {
 		return cd;
@@ -176,7 +184,7 @@ public abstract class Skill implements Countdownable {
 
 	/**
 	  * Getter of inCombatCd
-	  * 
+	  * @return in combat cooldown
 	  */
 	public int getInCombatCd() {
 		return inCombatCd;
@@ -196,6 +204,7 @@ public abstract class Skill implements Countdownable {
 	
 	/**
 	  * to string method
+	  * @return string form of this class
 	  */
 	public String toString() {
 		return this.getName() + " : " + this.getInCombatCd() + "/" + this.getCd();
@@ -204,6 +213,7 @@ public abstract class Skill implements Countdownable {
 	
 	/**
 	  * Getter of image path
+	  * @return image path
 	  */
 	public String getImagePath() {
 		return imagePath;

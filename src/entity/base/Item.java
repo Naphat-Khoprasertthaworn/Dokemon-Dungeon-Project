@@ -63,6 +63,7 @@ public abstract class Item {
 	
 	/**
 	  * Getter of amount
+	  * @return amount
 	  */
 	public int getAmount() {
 		return amount;
@@ -84,6 +85,7 @@ public abstract class Item {
 	
 	/**
 	  * Getter of name
+	  * @return name
 	  */
 	public String getName() {
 		return name;
@@ -99,6 +101,7 @@ public abstract class Item {
 	
 	/**
 	  * Getter of text
+	  * @return text
 	  * 
 	  */
 	public String getText() {
@@ -150,6 +153,7 @@ public abstract class Item {
 	
 	/**
 	  * To string function
+	  * @return string form of this class
 	  */
 	public String toString() {
 		return this.getName() + " x " + this.getAmount();
@@ -157,6 +161,7 @@ public abstract class Item {
 	
 	/**
 	  * Getter of image path
+	  * @return image path
 	  */
 	public String getImagePath() {
 		return imagePath;

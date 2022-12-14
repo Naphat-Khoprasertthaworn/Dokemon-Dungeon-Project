@@ -10,6 +10,7 @@ import buff.type.Vulnerability;
 import entity.base.Buff;
 import entity.base.Unit;
 
+
 public class MultiTargetDefenceSkill extends DefenseSkill {
 
 	public MultiTargetDefenceSkill(String name, String text, int ratio, int cd,String imagePath) {

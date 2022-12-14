@@ -17,16 +17,16 @@ import javafx.stage.Stage;
 import logic.GameLogic;
 import sound.SoundManager;
 /**
- * Main Stage
+ * Main class of program
  */
 public class Main  extends Application{
-	private static Scanner keyBoard;
-	private static boolean isGameActive;
-	private static boolean isCombatMode;
-	private static boolean isHeroTurn;
-	private static boolean isStageFail;
-	private static boolean isStageClear;
+	/**
+	 * Main Stage
+	 */
     public static Stage primaryStage ;
+    /**
+     * JavaFX start function
+     */ 
     public void start(Stage primaryStage) throws Exception {
         // TODO Auto-generated method stub
         try {
@@ -44,6 +44,10 @@ public class Main  extends Application{
         }
     }
 	
+    /**
+     * Main entry point
+     * @param args arguments
+     */ 
 	public static void main(String[] args) {
 		launch(args);
 	}

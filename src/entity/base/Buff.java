@@ -39,12 +39,14 @@ public class Buff implements Countdownable {
 	
 	/**
 	  * Getter for turn
+	  * @return turn
 	  */
 	public int getTurn() {
 		return turn;
 	}
 	/**
 	  * Getter for ratio
+	  * @return ratio
 	  */
 	public int getRatio() {
 		return ratio;
@@ -82,6 +84,7 @@ public class Buff implements Countdownable {
 	
 	/**
 	  * Getter of name
+	  * @return name
 	  */
 	public String getName() {
 		return name;
@@ -130,6 +133,7 @@ public class Buff implements Countdownable {
 	}
 	/**
 	  * Getter for image path
+	  * @return image path
 	  */
 	public String getImagePath() {
 		return imagePath;

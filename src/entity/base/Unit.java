@@ -149,6 +149,7 @@ public class Unit {
 	/**
 	  * Method make unit taken damage 
 	  * @param dmg Damage unit will be taken
+	  * @return damage that unit taken
 	  */
 	public int takeDamage(int dmg) {
 		if(!this.isAlive()) {
@@ -242,7 +243,7 @@ public class Unit {
 	
 	/**
 	  * Getter of skills 
-	  * 
+	  * @return skills
 	  */
 	public ArrayList<Skill> getSkills() {
 		return skills;
@@ -250,6 +251,7 @@ public class Unit {
 
 	/**
 	  * add skill to skills
+	  * @param skill skill to add
 	  */
 	public void addSkills(Skill skill) {
 		this.skills.add(skill);
@@ -267,6 +269,7 @@ public class Unit {
 	
 	/**
 	  * Getter of attack
+	  * @return attack
 	  */
 	public int getAttack() {
 		return attack;
@@ -274,7 +277,7 @@ public class Unit {
 	
 	/**
 	  * Setter of attack
-	  * @param attack 
+	  * @param attack attack to set
 	  */
 	public void setAttack(int attack) {
 		this.attack = attack;
@@ -282,6 +285,7 @@ public class Unit {
 
 	/**
 	  * Getter of maxHealth
+	  * @return max health
 	  * 
 	  */
 	public int getMaxHealth() {
@@ -298,6 +302,7 @@ public class Unit {
 	
 	/**
 	  * Getter of health
+	  * @return health
 	  */
 	public int getHealth() {
 		return health;
@@ -320,6 +325,7 @@ public class Unit {
 
 	/**
 	  * Getter of name
+	  * @return name
 	  */
 	public String getName() {
 		return name;
@@ -335,6 +341,7 @@ public class Unit {
 
 	/**
 	  * Getter of text
+	  * @return text
 	  */
 	public String getText() {
 		return text;
@@ -349,6 +356,7 @@ public class Unit {
 	}
 	/**
 	  * Getter of position
+	  * @return position
 	  */
 	public int getPosition() {
 		return position;
@@ -364,6 +372,7 @@ public class Unit {
 
 	/**
 	  * Getter of buffs
+	  * @return buffs
 	  */
 	public ArrayList<Buff> getBuffs() {
 		return buffs;
@@ -379,6 +388,7 @@ public class Unit {
 	
 	/**
 	  * add buff to buffs
+	  * @param buff buff to add
 	  */
 	public void addBuff(Buff buff) {
 		if(!this.isAlive()) {
@@ -417,6 +427,7 @@ public class Unit {
 
 	/**
 	  * Getter of buffAttack
+	  * @return buff attack
 	  */
 	public int getBuffAttack() {
 		return buffAttack;
@@ -432,18 +443,21 @@ public class Unit {
 	
 	/**
 	  * Compute total attack
+	  * @return total attack
 	  */
 	public int getTotalAttack() {
 		return this.getAttack() + this.getBuffAttack();
 	}
 	/**
 	  * Comput total defense
+	  * @return total defense
 	  */
 	public int getTotalDefense() {
 		return this.getDefense()+this.getBuffDefense();
 	}
 	/**
 	  * Getter of defense
+	  * @return defense
 	  */
 	public int getDefense() {
 		return defense;
@@ -462,6 +476,7 @@ public class Unit {
 
 	/**
 	  * Getter of buffDefense
+	  * @return buff defense
 	  * 
 	  */
 	public int getBuffDefense() {
@@ -477,6 +492,7 @@ public class Unit {
 
 	/**
 	  * to string method
+	  * @return string form of this class
 	  */
 	public String toString() {
 		return " "+ this.getName() + "\n Atk : " + this.getTotalAttack() + " / " + this.getAttack() + "\n Health: " + this.getHealth() +" / "+ this.getMaxHealth() + "\n Def : " + this.getTotalDefense() + " / " + this.getDefense();
@@ -484,6 +500,7 @@ public class Unit {
 
 	/**
 	  * Getter of imagePath
+	  * @return image path
 	  */
 	public String getImagePath() {
 		return imagePath;

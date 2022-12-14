@@ -195,6 +195,7 @@ public class CombatController implements Initializable{
 	
 	/**
 	  * Getter of combatDisplay
+	  * @return combat display
 	  */
 	public CombatDisplay getCombatDisplay() {
 		return combatDisplay;
@@ -209,6 +210,7 @@ public class CombatController implements Initializable{
 
 	/**
 	  * Getter of skillPane
+	  * @return skill pane
 	  */
 	public SkillPane getSkillPane() {
 		return skillPane;
@@ -223,6 +225,7 @@ public class CombatController implements Initializable{
 
 	/**
 	  * Getter of itemGridPane
+	  * @return item gridpane
 	  */
 	public ItemGridPane getItemGridPane() {
 		return itemGridPane;
@@ -230,6 +233,7 @@ public class CombatController implements Initializable{
 
 	/**
 	  * Setter of itemGridPane 
+	  * @param itemGridPane item grid pane
 	  */
 	public void setItemGridPane(ItemGridPane itemGridPane) {
 		this.itemGridPane = itemGridPane;
@@ -247,6 +251,7 @@ public class CombatController implements Initializable{
 	
 	/**
 	  *  switch to GameOverScene
+	  *  @throws IOException
 	  */
 	public void switchtoGameOver () throws IOException {
 		//System.out.println("its work");
@@ -261,6 +266,7 @@ public class CombatController implements Initializable{
 	
 	/**
 	  * switch to GameClearScene
+	  * @throws IOException
 	  */
 	public void switchtoGameClear() throws IOException {
 		Thread switchToGameClearDelayThread = new Thread() {
