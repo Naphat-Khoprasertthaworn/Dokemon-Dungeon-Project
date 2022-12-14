@@ -56,7 +56,7 @@ public class CombatDisplay extends HBox {
 	            this.unitCards.add(heroCard);
 	            
 	        }
-	        for(int i = 0;i<3;i++) {
+	        for(int i = 0;i<GameLogic.MAX_PARTY;i++) {
 	        	
 	            UnitCard monsterCard = new UnitCard();
 	            monsterCardBox.getChildren().add(monsterCard);

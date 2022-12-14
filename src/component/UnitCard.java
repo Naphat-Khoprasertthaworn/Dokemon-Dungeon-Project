@@ -185,7 +185,7 @@ public class UnitCard extends VBox {
 			public void run () {
 				//SoundManager.playSound("audio/unitAttackSound.mp3",50);
 				GameLogic.getInstance().animationRunning = true;
-				System.out.println("Thread Running");
+				System.out.println("Atk Thread Running");
 //				try {
 //					Thread.sleep(1000);
 //				} catch (InterruptedException e) {
@@ -233,7 +233,7 @@ public class UnitCard extends VBox {
 			public void run () {
 				
 				GameLogic.getInstance().animationRunning = true;
-				System.out.println("Thread Running");
+				System.out.println("Take Dmg Thread Running");
 				try {
 					for (int i = 0 ;  i < newRound ; i ++) {
 						System.out.println(i);

@@ -44,7 +44,7 @@ public class Monster extends Unit {
 					if( monster instanceof Monster ) {
 						for( Node unitCard :GameLogic.getInstance().getCombatController().getCombatDisplay().getMonsterCardBox().getChildren() ) {
 							if ( ((UnitCard)unitCard).getUnit() == monster ) {
-								System.out.println("monster atk animation");
+								//System.out.println("monster atk animation");
 								((UnitCard)unitCard).attackAnimation();
 								break;
 							}

@@ -78,9 +78,9 @@ public class ItemSquare extends VBox {
 			System.out.println("cant use item please row a dice");
 			return;
 		}
-		System.out.println("use item");
+		System.out.println("use item "+this.item.getName());
 		this.item.active();
-		System.out.println(this.item.getAmount());
+		//System.out.println(this.item.getAmount());
 		GameLogic.getInstance().getCombatController().getItemGridPane().updateState();
 		GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
 

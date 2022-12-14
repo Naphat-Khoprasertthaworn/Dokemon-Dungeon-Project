@@ -59,8 +59,8 @@ public class SingleTargetDefenceSkill extends DefenceSkill {
 				
 			}
 		}
-		System.out.println(unit);
-		System.out.println(owner);
+		System.out.println("Target"+unit);
+		System.out.println("owner"+owner);
 	}
 	
 

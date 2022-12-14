@@ -110,7 +110,7 @@ public class Unit {
 	
 	public void receiveHeal(int heal) {
 		//System.out.println("heal"+heal);
-		System.out.println(this);
+		//System.out.println(this);
 		if(heal<=0) {
 			return;
 		}
@@ -143,7 +143,7 @@ public class Unit {
 		if( !(this instanceof Monster) ) {
 		    for( Node unitCard :GameLogic.getInstance().getCombatController().getCombatDisplay().getHeroesCardBox().getChildren() ) {
 		    	if ( ((UnitCard)unitCard).getUnit() == this ) {
-		    		System.out.println("animation");
+		    		//System.out.println("animation");
 		    		((UnitCard)unitCard).attackAnimation();
 		    		break;
 		    	}

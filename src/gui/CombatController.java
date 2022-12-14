@@ -154,7 +154,7 @@ public class CombatController implements Initializable{
 	
 	
 	public void switchtoGameOver () throws IOException {
-		System.out.println("its work");
+		//System.out.println("its work");
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GameOverScene.fxml"));
 		root = loader.load();
 		stage = Main.primaryStage; 
@@ -165,12 +165,33 @@ public class CombatController implements Initializable{
 	}
 	
 	public void switchtoGameClear() throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GameClearScene.fxml"));
-		root = loader.load();
-		stage = Main.primaryStage; 
-		scene = new Scene(root,1280,720);
-		stage.setScene(scene);
-		stage.show();
+		Thread switchToGameClearDelayThread = new Thread() {
+			public void run() {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				Platform.runLater(()->{
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GameClearScene.fxml"));
+					try {
+						root = loader.load();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					stage = Main.primaryStage; 
+					scene = new Scene(root,1280,720);
+					stage.setScene(scene);
+					stage.show();
+				});
+				
+				
+			}
+		};
+		switchToGameClearDelayThread.start();
+
 	}
 	
 
