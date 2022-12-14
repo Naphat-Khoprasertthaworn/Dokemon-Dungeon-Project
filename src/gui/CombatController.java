@@ -4,9 +4,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import application.Main;
-import javafx.application.Application;
+
 import javafx.application.Platform;
-//import javafx.embed.swing.SwingFXUtils;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,13 +15,11 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.image.Image ;
-import javafx.scene.image.ImageView;
+
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -29,32 +27,70 @@ import logic.GameLogic;
 import sound.SoundManager;
 import component.CombatDisplay; 
 import component.*;
-
+/**
+ * gui controller for combatscene
+ */
 public class CombatController implements Initializable{
+
+	/**
+	  * Pane for skill and item
+	  */
 	@FXML
 	public HBox commandPane ;
+	/**
+	  * Pane for unit
+	  */
 	@FXML
 	public HBox combatPane ;
+	/**
+	  * Distance bar
+	  */
 	@FXML
 	public ProgressBar distanceProgress ;
+	/**
+	  * stage
+	  */
 	@FXML
 	public Stage stage ;
+	/**
+	  * scene
+	  */
 	@FXML
 	public Scene scene ;
+	/**
+	  * root
+	  */
 	@FXML
 	public Parent root ;
 	
+	/**
+	  * Dice in commandPane
+	  */
 	public Dice dice ; 
 	
-	public StackPane dicePane ;
+	//public StackPane dicePane ;
 
-
+	/**
+	  * sub combatpane
+	  */
 	private CombatDisplay combatDisplay;
+	/**
+	  * sub commandpane
+	  */
 	private HBox skillAndItemPane;
+	/**
+	  * Pane for skill
+	  */
 	private SkillPane skillPane;
+	/**
+	  * Pane for item 
+	  */
 	private ItemGridPane itemGridPane;
 	
-	
+	/**
+	  * switch to menuscene
+	  * @param event mouse clicked event
+	  */
 	public void switchToMenu (ActionEvent event) {
 		try {
 			root = FXMLLoader.load(getClass().getResource("/gui/MenuScene.fxml"));
@@ -68,7 +104,9 @@ public class CombatController implements Initializable{
 		}
 	}
 	
-	
+	/**
+	  * inititialize combatPane
+	  */
 	public void initializeCombatPane () {
 		combatDisplay = new CombatDisplay() ;
 		combatPane.getChildren().add(combatDisplay);
@@ -78,6 +116,9 @@ public class CombatController implements Initializable{
 		this.getCombatDisplay().updatePointer();
 	}
 	
+	/**
+	  * switch to GameOverScene 
+	  */
 	public void showGameOver () {
 		//root = FXMLLoader.load(getClass().getResource("/gui/MenuScene.fxml"));
 		
@@ -87,6 +128,9 @@ public class CombatController implements Initializable{
 		stage.show();
 	}
 	
+	/**
+	  * Initialize commandPane
+	  */
 	public void initializeCommandPane() {
 		Circle circle = new Circle() ;
 		circle.setRadius(75);
@@ -103,11 +147,18 @@ public class CombatController implements Initializable{
 
 	}
 	
+	/**
+	  * exit game
+	  * @param event mouse clicked event
+	  */
 	public void exitGame (ActionEvent event) {
 		Platform.exit();
 		System.exit(0);
 	}
 
+	/**
+	  * Initialize function
+	  */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
@@ -120,31 +171,79 @@ public class CombatController implements Initializable{
 	    
 	}
 	
+	/**
+	  * Show dice alert
+	  */
+	public void showRollDiceAlert() {
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setTitle("Error");
+		alert.setHeaderText("Can't use this right now");
+		alert.setContentText("Please roll the dice first !");
+		alert.showAndWait();
+	}
+	
+	/**
+	  * show cooldown alert
+	  */
+	public void showOnCooldown() {
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setTitle("Error");
+		alert.setHeaderText("Skill is on cooldown");
+		alert.setContentText("Use other skills !");
+		alert.showAndWait();
+	}
+	
+	/**
+	  * Getter of combatDisplay
+	  * @return combat display
+	  */
 	public CombatDisplay getCombatDisplay() {
 		return combatDisplay;
 	}
 
+	/**
+	  * Setter of combatDisplay
+	  * @param combatDisplay combat display
+	  */
 	public void setCombatDisplay(CombatDisplay combatDisplay) {
 		this.combatDisplay = combatDisplay;
 	}
 
+	/**
+	  * Getter of skillPane
+	  * @return skill pane
+	  */
 	public SkillPane getSkillPane() {
 		return skillPane;
 	}
 
+	/**
+	  * Setter of skillPane
+	  * @param skillPane skill pane
+	  */
 	public void setSkillPane(SkillPane skillPane) {
 		this.skillPane = skillPane;
 	}
 
+	/**
+	  * Getter of itemGridPane
+	  * @return item gridpane
+	  */
 	public ItemGridPane getItemGridPane() {
 		return itemGridPane;
 	}
 
+	/**
+	  * Setter of itemGridPane 
+	  * @param itemGridPane item grid pane
+	  */
 	public void setItemGridPane(ItemGridPane itemGridPane) {
 		this.itemGridPane = itemGridPane;
 	}
 	
-	
+	/**
+	  * update distance bar
+	  */
 	//@FXML
 	public void updateProgressBar() {
 		float dis = GameLogic.getInstance().getDistance();
@@ -152,7 +251,10 @@ public class CombatController implements Initializable{
 		distanceProgress.setProgress( dis/max );
 	}
 	
-	
+	/**
+	  *  switch to GameOverScene
+	  *  @throws IOException throws exception
+	  */
 	public void switchtoGameOver () throws IOException {
 		//System.out.println("its work");
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GameOverScene.fxml"));
@@ -164,6 +266,10 @@ public class CombatController implements Initializable{
 		
 	}
 	
+	/**
+	  * switch to GameClearScene
+	  * @throws IOException throws exception
+	  */
 	public void switchtoGameClear() throws IOException {
 		Thread switchToGameClearDelayThread = new Thread() {
 			public void run() {
