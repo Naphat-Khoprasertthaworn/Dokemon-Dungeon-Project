@@ -11,31 +11,22 @@ import entity.base.Buff;
 import entity.base.Monster;
 import entity.base.Unit;
 import logic.GameLogic;
-
 /**
- * SingleTargetAttackSkill Class
+ * SingleTargetDefenseSkill Class
  */
-public class SingleTargetAttackSkill extends AttackSkill {
+public class SingleTargetDefenseSkill extends DefenseSkill {
 	/**
-	  * target is true if this skill can target unit
-	  */
-	private boolean target;
-	
-	
-	/**
-	  * Constructor of SingleTargetAttackSkill Class.
+	  * Constructor of SingleTargetDefenceSkill Class.
 	  * @param name name.
 	  * @param text text.
 	  * @param ratio ratio.
 	  * @param cd cooldown.
-	  * @param target targetable.
 	  * @param imagePath path of skill image.
 	  */
-	public SingleTargetAttackSkill(String name, String text, int ratio, int cd , boolean target,String imagePath) {
+	public SingleTargetDefenseSkill(String name, String text, int ratio, int cd,String imagePath) {
 		super(name, text, ratio, cd,imagePath);
-		this.target = target;
 	}
-
+	
 	@Override
 	/**
 	  * active skill.
@@ -44,18 +35,14 @@ public class SingleTargetAttackSkill extends AttackSkill {
 	  * @param owner unit that call this skill.
 	  */
 	public void skillEffect(ArrayList<Unit> units, Unit targetUnit, Unit owner) {
+		
 		Unit unit;
-		if(this.target) {
-			if(owner instanceof Monster) {
-				unit = GameLogic.getInstance().getBackLineUnit(units);
-			}else {
-				unit = targetUnit;
-			}
-			
+		if(owner instanceof Monster) {
+			unit = GameLogic.getInstance().getLowestHealthUnit(units);
 		}else {
-			unit = GameLogic.getInstance().getFrontLineUnit(units);
+			unit = targetUnit;
 		}
-		unit.takeDamage( (this.getRatio()*owner.getTotalAttack())/100 );
+		unit.receiveHeal( (this.getRatio()*owner.getTotalAttack())/100 );
 		for(Buff b:this.getBuffsSelf()) {
 			if (b instanceof DamageReduction) {
 				owner.addBuff(new DamageReduction((DamageReduction)b));
@@ -89,5 +76,6 @@ public class SingleTargetAttackSkill extends AttackSkill {
 		System.out.println("Target"+unit);
 		System.out.println("owner"+owner);
 	}
+	
 
 }

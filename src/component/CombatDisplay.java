@@ -18,20 +18,37 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import logic.GameLogic;
-
+/**
+ * CombatDisplay Class.
+ */
 public class CombatDisplay extends HBox {
-	
-	private String backGroundImageURL = "image/combatBackGround.png";
-	
+	/**
+	 * ArrayList of HeroCard.
+	 */
 	private ArrayList<UnitCard> unitCards ;
+	/**
+	 * ArrayList of MonsterCard.
+	 */
 	private ArrayList<UnitCard> monsterCards;
 	
+	/**
+	 * BackGround image.
+	 */
 	Image combatBackground = new Image(ClassLoader.getSystemResource("image/combatBackground.png").toString(), 1280,460, false, true);
 	
+	/**
+	 * HBox of monstersCards
+	 */
 	private HBox monsterCardBox;
 
+	/**
+	 * HBox of heroCards
+	 */
 	private HBox heroesCardBox;
 	
+	/**
+	 * Constructor of CombatDisplay
+	 */
 	public CombatDisplay(){
 		
 		    heroesCardBox = new HBox();
@@ -70,6 +87,9 @@ public class CombatDisplay extends HBox {
 	        updatePointer();
 	}
 	
+	/**
+	 * call updateHealthBar of all unit in unitCards and monsterCards
+	 */
 	public void updateCombatDisplay() {
 		for(UnitCard u:this.unitCards) {
 			u.updateHealthBar();
@@ -79,6 +99,9 @@ public class CombatDisplay extends HBox {
 		}
 	}
 	
+	/**
+	 * call update of all unit in unitCards and monsterCards
+	 */
 	public void updateCombatUnit() {
 		ArrayList<Unit> herosArrayList = GameLogic.getInstance().getHeros();
 		ArrayList<Unit> monsterArrayList = GameLogic.getInstance().getMonsters();
@@ -99,6 +122,9 @@ public class CombatDisplay extends HBox {
 		}
 	}
 	
+	/**
+	 * update pointer of all unit in unitCards and monsterCards
+	 */
 	public void updatePointer() {
 		for(UnitCard u:this.unitCards) {
 			if( u.getUnit().isTargeted() ) {
@@ -119,18 +145,29 @@ public class CombatDisplay extends HBox {
 		}
 	}
 	
+	/**
+	 * Getter of monsterCardBox.
+	 */
 	public HBox getMonsterCardBox() {
 		return monsterCardBox;
 	}
-
+	
+	/**
+	 * Setter of monsterCardBox.
+	 */
 	public void setMonsterCardBox(HBox monsterCardBox) {
 		this.monsterCardBox = monsterCardBox;
 	}
-
+	
+	/**
+	 * Getter of heroesCardBox.
+	 */
 	public HBox getHeroesCardBox() {
 		return heroesCardBox;
 	}
-
+	/**
+	 * Setter of heroesCardBox.
+	 */
 	public void setHeroesCardBox(HBox heroesCardBox) {
 		this.heroesCardBox = heroesCardBox;
 	}

@@ -151,7 +151,9 @@ public class Unit {
 	  * @param dmg Damage unit will be taken
 	  */
 	public int takeDamage(int dmg) {
-		
+		if(!this.isAlive()) {
+			return 0;
+		}
 		if( this instanceof Monster ) {
 		    for( Node unitCard :GameLogic.getInstance().getCombatController().getCombatDisplay().getMonsterCardBox().getChildren() ) {
 		    	if ( ((UnitCard)unitCard).getUnit() == this ) {
@@ -184,6 +186,10 @@ public class Unit {
 	public void receiveHeal(int heal) {
 		//System.out.println("heal"+heal);
 		//System.out.println(this);
+		if(!isAlive()) {
+			return;
+		}
+		
 		if(heal<=0) {
 			return;
 		}
