@@ -111,9 +111,13 @@ public class SkillCard extends VBox{
 			return;
 		}
 		if(GameLogic.getInstance().animationRunning) {
+			System.out.println("animation run");
 			return;
 		}
-		
+		if(GameLogic.getInstance().isMonsterTurn) {
+			System.out.println("monster turn");
+			return;
+		}
 		
 		if(this.skill == null) {
 			return;
@@ -124,22 +128,7 @@ public class SkillCard extends VBox{
 			
 			Unit unit = GameLogic.getInstance().getCurrentHero();
 			unit.useSkill(this.skill);
-			if( unit instanceof Monster ) {
-			    for( Node unitCard :GameLogic.getInstance().getCombatController().getCombatDisplay().getMonsterCardBox().getChildren() ) {
-			    	if ( ((UnitCard)unitCard).getUnit() == unit ) {
-			    		((UnitCard)unitCard).attackAnimation();
-			    		break;
-			    	}
-			    }
-				
-			}else {
-				for( Node unitCard :GameLogic.getInstance().getCombatController().getCombatDisplay().getHeroesCardBox().getChildren() ) {
-			    	if ( ((UnitCard)unitCard).getUnit() == unit ) {
-			    		((UnitCard)unitCard).attackAnimation();
-			    		break;
-			    	}
-			    }
-			}
+
 			//GameLogic.getInstance().getCombatController().getCombatDisplay().get
 			
 			GameLogic.getInstance().updateTargetPointer();

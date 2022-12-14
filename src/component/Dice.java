@@ -89,12 +89,8 @@ public class Dice extends VBox{
 					e.printStackTrace();
 				}
 				
-				Platform.runLater(new Runnable() {
-					
-					@Override
-					public void run() {
-						endThread();
-					}
+				Platform.runLater(()-> {
+					endThread();
 				});
 			}
 		};
