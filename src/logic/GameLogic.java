@@ -462,7 +462,7 @@ public class GameLogic {
 		SingleTargetAttackSkill bloodHawkSkill1 = new SingleTargetAttackSkill("super dangerous vulnetability" , "" , 100,2,true,"image/monsterSkill.png");
 		bloodHawkSkill1.addBuffsTarget(new Vulnetability(2, 30));
 
-		SingleTargetDefenceSkill gnomeAutoAttack = new SingleTargetDefenceSkill("heal lowest hp monster","single heal",100,1,"image/monsterSkill.png");
+		SingleTargetDefenceSkill gnomeAutoAttack = new SingleTargetDefenceSkill("heal lowest hp monster","single heal",100,2,"image/monsterSkill.png");
 		MultiTargetDefenceSkill gnomeSkill1 = new MultiTargetDefenceSkill("Heal monster","AOE heal",100,4,"image/monsterSkill.png");
 		
 		
