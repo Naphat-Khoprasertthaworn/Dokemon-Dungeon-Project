@@ -43,7 +43,7 @@ public class ItemSquare extends VBox {
         this.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(3))));
         
         
-        this.text = new Text("test");
+        this.text = new Text();
         this.text.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 10));
         this.text.setWrappingWidth( 80 );
         this.text.setFill(Color.WHITE);

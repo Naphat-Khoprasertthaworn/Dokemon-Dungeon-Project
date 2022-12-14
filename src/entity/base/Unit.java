@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.Vector;
 
 import component.UnitCard;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import logic.GameLogic;
 
@@ -139,6 +140,16 @@ public class Unit {
 			return false;
 		}
 		System.out.println("############# "+ this.getName()+" use skill " + skill.getName());
+		if( !(this instanceof Monster) ) {
+		    for( Node unitCard :GameLogic.getInstance().getCombatController().getCombatDisplay().getHeroesCardBox().getChildren() ) {
+		    	if ( ((UnitCard)unitCard).getUnit() == this ) {
+		    		System.out.println("animation");
+		    		((UnitCard)unitCard).attackAnimation();
+		    		break;
+		    	}
+		    }
+			
+		}
 		return skill.skillActive(this);
 	}
 	

@@ -154,6 +154,7 @@ public class CombatController implements Initializable{
 	
 	
 	public void switchtoGameOver () throws IOException {
+		System.out.println("its work");
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GameOverScene.fxml"));
 		root = loader.load();
 		stage = Main.primaryStage; 

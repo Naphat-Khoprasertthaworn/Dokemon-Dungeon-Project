@@ -30,6 +30,8 @@ import item.type.EnhancePotion;
 import item.type.ExhaustPotion;
 import item.type.HealingPotion;
 import item.type.VulnetabilityPotion;
+import javafx.application.Platform;
+import javafx.scene.image.Image;
 import skill.type.AttackSkill;
 import skill.type.DefenceSkill;
 import skill.type.MultiTargetAttackSkill;
@@ -50,7 +52,7 @@ public class GameLogic {
 	private Unit currentHero;
 	
 	private int distance;
-	public static final int MAX_DISTANCE = 20;
+	public static final int MAX_DISTANCE = 7;
 	static final int MAX_PARTY = 3;
 	static final int ITEM_DROP = 3;
 	
@@ -64,6 +66,18 @@ public class GameLogic {
 	public static boolean notInitStage;
 	public static boolean isBossStage;
 	
+	public static boolean animationRunning;
+	public static boolean isMonsterTurn;
+	
+	
+	public static boolean isMonsterTurn() {
+		return isMonsterTurn;
+	}
+
+	public static void setMonsterTurn(boolean isMonsterTurn) {
+		GameLogic.isMonsterTurn = isMonsterTurn;
+	}
+
 	public boolean isAnimationRunning() {
 		return animationRunning;
 	}
@@ -72,7 +86,7 @@ public class GameLogic {
 		GameLogic.animationRunning = animationRunning;
 	}
 
-	public static boolean animationRunning;
+	
 	
 	public CombatController getCombatController() {
 		return combatController;
@@ -659,7 +673,7 @@ public class GameLogic {
 		}
 		if(heroOrder >= MAX_PARTY) {
 			heroOrder = 0;
-			GameLogic.getInstance().setCurrentHero( GameLogic.getInstance().getHeros().get(heroOrder) );
+
 			monsterTurn();
 			return;
 		}
@@ -671,35 +685,65 @@ public class GameLogic {
 	}
 	
 	public static void monsterTurn() {
-		ArrayList<Unit> monsters = GameLogic.getInstance().getMonsters();
-		Unit monster;
-		for(int i = 0;i<monsters.size();i++) {
-			
-			monster = GameLogic.getInstance().getUnitByPosition(i,monsters);
-			//System.out.println(monster+" turn !!!");
-			if( monster == null || !monster.isAlive() ) {
-				continue;
-			}
-			
-			monster.useSkill(null);
-			GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
-			updateStageGame();
-			if(isStageFail) {
-				try {
-					GameLogic.getInstance().getCombatController().switchtoGameOver();
-				} catch (IOException e) {
-					System.out.println("game over error");
-					e.printStackTrace();
-				}
-				isGameActive = false;
-				return;
-			}
-			
-		}
 		
-		GameLogic.getInstance().countdownGame();
-		GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
+		
+		Thread monsterDelayThread = new Thread() {
+			public void run () {
+				setMonsterTurn(true);
+				ArrayList<Unit> monsters = GameLogic.getInstance().getMonsters();
+				Unit monster;
+				
+				for(int i = 0;i<monsters.size();i++) {
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+					monster = GameLogic.getInstance().getUnitByPosition(i,monsters);
+					if( monster == null || !monster.isAlive() ) {
+						continue;
+					}
+					
+					monster.useSkill(null);
+					GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
+					updateStageGame();
+					
+					if(isStageFail) {
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e1) {
+
+							e1.printStackTrace();
+						}
+						Platform.runLater( ()->{
+							try {
+								GameLogic.getInstance().getCombatController().switchtoGameOver();
+							} catch (IOException e) {
+								System.out.println("game over error");
+								e.printStackTrace();
+							}
+						});
+						
+						isGameActive = false;
+						return;
+					}
+					
+					
+					
+				}
+				setMonsterTurn(false);
+				GameLogic.getInstance().countdownGame();
+				GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
+				GameLogic.getInstance().setCurrentHero( GameLogic.getInstance().getHeros().get(heroOrder) );
+				GameLogic.getInstance().getCombatController().getSkillPane().updateState();
+			}
+		};
+		monsterDelayThread.start();
+
+		
+
 	}
+	
 
 	
 	
