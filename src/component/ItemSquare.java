@@ -95,6 +95,7 @@ public class ItemSquare extends VBox {
 			return;
 		}
 		if(GameLogic.getInstance().stageClear() || GameLogic.getInstance().stageFail() ) {
+			GameLogic.getInstance().getCombatController().showRollDiceAlert();
 			System.out.println("cant use item please row a dice");
 			return;
 		}
