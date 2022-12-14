@@ -26,8 +26,14 @@ import logic.GameLogic;
 import sound.SoundManager;
 import application.Main;
 import component.*;
+
+/**
+ * Controller for fxml 
+ */
 public class MenuController implements Initializable  {
-    
+	/**
+	  *
+	  */
 	@FXML
 	public Button eieiButton ;
 	@FXML
@@ -58,7 +64,7 @@ public class MenuController implements Initializable  {
 			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
 			stage.setScene(scene);
-			//SoundManager.setCurrentBGM("audio/CombatBGM.wav",0.1);
+			SoundManager.setCurrentBGM("audio/CombatBGM.wav",0.1);
 			
 			stage.show();
 			

@@ -31,6 +31,7 @@ import component.CombatDisplay;
 import component.*;
 
 public class CombatController implements Initializable{
+
 	@FXML
 	public HBox commandPane ;
 	@FXML

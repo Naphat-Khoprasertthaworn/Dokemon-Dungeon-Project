@@ -5,16 +5,33 @@ import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import logic.GameLogic;
-
+/**
+ * Monster class
+ */
 public class Monster extends Unit {
-	
+	/**
+	  * Object monster
+	  */
 	private Monster monster;
 	
+	/**
+	  * Constructor of Monster class
+	  * @param name name of monster
+	  * @param text text of monster 
+	  * @param attack attack of monster
+	  * @param defense defense of monster 
+	  * @param position position of monster
+	  * @param maxHealth max health of monster
+	  * @param imagePath image path of monster
+	  */
 	public Monster(String name, String text, int attack, int defense, int position, int maxHealth,String imagePath) {
 		super(name, text, attack, defense, position, maxHealth, imagePath);
 		this.monster = this;
 	}
 	
+	/**
+	  * Reset monster to battlefield
+	  */
 	public void reset() {
 		//System.out.println("use this");
 		this.setAlive(true);
@@ -29,6 +46,10 @@ public class Monster extends Unit {
 		}
 	}
 	
+	/**
+	  * Activate skill method
+	  * @param skill skill to use 
+	  */
 	public boolean useSkill(Skill skill) {
 		
 		//System.err.println(skill.getName() + " cd " + skill.getInCombatCd() + " " + skill.getCd());
