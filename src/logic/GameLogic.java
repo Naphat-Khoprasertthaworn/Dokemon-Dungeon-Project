@@ -41,65 +41,125 @@ import skill.type.SingleTargetDefenceSkill;
 
 
 public class GameLogic {
+	/**
+	  * GameLogic is game controller of this game.
+	  */
 	private static GameLogic instance = null;
+	
+	/**
+	  * Arraylist of hero units.
+	  */
 	private ArrayList<Unit> heros;
+	
+	/**
+	  * ArrayList of monsters units in one stage.
+	  */
 	private ArrayList<Unit> monsters;
+	
+	/**
+	  * Arraylist of all monsters(execpt boss).
+	  */
 	private ArrayList<Monster> poolMonsters;
+	
+	/**
+	  * Arraylist of all item(execpt boss).
+	  */
 	private ArrayList<Item> poolItems;
-
+	
+	
+	/**
+	  * Hero unit targeted by player.
+	  */
 	private Unit targetedHero;
+	
+	/**
+	  * Monster unit targeted by player.
+	  */
 	private Unit targetedMonster;
+	
+	/**
+	  * Hero units this turn.
+	  */
 	private Unit currentHero;
 	
+	/**
+	  * Game distance progress.
+	  */
 	private int distance;
+	
+	/**
+	  * Max game distance progress.
+	  */
 	public static final int MAX_DISTANCE = 7;
+	
+	/**
+	  * Number of unit in party.
+	  */
 	public static final int MAX_PARTY = 3;
+	
+	/**
+	  * Number of item that drop each stage.
+	  */
 	public static final int ITEM_DROP = 3;
 	
+	/**
+	  * Game active state.
+	  */
 	public static boolean isGameActive;
+	
+	/**
+	  * Game combat mode state.
+	  */
 	public static boolean isCombatMode;
+	
+	/**
+	  * Game hero turn state.
+	  */
 	public static boolean isHeroTurn;
+	
+	/**
+	  * Game fail state.
+	  */
 	public static boolean isStageFail;
+	
+	/**
+	  * Game clear state.
+	  */
 	public static boolean isStageClear;
+	
+	/**
+	  * Order of hero in party in this turn. 
+	  */
 	private static int heroOrder;
+	
+	/**
+	  * Combat controller of this game. 
+	  */
 	private CombatController combatController;
-	public static boolean notInitStage;
+	
+	/**
+	  * Game boss stage state 
+	  */
 	public static boolean isBossStage;
 	
+	/**
+	  * Game animation running state. 
+	  */
 	public static boolean animationRunning;
+	
+	/**
+	  * Game monster turn state. 
+	  */
 	public static boolean isMonsterTurn;
-	
-	
-	public static boolean isMonsterTurn() {
-		return isMonsterTurn;
-	}
 
-	public static void setMonsterTurn(boolean isMonsterTurn) {
-		GameLogic.isMonsterTurn = isMonsterTurn;
-	}
-
-	public boolean isAnimationRunning() {
-		return animationRunning;
-	}
-
-	public static void setAnimationRunning(boolean animationRunning) {
-		GameLogic.animationRunning = animationRunning;
-	}
-
-	
-	
-	public CombatController getCombatController() {
-		return combatController;
-	}
-
-	public void setCombatController(CombatController combatController) {
-		this.combatController = combatController;
-	}
-
-	private MenuController menuController;
-	
+	/**
+	  * ArrayList of player item. 
+	  */
 	private ArrayList<Item> inventory;
 	
+	/**
+	  * Comparator of unit in unit party. 
+	  */
 	private Comparator<Unit> compUnit = (Unit u1,Unit u2)->{
 		if(u1.getPosition() > u2.getPosition()) {
 			return 1;
@@ -107,13 +167,64 @@ public class GameLogic {
 		return -1;
 	};
 	
-		//######## GAME LOGIC ########
-	private GameLogic() {
-		
-		this.newGame();
-		
+	/**
+	  * Getter of combat controller of this game.
+	  */
+	public CombatController getCombatController() {
+		return combatController;
 	}
 	
+	/**
+	  * Setter of combat controller of this game.
+	  * @param combatController combat controller of this game.
+	  */
+	public void setCombatController(CombatController combatController) {
+		this.combatController = combatController;
+	}
+	
+	/**
+	  * Getter of isMonsterTurn of this game.
+	  */
+	public static boolean isMonsterTurn() {
+		return isMonsterTurn;
+	}
+	
+	/**
+	  * Setter of isMonsterTurn of this game.
+	  * @param isMonsterTurn game monster turn state.
+	  */
+	public static void setMonsterTurn(boolean isMonsterTurn) {
+		GameLogic.isMonsterTurn = isMonsterTurn;
+	}
+	
+	/**
+	  * Getter of isAnimationRunning of this game.
+	  */
+	public boolean isAnimationRunning() {
+		return animationRunning;
+	}
+	
+	/**
+	  * Setter of isAnimationRunning of this game.
+	  * @param animationRunning game animation running state.
+	  */
+	public static void setAnimationRunning(boolean animationRunning) {
+		GameLogic.animationRunning = animationRunning;
+	}
+	
+	
+		//######## GAME LOGIC ########
+	
+	/**
+	  * Contractor of GameLogic.
+	  */
+	private GameLogic() {
+		this.newGame();
+	}
+	
+	/**
+	  * Getter of GameLogic.
+	  */
 	public static GameLogic getInstance() {
 		if(instance == null) {
 			instance = new GameLogic();
@@ -123,15 +234,17 @@ public class GameLogic {
 	
 
 	//######## DISTANCE & DICE ########
-//	public int rollDice() {
-//		int i = (int) ((Math.random()*5) +1);
-//		return i;
-//	}
-//	
+	/**
+	  * Getter of game distance.
+	  */
 	public int getDistance() {
 		return distance;
 	}
 	
+	/**
+	  * Setter of game distance.
+	  * @param distance game distance.
+	  */
 	public boolean setDistance(int distance) {
 		
 		if( distance >= MAX_DISTANCE ) {
@@ -144,6 +257,9 @@ public class GameLogic {
 	
 	//######## TURN & STAGE HANDLER ########
 	
+	/**
+	  * countdown all countdownable object.
+	  */
 	public void countdownGame() {
 		for(Unit unit:this.getHeros()) {
 			unit.countdownAll();
@@ -153,6 +269,9 @@ public class GameLogic {
 		}
 	}
 	
+	/**
+	  * reset all unit in array of hero and array of monster.
+	  */
 	public void resetUnits() {
 		for(Unit unit:this.getHeros()) {
 			unit.reset();
@@ -163,12 +282,18 @@ public class GameLogic {
 		this.getMonsters().clear();
 	}
 	
+	/**
+	  * auto set of targetHero and targetMonster.
+	  */
 	public void initPointer() {
 		this.setTargetedHero( this.getFrontLineUnit(heros) );
 		this.setTargetedMonster( this.getFrontLineUnit(monsters) );
 
 	}
 	
+	/**
+	  * check stage clear of combat mode.
+	  */
 	public boolean stageClear() {
 		for(Unit unit :this.getMonsters()) {
 			if(unit.isAlive()) {
@@ -178,6 +303,9 @@ public class GameLogic {
 		return true;
 	}
 	
+	/**
+	  * check stage fail of combat mode.
+	  */
 	public boolean stageFail() {
 		for(Unit unit :this.getHeros()) {
 			if(unit.isAlive()) {
@@ -187,6 +315,9 @@ public class GameLogic {
 		return true;
 	}
 	
+	/**
+	  * update targetPointer of hero and monster.
+	  */
 	public void updateTargetPointer() {
 		Unit unit;
 
@@ -214,15 +345,27 @@ public class GameLogic {
 			}
 		}
 	}
+	
 	//######## INVENTORY ########
+	/**
+	  * getter of inventory.
+	  */
 	public ArrayList<Item> getInventory() {
 		return inventory;
 	}
-
+	
+	/**
+	  * setter of inventory.
+	  * @param inventory ArrayList of Item.
+	  */
 	public void setInventory(ArrayList<Item> inventory) {
 		this.inventory = inventory;
 	}
 	
+	/**
+	  * setter of inventory.
+	  * @param inventory ArrayList of Item.
+	  */
 	public void addItem(Item item) {
 		for(Item i:this.getInventory()) {
 			if( i.equals(item) ) {
@@ -233,7 +376,9 @@ public class GameLogic {
 		this.getInventory().add(item);
 	}
 
-	
+	/**
+	  * print all Item in inventory.
+	  */
 	public void showInventory() {
 		for(int i = 0;i<inventory.size();i++) {
 			System.out.println( inventory.get(i) );
@@ -242,6 +387,11 @@ public class GameLogic {
 	
 	//######## TARGET POINTER HANDLER ########
 	
+	/**
+	  * find targeted unit in hero party or monster party.
+	  * @param unit used skill unit.
+	  * @param b b is true if we want to find target unit is in same party.
+	  */
 	public Unit findTarget(Unit unit,boolean b) {
 		if(this.getHeros().contains(unit) == b) {
 			return this.getTargetedHero();
@@ -252,10 +402,17 @@ public class GameLogic {
 		}
 	}
 	
+	/**
+	  * Getter of targeted hero.
+	  */
 	public Unit getTargetedHero() {
 		return targetedHero;
 	}
-
+	
+	/**
+	  * Setter of targeted hero.
+	  * @param targetedHero targeted hero.
+	  */
 	public void setTargetedHero(Unit targetedHero) {
 		if(targetedHero == null) {
 			return;//add disable all pointer
@@ -269,11 +426,18 @@ public class GameLogic {
 			this.targetedHero = targetedHero;
 		}
 	}
-
+	
+	/**
+	  * Getter of targeted monster.
+	  */
 	public Unit getTargetedMonster() {
 		return targetedMonster;
 	}
-
+	
+	/**
+	  * Setter of target monster.
+	  * @param targetedMonster targeted monster.
+	  */
 	public void setTargetedMonster(Unit targetedMonster) {
 		if(targetedMonster == null) {
 			return;//add disable all pointer
@@ -290,7 +454,11 @@ public class GameLogic {
 	}
 
 	//######## SINGLE UNIT HANDLER ########
-	
+	/**
+	  * Getter unit in array of unit by position.
+	  * @param p position.
+	  * @param units array of unit.
+	  */
 	public Unit getUnitByPosition(int p,ArrayList<Unit> units) {
 		for(int i = 0;i<MAX_PARTY;i++) {
 			if(units.get(i).getPosition() == p) {
@@ -300,6 +468,10 @@ public class GameLogic {
 		return null;
 	}
 	
+	/**
+	  * Getter less position unit in array of unit.
+	  * @param units array of unit.
+	  */
 	public Unit getFrontLineUnit(ArrayList<Unit> units) {
 		for( int i = 0;i<MAX_PARTY;i++ ) {
 			for(Unit u :units) {
@@ -311,6 +483,10 @@ public class GameLogic {
 		return null;
 	}
 	
+	/**
+	  * Getter greater position unit in array of unit.
+	  * @param units array of unit.
+	  */
 	public Unit getBackLineUnit(ArrayList<Unit> units) {
 		for( int i = MAX_PARTY-1;i>=0;i-- ) {
 			for(Unit u :units) {
@@ -322,6 +498,10 @@ public class GameLogic {
 		return null;
 	}
 	
+	/**
+	  * Getter less health unit in array of unit.
+	  * @param units array of unit.
+	  */
 	public Unit getLowestHealthUnit( ArrayList<Unit> units ) {
 		Unit u = getFrontLineUnit(units);
 		for(Unit unit:units) {
@@ -332,34 +512,59 @@ public class GameLogic {
 		return u;
 	}
 	
+	/**
+	  * Getter of hero unit in this turn.
+	  */
 	public Unit getCurrentHero() {
 		return currentHero;
 	}
-
+	
+	/**
+	  * Setter of hero unit in this turn.
+	  * @param currentHero next turn hero unit.
+	  */
 	public void setCurrentHero(Unit currentHero) {
 		this.currentHero = currentHero;
 	}
 	
 	//######## PARTY HANDLER ########
-
+	/**
+	  * Getter of arraylist of hero unit.
+	  */
 	public ArrayList<Unit> getHeros() {
 		return heros;
 	}
 
+	/**
+	  * add hero unit to arraylist of hero.
+	  * @param heros hero unit.
+	  */
 	public void addHeros(Unit heros) {
 		this.heros.add(heros);
 		Collections.sort( this.heros,compUnit );
 	}
 
+	/**
+	  * Getter of arraylist of monster unit.
+	  */
 	public ArrayList<Unit> getMonsters() {
 		return monsters;
 	}
-
+	
+	/**
+	  * add monster unit to arraylist of monster.
+	  * @param monsters monster unit.
+	  */
 	public void addMonsters(Unit monsters) {
 		this.monsters.add(monsters);
 		Collections.sort( this.monsters,compUnit );
 	}
-	
+
+	/**
+	  * find arraylist of monsters or arraylist of heros.
+	  * @param u unit.
+	  * @param b b is true if we want to find party that contain this unit.
+	  */
 	public ArrayList<Unit> findParty(Unit u,boolean b){
 		if( this.getHeros().contains(u)==b ) {
 			return this.getHeros();
@@ -372,6 +577,9 @@ public class GameLogic {
 	
 	
 	//######## INITIAL GAME ########
+	/**
+	  * generate all object in this game execpt boss.
+	  */
 	public void newGame() {
 		this.setDistance(0);
 		this.inventory = new ArrayList<Item>();
@@ -380,13 +588,12 @@ public class GameLogic {
 		this.monsters = new ArrayList<Unit>();
 		this.generatePoolMonsters();
 		
-		//UnitCard.updateHealthBar();
-		
-		
 	}
 	
+	/**
+	  * generate hero party.
+	  */
 	public void gennerateHerosParty() {
-		//System.out.println("gen heros");
 		this.heros = new ArrayList<Unit>();
 		
 		Unit warriorUnit = new Unit("Warrior", "I am warrior.", 50, 30, 0, 100,"image/warriorUnit.png");
@@ -429,11 +636,12 @@ public class GameLogic {
 		medicUnit.addSkills(medicAutoAttack);
 		medicUnit.addSkills(medicSkill1);
 		medicUnit.addSkills(medicSkill2);
-		
-		//System.out.println(this.getHeros());
-		//System.out.println(this.getCurrentHero());
+	
 	}
 	
+	/**
+	  * generate all monster in this game.
+	  */
 	public void generatePoolMonsters() {
 		this.poolMonsters = new ArrayList<Monster>();
 		Monster golemUnit = new Monster("Golem", "I am golem", 50, 30, 0,300,"image/golemUnit.png");
@@ -441,7 +649,6 @@ public class GameLogic {
 		Monster oniUnit = new Monster("Oni", "I am Oni", 50 , 30, 0, 250,"image/oniUnit.png");
 		Monster bloodHawkUnit = new Monster("Blood Hawk", "I am blood hawk" ,40, 10, 0, 200,"image/bloodHawkUnit.png");
 		Monster gnomeUnit = new Monster("Gnome", "I am Gnome", 30, 10, 0, 200,"image/gnomeUnit.png");
-		
 		
 		SingleTargetAttackSkill golemAutoAttack = new SingleTargetAttackSkill("Auto attack","attack front line hero",100,2, false,"image/monsterSkill.png");
 		MultiTargetAttackSkill golemSkill1 = new MultiTargetAttackSkill("Eathquake","AOE attack",100,5,"image/monsterSkill.png");
@@ -489,10 +696,10 @@ public class GameLogic {
 		for(Monster m:this.poolMonsters) {
 			m.reset();
 		}
-		
-		
 	}
-	
+	/**
+	  * generate all item in this game.
+	  */
 	public void generatePoolItems() {
 		this.poolItems = new ArrayList<Item>();
 		
@@ -511,6 +718,9 @@ public class GameLogic {
 	
 	
 	//######## INITIAL STAGE ########
+	/**
+	  * generate monsters in each stage.
+	  */
 	public void generateMonsters() {
 		int rand;
 		ArrayList<Integer> nums = new ArrayList<Integer>();
@@ -532,10 +742,11 @@ public class GameLogic {
 				}
 			}
 		}
-
-		
 	}
 	
+	/**
+	  * generate boss in boss stage.
+	  */
 	public void generateBossStage() {
 		Monster bossMonster = new Monster("Boss", "I am Boss of this game", 100, 70, 0, 200,"image/bossUnit.png");
 		MultiTargetAttackSkill bossAutoAttack = new MultiTargetAttackSkill("boss auto attack", "AOE debuff and buff self", 10, 3,"image/monsterSkill.png");
@@ -563,7 +774,9 @@ public class GameLogic {
 	}
 	
 	//######## END STAGE ########
-	
+	/**
+	  * generate item when we clear each stage and add to inventory.
+	  */
 	public ArrayList<Item> generateItemDrop(){
 		
 		ArrayList<Item> itemDrop = new ArrayList<Item>();
@@ -594,30 +807,28 @@ public class GameLogic {
 		return itemDrop;
 	}
 	
-	
-	
+	/**
+	  * init this game.
+	  */
 	public static void initGame() {
-		
 		isGameActive = true;
 		GameLogic.getInstance().newGame();
 		GameLogic.getInstance().setCurrentHero( GameLogic.getInstance().getHeros().get(heroOrder) );
 	}
 	
+	/**
+	  * start each stage in this game and update GUI.
+	  */
 	public static void startStageGame() {
 		System.out.println( "distance NOW : "+GameLogic.getInstance().getDistance() );
 		setMonsterTurn(false);
 		
 		if(isBossStage) {
 			GameLogic.getInstance().generateBossStage();
-//			GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatUnit();
 		}else {
 			
 			GameLogic.getInstance().generateMonsters();
-//			if(notInitStage) {
-//				GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatUnit();
-//			}
-//			notInitStage = true;
-//			GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatUnit();
+
 		}
 		GameLogic.getInstance().initPointer();
 		GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatUnit();
@@ -630,17 +841,15 @@ public class GameLogic {
 		
 	}
 	
+	/**
+	  * update state game after skill is clicked.
+	  */
 	public static void heroAction() {
 		
-		updateStageGame();
+		updateStateGame();
 		if(isStageClear) {
 			if(isBossStage) {
 				System.out.println("YOU WIN!!!");
-//				try {
-//					Thread.sleep(1000);
-//				} catch (InterruptedException e1) {
-//					e1.printStackTrace();
-//				}
 				
 				try {
 					GameLogic.getInstance().getCombatController().switchtoGameClear();
@@ -678,16 +887,16 @@ public class GameLogic {
 			monsterTurn();
 			return;
 		}
-		
-		
+
 		GameLogic.getInstance().setCurrentHero( GameLogic.getInstance().getHeros().get(heroOrder) );
 
-		
 	}
 	
+	/**
+	  * monster auto use skill.
+	  */
 	public static void monsterTurn() {
-		
-		
+
 		Thread monsterDelayThread = new Thread() {
 			public void run () {
 				setMonsterTurn(true);
@@ -709,7 +918,7 @@ public class GameLogic {
 					GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
 					GameLogic.getInstance().updateTargetPointer();
 					GameLogic.getInstance().getCombatController().getCombatDisplay().updatePointer();
-					updateStageGame();
+					updateStateGame();
 					
 					if(isStageFail) {
 						try {
@@ -726,13 +935,9 @@ public class GameLogic {
 								e.printStackTrace();
 							}
 						});
-						
 						isGameActive = false;
 						return;
 					}
-					
-					
-					
 				}
 				setMonsterTurn(false);
 				GameLogic.getInstance().countdownGame();
@@ -743,18 +948,18 @@ public class GameLogic {
 		};
 		monsterDelayThread.start();
 
-		
-
 	}
-	
-
-	
-	
-	public static void updateStageGame() {
+	/**
+	  * update state game
+	  */
+	public static void updateStateGame() {
 		isStageClear = GameLogic.getInstance().stageClear();
 		isStageFail = GameLogic.getInstance().stageFail();
 	}
 	
+	/**
+	  * generate item drop and show inventory.
+	  */
 	public static void collectItem() {
 		GameLogic.getInstance().generateItemDrop();
 
