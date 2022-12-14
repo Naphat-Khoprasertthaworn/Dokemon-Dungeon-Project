@@ -53,8 +53,8 @@ public class GameLogic {
 	
 	private int distance;
 	public static final int MAX_DISTANCE = 7;
-	static final int MAX_PARTY = 3;
-	static final int ITEM_DROP = 3;
+	public static final int MAX_PARTY = 3;
+	public static final int ITEM_DROP = 3;
 	
 	public static boolean isGameActive;
 	public static boolean isCombatMode;
@@ -396,25 +396,25 @@ public class GameLogic {
 		this.addHeros(archerUnit);
 		this.addHeros(medicUnit);
 		this.addHeros(warriorUnit);
-		SingleTargetAttackSkill warriorAutoAttack = new SingleTargetAttackSkill("Auto attack","can't target", 100,0, false,"image/warriorAutoAttack.png");
-		SingleTargetAttackSkill warriorSkill1 = new SingleTargetAttackSkill("atk & self buff","give dmg reduc to self",120,3,false,"image/warriorSkill1.png");
+		SingleTargetAttackSkill warriorAutoAttack = new SingleTargetAttackSkill("Auto Attack","can't target", 100,0, false,"image/warriorAutoAttack.png");
+		SingleTargetAttackSkill warriorSkill1 = new SingleTargetAttackSkill("Attack then Buff","can't target",120,3,false,"image/warriorSkill1.png");
 		warriorSkill1.addBuffsSelf( new DamageReduction(2, 30) );
-		MultiTargetAttackSkill warriorSkill2 = new MultiTargetAttackSkill("AOE atk","can't target",120,5,"image/warriorSkill2.png");
+		MultiTargetAttackSkill warriorSkill2 = new MultiTargetAttackSkill("AOE Damage","AOE",120,5,"image/warriorSkill2.png");
 		warriorSkill2.addBuffsSelf( new Exhaust(2, 30) );
 		
-		SingleTargetAttackSkill medicAutoAttack = new SingleTargetAttackSkill("Auto attack","can't target and give exhaust to attacked unit",100,0, false,"image/medicAutoAttack.png");
+		SingleTargetAttackSkill medicAutoAttack = new SingleTargetAttackSkill("Auto Attack","can't target",100,0, false,"image/medicAutoAttack.png");
 		medicAutoAttack.addBuffsTarget(new Exhaust(1 , 30));
-		SingleTargetDefenceSkill medicSkill1 = new SingleTargetDefenceSkill("heal","single heal",100,3,"image/medicSkill1.png");
-		MultiTargetDefenceSkill medicSkill2 = new MultiTargetDefenceSkill("AOE buff","AOE buff",0,6,"image/medicSkill2.png");
+		SingleTargetDefenceSkill medicSkill1 = new SingleTargetDefenceSkill("Single Heal","can target an allie",100,3,"image/medicSkill1.png");
+		MultiTargetDefenceSkill medicSkill2 = new MultiTargetDefenceSkill("Buff","AOE buff",0,6,"image/medicSkill2.png");
 		medicSkill2.addBuffsTarget( new DamageReduction(1, 100) );
 		medicSkill2.addBuffsTarget( new Enhance(2, 100) );
 		
-		SingleTargetAttackSkill archerAutoAttack = new SingleTargetAttackSkill("Auto attack","Give vulnetability to target",100,0, true,"image/archerAutoAttack.png");
+		SingleTargetAttackSkill archerAutoAttack = new SingleTargetAttackSkill("Auto Attack","can target an enemy",100,0, true,"image/archerAutoAttack.png");
 		archerAutoAttack.addBuffsTarget(new Vulnetability(2, 20));
-		SingleTargetAttackSkill archerSkill1 = new SingleTargetAttackSkill("DPS skill","enhance self and vulnetability target",200,2, true,"image/archerSkill1.png");
+		SingleTargetAttackSkill archerSkill1 = new SingleTargetAttackSkill("DPS skill","can target an enemy",200,2, true,"image/archerSkill1.png");
 		archerSkill1.addBuffsTarget(new Vulnetability(2, 30));
 		archerSkill1.addBuffsSelf( new Enhance(3, 20) );
-		MultiTargetAttackSkill archerSkill2 = new MultiTargetAttackSkill("super debuff","give all enimies vulnetability and exhaust",100,4,"image/archerSkill2.png");
+		MultiTargetAttackSkill archerSkill2 = new MultiTargetAttackSkill("Debuff","AOE",100,4,"image/archerSkill2.png");
 		archerSkill2.addBuffsTarget(new Vulnetability(2, 30));
 		archerSkill2.addBuffsTarget(new Exhaust(1, 30));
 
@@ -436,11 +436,11 @@ public class GameLogic {
 	
 	public void generatePoolMonsters() {
 		this.poolMonsters = new ArrayList<Monster>();
-		Monster golemUnit = new Monster("Golem", "I am golem", 50, 30, 0,100,"image/golemUnit.png");
-		Monster slimeUnit = new Monster("Slime", "I am slime", 20, 10, 0, 50,"image/slimeUnit.png");
-		Monster oniUnit = new Monster("Oni", "I am Oni", 50 , 30, 0, 60,"image/oniUnit.png");
-		Monster bloodHawkUnit = new Monster("Blood Hawk", "I am blood hawk" ,40, 10, 0, 50,"image/bloodHawkUnit.png");
-		Monster gnomeUnit = new Monster("Gnome", "I am Gnome", 20, 10, 0, 50,"image/gnomeUnit.png");
+		Monster golemUnit = new Monster("Golem", "I am golem", 50, 30, 0,300,"image/golemUnit.png");
+		Monster slimeUnit = new Monster("Slime", "I am slime", 20, 10, 0, 200,"image/slimeUnit.png");
+		Monster oniUnit = new Monster("Oni", "I am Oni", 50 , 30, 0, 250,"image/oniUnit.png");
+		Monster bloodHawkUnit = new Monster("Blood Hawk", "I am blood hawk" ,40, 10, 0, 200,"image/bloodHawkUnit.png");
+		Monster gnomeUnit = new Monster("Gnome", "I am Gnome", 30, 10, 0, 200,"image/gnomeUnit.png");
 		
 		
 		SingleTargetAttackSkill golemAutoAttack = new SingleTargetAttackSkill("Auto attack","attack front line hero",100,2, false,"image/monsterSkill.png");
@@ -448,8 +448,8 @@ public class GameLogic {
 
 		SingleTargetAttackSkill slimeAutoAttack = new SingleTargetAttackSkill("Auto attack" , "heal self and give front line exhaust" , 100,0, false,"image/monsterSkill.png");
 		slimeAutoAttack.addBuffsSelf(new Regeneration(40));
-
 		SingleTargetAttackSkill slimeSkill1 = new SingleTargetAttackSkill("normal debuff","give debuff to front line",100,3, false,"image/monsterSkill.png");
+		
 		slimeSkill1.addBuffsTarget(new Exhaust(3, 20));
 		slimeSkill1.addBuffsTarget(new Vulnetability(2, 20));
 		
@@ -462,8 +462,8 @@ public class GameLogic {
 		SingleTargetAttackSkill bloodHawkSkill1 = new SingleTargetAttackSkill("super dangerous vulnetability" , "" , 100,2,true,"image/monsterSkill.png");
 		bloodHawkSkill1.addBuffsTarget(new Vulnetability(2, 30));
 
-		SingleTargetDefenceSkill gnomeAutoAttack = new SingleTargetDefenceSkill("heal lowest hp monster","single heal",50,2,"image/monsterSkill.png");
-		MultiTargetDefenceSkill gnomeSkill1 = new MultiTargetDefenceSkill("Heal monster","AOE heal",30,4,"image/monsterSkill.png");
+		SingleTargetDefenceSkill gnomeAutoAttack = new SingleTargetDefenceSkill("heal lowest hp monster","single heal",100,1,"image/monsterSkill.png");
+		MultiTargetDefenceSkill gnomeSkill1 = new MultiTargetDefenceSkill("Heal monster","AOE heal",100,4,"image/monsterSkill.png");
 		
 		
 		golemUnit.addSkills(golemAutoAttack);
@@ -556,12 +556,10 @@ public class GameLogic {
 		bossMonster.addSkills(bossSkill2);
 		bossMonster.reset();
 		
-		//Monster blankUnitMonster = new Monster("blank unit", "donothing", 0, 0, 0, 0, "image/blank.png");
 		
 		
 		this.monsters.add(bossMonster);
-		//this.monsters.add(blankUnitMonster);
-		//this.monsters.add(blankUnitMonster);
+
 	}
 	
 	//######## END STAGE ########
@@ -606,9 +604,8 @@ public class GameLogic {
 	}
 	
 	public static void startStageGame() {
-
 		System.out.println( "distance NOW : "+GameLogic.getInstance().getDistance() );
-
+		setMonsterTurn(false);
 		
 		if(isBossStage) {
 			GameLogic.getInstance().generateBossStage();
@@ -628,7 +625,6 @@ public class GameLogic {
 		
 		isStageClear = false;
 		isStageFail = false;
-		//isCombatMode = true;
 		heroOrder = 0;
 		GameLogic.getInstance().setCurrentHero( GameLogic.getInstance().getHeros().get(heroOrder) );
 		
@@ -640,10 +636,16 @@ public class GameLogic {
 		if(isStageClear) {
 			if(isBossStage) {
 				System.out.println("YOU WIN!!!");
+//				try {
+//					Thread.sleep(1000);
+//				} catch (InterruptedException e1) {
+//					e1.printStackTrace();
+//				}
+				
 				try {
 					GameLogic.getInstance().getCombatController().switchtoGameClear();
 				} catch (IOException e) {
-					System.out.println("game over error");
+					System.out.println("game clear error");
 					e.printStackTrace();
 				}
 				isBossStage = false;
@@ -651,7 +653,6 @@ public class GameLogic {
 				return;
 			}
 			
-			//GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
 			GameLogic.getInstance().generateItemDrop();
 			GameLogic.getInstance().getCombatController().getItemGridPane().updateState();
 			GameLogic.getInstance().getCombatController().dice.setEnable(true);
@@ -706,6 +707,8 @@ public class GameLogic {
 					
 					monster.useSkill(null);
 					GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
+					GameLogic.getInstance().updateTargetPointer();
+					GameLogic.getInstance().getCombatController().getCombatDisplay().updatePointer();
 					updateStageGame();
 					
 					if(isStageFail) {

@@ -37,7 +37,7 @@ public class MultiTargetDefenceSkill extends DefenceSkill {
 				}
 			
 			}
-			System.out.println(unit);
+			System.out.println("Target"+unit);
 		}
 		for(Buff b:this.getBuffsSelf()) {
 			if (b instanceof DamageReduction) {
@@ -54,7 +54,7 @@ public class MultiTargetDefenceSkill extends DefenceSkill {
 				
 			}
 		}
-		System.out.println(owner);
+		System.out.println("owner"+owner);
 		
 	}
 
