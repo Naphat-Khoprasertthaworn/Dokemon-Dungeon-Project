@@ -102,6 +102,7 @@ public class Dice extends VBox{
 		};
 		thread.start();
 
+
 	}
 	
 	/**
