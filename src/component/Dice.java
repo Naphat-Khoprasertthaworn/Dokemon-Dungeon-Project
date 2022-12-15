@@ -78,7 +78,7 @@ public class Dice extends VBox{
 	 * Dice on click event. 
 	 */
 	protected void onClickHandler() {
-		
+		isEnable = false;
 		Random random = new Random();
 		Thread thread = new Thread() {
 			public void run () {
@@ -90,7 +90,7 @@ public class Dice extends VBox{
 						diceImageView.setImage(new Image(imgPath));
 						Thread.sleep(50);
 					}
-					isEnable = true ;
+					//isEnable = true ;
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -134,8 +134,7 @@ public class Dice extends VBox{
 		
 		GameLogic.getInstance().getCombatController().getCombatDisplay().updatePointer();
 		GameLogic.getInstance().getCombatController().getSkillPane().updateState();
-		
-		isEnable = false;
+
 	}
 	
 	/**
