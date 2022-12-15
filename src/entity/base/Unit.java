@@ -141,7 +141,7 @@ public class Unit {
 	  * @param isAlive value to set
 	  */
 	public void setAlive(boolean isAlive) {
-		if(isAlive == false) {
+		if(!isAlive) {
 			this.getBuffs().clear();
 		}
 		this.isAlive = isAlive;
@@ -221,7 +221,7 @@ public class Unit {
 		if(!this.skills.contains(skill)) {
 			return false;
 		}
-		if( skill.readySkill()==false ) {
+		if( !skill.readySkill() ) {
 			return false;
 		}
 		if( skill==null) {
