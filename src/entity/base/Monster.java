@@ -51,7 +51,7 @@ public class Monster extends Unit {
 		for(int i=monster.getSkills().size()-1;i>=0;i--) {
 			if(monster.getSkills().get(i)==null) {
 				continue;
-			}else if(monster.getSkills().get(i).readySkill()==false) {
+			}else if(!monster.getSkills().get(i).readySkill()) {
 				continue;
 			}else {
 				
