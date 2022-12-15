@@ -75,8 +75,8 @@ public class MenuController implements Initializable  {
 	  */
 	@FXML
 	//Image dota2 = new Image(getClass().getResourceAsStream("image/monsterSkill.png"));
-	Image image = new Image(ClassLoader.getSystemResource("image/monsterSkill.png").toString(), 1200,
-            800, false, true);
+//	Image image = new Image(ClassLoader.getSystemResource("image/ddlogo.png").toString(), 200,
+//            200, false, true);
 
 	
 	/**
@@ -132,6 +132,7 @@ public class MenuController implements Initializable  {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
+		//gameLogo.setImage(image);
 		System.out.println("eiei");
 	}
 	

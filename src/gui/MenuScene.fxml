@@ -20,7 +20,7 @@
                <children>
                   <ImageView fx:id="gameLogo" fitHeight="179.0" fitWidth="195.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../res/image/ddlogo.png" />
+                        <Image url="@ddlogo.png" />
                      </image>
                      <effect>
                         <Glow level="0.78" />
