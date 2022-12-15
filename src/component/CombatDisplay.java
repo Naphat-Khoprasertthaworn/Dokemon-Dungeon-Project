@@ -3,6 +3,7 @@ package component;
 import java.util.ArrayList;
 
 import entity.base.Unit;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
@@ -60,15 +61,14 @@ public class CombatDisplay extends HBox {
 	        monsterCardBox.setPrefWidth(640);
 	        monsterCardBox.setAlignment(Pos.CENTER);
 	        
-	        BackgroundImage bgImg = new BackgroundImage(combatBackground,BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT,BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT);
-	        //GameLogic.getInstance().generateBossStage();
+	        //BackgroundImage bgImg = new BackgroundImage(combatBackground,BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT,BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT);
 	        ArrayList<Unit> heroes = GameLogic.getInstance().getHeros();
-	        ArrayList<Unit> monsters = GameLogic.getInstance().getMonsters();
+	        //ArrayList<Unit> monsters = GameLogic.getInstance().getMonsters();
 	        unitCards = new ArrayList<UnitCard>();
 	        monsterCards = new ArrayList<UnitCard>();
+	        
 	        for( int i = heroes.size()-1;i>=0;i--) {
 	            UnitCard heroCard = new UnitCard();
-	            //heroCard.update(heroes.get(i));
 	            heroesCardBox.getChildren().add(heroCard);
 	            this.unitCards.add(heroCard);
 	            
@@ -82,9 +82,12 @@ public class CombatDisplay extends HBox {
 	        this.setAlignment(Pos.CENTER);
 	        //this.setBackground(new Background(bgImg));
 	        this.getChildren().add(heroesCardBox);
-	        this.getChildren().add(monsterCardBox); 
+	        this.getChildren().add(monsterCardBox);
+
 	        updateCombatUnit();
 	        updatePointer();
+
+
 	}
 	
 	/**
@@ -109,7 +112,7 @@ public class CombatDisplay extends HBox {
 			this.unitCards.get(herosArrayList.size()-1-i).update(herosArrayList.get(i) );
 		}
 		
-		if(GameLogic.getInstance().isBossStage) {
+		if(GameLogic.isBossStage) {
 			this.monsterCards.clear();
 			this.monsterCardBox.getChildren().clear();
             UnitCard monsterCard = new UnitCard();

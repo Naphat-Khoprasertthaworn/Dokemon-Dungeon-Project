@@ -127,7 +127,7 @@ public class SkillCard extends VBox{
 	 * SkillCard on click event.
 	 */
 	public void onClickHandler() {
-		if(!GameLogic.getInstance().isGameActive) {
+		if(!GameLogic.isGameActive) {
 			System.out.println("game END");
 			return;
 		}
@@ -136,11 +136,11 @@ public class SkillCard extends VBox{
 			System.out.println("Roll dice !!");
 			return;
 		}
-		if(GameLogic.getInstance().animationRunning) {
+		if(GameLogic.animationRunning) {
 			System.out.println("animation run");
 			return;
 		}
-		if(GameLogic.getInstance().isMonsterTurn) {
+		if(GameLogic.isMonsterTurn) {
 			System.out.println("monster turn");
 			return;
 		}

@@ -54,6 +54,8 @@ public class Monster extends Unit {
 			}else if(monster.getSkills().get(i).readySkill()==false) {
 				continue;
 			}else {
+				
+				
 				System.out.println("############# "+ this.getName()+" use skill " + monster.getSkills().get(i).getName());
 					
 					if( monster instanceof Monster ) {

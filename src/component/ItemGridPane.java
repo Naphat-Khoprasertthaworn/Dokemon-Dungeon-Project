@@ -42,6 +42,9 @@ public class ItemGridPane extends GridPane{
 		//inventory = new Item[MAX_COL][MAX_ROW];
 		this.setAlignment(Pos.CENTER);
 		inventory = GameLogic.getInstance().getInventory();
+		
+		GameLogic.collectItem(); //generate item when start game.
+		this.updateState();
 	}
 	
 	

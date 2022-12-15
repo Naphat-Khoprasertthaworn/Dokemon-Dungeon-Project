@@ -619,8 +619,8 @@ public class GameLogic {
 		this.heros = new ArrayList<Unit>();
 		
 		Unit warriorUnit = new Unit("Warrior", "I am warrior.", 50, 30, 0, 100,"image/warriorUnit.png");
-		Unit archerUnit = new Unit("Archer", "I am archer.", 50, 10, 1, 50,"image/archerUnit.png");
-		Unit medicUnit = new Unit("Medic", "I am medic", 40, 20, 2, 75,"image/medicUnit.png");
+		Unit archerUnit = new Unit("Archer", "I am archer.", 50, 10, 1, 70,"image/archerUnit.png");
+		Unit medicUnit = new Unit("Medic", "I am medic", 40, 20, 2, 80,"image/medicUnit.png");
 		
 		this.addHeros(archerUnit);
 		this.addHeros(medicUnit);
@@ -667,12 +667,12 @@ public class GameLogic {
 	public void generatePoolMonsters() {
 		this.poolMonsters = new ArrayList<Monster>();
 		Monster golemUnit = new Monster("Golem", "I am golem", 50, 30, 0,300,"image/golemUnit.png");
-		Monster slimeUnit = new Monster("Slime", "I am slime", 20, 10, 0, 200,"image/slimeUnit.png");
+		Monster slimeUnit = new Monster("Slime", "I am slime", 40, 10, 0, 200,"image/slimeUnit.png");
 		Monster oniUnit = new Monster("Oni", "I am Oni", 50 , 30, 0, 250,"image/oniUnit.png");
-		Monster bloodHawkUnit = new Monster("Blood Hawk", "I am blood hawk" ,40, 10, 0, 200,"image/bloodHawkUnit.png");
-		Monster gnomeUnit = new Monster("Gnome", "I am Gnome", 30, 10, 0, 200,"image/gnomeUnit.png");
+		Monster bloodHawkUnit = new Monster("Blood Hawk", "I am blood hawk" ,50, 10, 0, 200,"image/bloodHawkUnit.png");
+		Monster gnomeUnit = new Monster("Gnome", "I am Gnome", 50, 10, 0, 200,"image/gnomeUnit.png");
 		
-		SingleTargetAttackSkill golemAutoAttack = new SingleTargetAttackSkill("Auto attack","attack front line hero",100,2, false,"image/monsterSkill.png");
+		SingleTargetAttackSkill golemAutoAttack = new SingleTargetAttackSkill("Auto attack","attack front line hero",100,0, false,"image/monsterSkill.png");
 		MultiTargetAttackSkill golemSkill1 = new MultiTargetAttackSkill("Eathquake","AOE attack",100,5,"image/monsterSkill.png");
 
 		SingleTargetAttackSkill slimeAutoAttack = new SingleTargetAttackSkill("Auto attack" , "heal self and give front line exhaust" , 100,0, false,"image/monsterSkill.png");
@@ -691,8 +691,8 @@ public class GameLogic {
 		SingleTargetAttackSkill bloodHawkSkill1 = new SingleTargetAttackSkill("super dangerous vulnetability" , "" , 100,2,true,"image/monsterSkill.png");
 		bloodHawkSkill1.addBuffsTarget(new Vulnerability(2, 30));
 
-		SingleTargetDefenseSkill gnomeAutoAttack = new SingleTargetDefenseSkill("heal lowest hp monster","single heal",100,2,"image/monsterSkill.png");
-		MultiTargetDefenseSkill gnomeSkill1 = new MultiTargetDefenseSkill("Heal monster","AOE heal",100,4,"image/monsterSkill.png");
+		SingleTargetDefenseSkill gnomeAutoAttack = new SingleTargetDefenseSkill("heal lowest hp monster","single heal",150,2,"image/monsterSkill.png");
+		MultiTargetDefenseSkill gnomeSkill1 = new MultiTargetDefenseSkill("Heal monster","AOE heal",100,3,"image/monsterSkill.png");
 		
 		
 		golemUnit.addSkills(golemAutoAttack);
@@ -770,7 +770,7 @@ public class GameLogic {
 	  * generate boss in boss stage.
 	  */
 	public void generateBossStage() {
-		Monster bossMonster = new Monster("Boss", "I am Boss of this game", 100, 70, 0, 200,"image/bossUnit.png");
+		Monster bossMonster = new Monster("Boss", "I am Boss of this game", 70, 50, 0, 300,"image/bossUnit.png");
 		MultiTargetAttackSkill bossAutoAttack = new MultiTargetAttackSkill("boss auto attack", "AOE debuff and buff self", 10, 3,"image/monsterSkill.png");
 		bossAutoAttack.addBuffsSelf( new Enhance(3, 30) );
 		bossAutoAttack.addBuffsSelf( new DamageReduction(3, 30) );
@@ -778,10 +778,10 @@ public class GameLogic {
 		bossAutoAttack.addBuffsTarget( new Exhaust(3, 30) );
 		
 		
-		MultiTargetAttackSkill bossSkill1 = new MultiTargetAttackSkill("AOE DMG", "aoe", 100 , 4,"image/monsterSkill.png");
+		MultiTargetAttackSkill bossSkill1 = new MultiTargetAttackSkill("AOE DMG", "aoe", 80 , 4,"image/monsterSkill.png");
 		bossSkill1.addBuffsSelf( new Vulnerability(3,50) );
 		
-		MultiTargetAttackSkill bossSkill2 = new MultiTargetAttackSkill("ULT", "AOE", 150, 5,"image/monsterSkill.png");
+		MultiTargetAttackSkill bossSkill2 = new MultiTargetAttackSkill("ULT", "AOE", 120, 5,"image/monsterSkill.png");
 		bossSkill2.addBuffsSelf( new Vulnerability(2,50) );
 		
 		bossMonster.addSkills(bossAutoAttack);
@@ -837,6 +837,7 @@ public class GameLogic {
 		isGameActive = true;
 		GameLogic.getInstance().newGame();
 		GameLogic.getInstance().setCurrentHero( GameLogic.getInstance().getHeros().get(heroOrder) );
+
 	}
 	
 	/**
@@ -880,12 +881,14 @@ public class GameLogic {
 					System.out.println("game clear error");
 					e.printStackTrace();
 				}
+				heroOrder = 0;
 				isBossStage = false;
 				isGameActive = false;
 				return;
 			}
 			
-			GameLogic.getInstance().generateItemDrop();
+			//GameLogic.getInstance();
+			GameLogic.collectItem();
 			GameLogic.getInstance().getCombatController().getItemGridPane().updateState();
 			GameLogic.getInstance().getCombatController().dice.setEnable(true);
 
@@ -906,8 +909,18 @@ public class GameLogic {
 		}
 		if(heroOrder >= MAX_PARTY) {
 			heroOrder = 0;
-
 			monsterTurn();
+//			while(heroOrder<MAX_PARTY) {
+//				heroUnit = GameLogic.getInstance().getHeros().get(heroOrder);
+//				System.out.println(heroUnit);
+//				if(heroUnit.isAlive()) {
+//					break;
+//				}
+//				else {
+//					heroOrder++;
+//				}
+//			}
+//			System.out.println("hero "+heroOrder);
 			return;
 		}
 
@@ -927,14 +940,15 @@ public class GameLogic {
 				Unit monster;
 				
 				for(int i = 0;i<monsters.size();i++) {
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
-					}
+
 					monster = GameLogic.getInstance().getUnitByPosition(i,monsters);
 					if( monster == null || !monster.isAlive() ) {
 						continue;
+					}
+					try {
+						Thread.sleep(600);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
 					}
 					
 					monster.useSkill(null);
@@ -958,11 +972,23 @@ public class GameLogic {
 								e.printStackTrace();
 							}
 						});
+						heroOrder = 0;
 						isGameActive = false;
 						return;
 					}
 				}
 				setMonsterTurn(false);
+				Unit heroUnit;
+				while(heroOrder<MAX_PARTY) {
+					heroUnit = GameLogic.getInstance().getHeros().get(heroOrder);
+					System.out.println(heroUnit);
+					if(heroUnit.isAlive()) {
+						break;
+					}
+					else {
+						heroOrder++;
+					}
+				}
 				GameLogic.getInstance().countdownGame();
 				GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
 				GameLogic.getInstance().setCurrentHero( GameLogic.getInstance().getHeros().get(heroOrder) );
