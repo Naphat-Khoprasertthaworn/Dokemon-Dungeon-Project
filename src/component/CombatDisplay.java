@@ -74,7 +74,7 @@ public class CombatDisplay extends HBox {
 	            
 	        }
 	        for(int i = 0;i<GameLogic.MAX_PARTY;i++) {
-	        	
+	        //for(int i = 0;i<3;i++) {	
 	            UnitCard monsterCard = new UnitCard();
 	            monsterCardBox.getChildren().add(monsterCard);
 	            this.monsterCards.add(monsterCard);
@@ -121,6 +121,7 @@ public class CombatDisplay extends HBox {
 		}
 
 		for(int i = 0;i<monsterArrayList.size();i++) {
+			//System.out.println("monstercard size"+this.monsterCards.size());
 			this.monsterCards.get(i).update(monsterArrayList.get(i) );
 		}
 	}
