@@ -2,7 +2,7 @@ package entity.base;
 /**
  * Base buff class
  */
-public class Buff implements Countdownable {
+public abstract class Buff implements Countdownable {
 	/**
 	  * Remaining turn
 	  */
@@ -120,17 +120,14 @@ public class Buff implements Countdownable {
 	 * Activate buff 
 	  * @param unit give buff to unit
 	  */
-	public void activeBuff(Unit unit) {
-		
-	};
+	public abstract void activeBuff(Unit unit);
 	
 	/**
 	  * Disable buff
 	  * @param unit disable buff this unit
 	  */
-	public void removeSelf(Unit unit) {
-		
-	}
+	public abstract void removeSelf(Unit unit);
+	
 	/**
 	  * Getter for image path
 	  * @return image path

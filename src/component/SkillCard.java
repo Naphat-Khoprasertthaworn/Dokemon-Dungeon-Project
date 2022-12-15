@@ -148,7 +148,7 @@ public class SkillCard extends VBox{
 		if(this.skill == null) {
 			return;
 		}
-		if(this.skill.readySkill()==false) {
+		if(!this.skill.readySkill()) {
 			GameLogic.getInstance().getCombatController().showOnCooldown();
 			System.out.println("i am cd");
 		}else {
