@@ -1,4 +1,9 @@
+application
 buff.type
 component
+entity.base
+gui
+item.type
 logic
 skill.type
+sound

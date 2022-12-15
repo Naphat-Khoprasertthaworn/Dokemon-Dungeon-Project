@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import application.Main;
-
+import component.*;
 import javafx.application.Platform;
 
 import javafx.event.ActionEvent;
@@ -25,8 +25,6 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import logic.GameLogic;
 import sound.SoundManager;
-import component.CombatDisplay; 
-import component.*;
 /**
  * gui controller for combatscene
  */

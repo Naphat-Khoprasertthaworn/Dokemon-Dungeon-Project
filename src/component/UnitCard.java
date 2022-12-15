@@ -203,7 +203,7 @@ public class UnitCard extends VBox {
 	 */
 	public void onClickHandler() {
 		if(GameLogic.getInstance().stageClear()) {
-			GameLogic.getInstance().getCombatController().showRollDiceAlert();
+			//GameLogic.getInstance().getCombatController().showRollDiceAlert();
 			return;
 		}
 		if(unit instanceof Monster) {

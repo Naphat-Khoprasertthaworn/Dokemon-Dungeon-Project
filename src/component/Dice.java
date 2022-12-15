@@ -42,25 +42,11 @@ public class Dice extends VBox{
 	 * random number from dice
 	 */
 	private int resultRoll ;
-//	private final String bigDice ;
-//	private final String dice1 ; 
-//	private final String dice2 ; 
-//	private final String dice3 ; 
-//	private final String dice4 ; 
-//	private final String dice5 ; 
-//	private final String dice6 ; 
 	
 	/**
 	 * Constructor of Dice
 	 */
 	public Dice() {
-//		bigDice = ClassLoader.getSystemResource("image/Bigdice.png").toString();
-//		dice1 = ClassLoader.getSystemResource("image/dice1.png").toString();
-//		dice2 = ClassLoader.getSystemResource("image/dice2.png").toString();
-//		dice3 = ClassLoader.getSystemResource("image/dice3.png").toString();
-//		dice4 = ClassLoader.getSystemResource("image/dice4.png").toString();
-//		dice5 = ClassLoader.getSystemResource("image/dice5.png").toString();
-//		dice6 = ClassLoader.getSystemResource("image/dice6.png").toString();
 		setMaxHeight(100);
 		setMinHeight(100);
 		diceImageView = new ImageView();
@@ -104,9 +90,7 @@ public class Dice extends VBox{
 						diceImageView.setImage(new Image(imgPath));
 						Thread.sleep(50);
 					}
-
 					isEnable = true ;
-					//System.out.println(resultRoll);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -142,12 +126,11 @@ public class Dice extends VBox{
 	public void endThread() {
 		int ni = this.getResultRoll();
 		
-		GameLogic.getInstance().isBossStage = GameLogic.getInstance().setDistance( GameLogic.getInstance().getDistance() + ni);
+
+		GameLogic.isBossStage = GameLogic.getInstance().setDistance( GameLogic.getInstance().getDistance() + ni);
 		GameLogic.getInstance().getCombatController().updateProgressBar();
 		GameLogic.getInstance().resetUnits();
-		GameLogic.getInstance().startStageGame();
-//		GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatDisplay();
-		//GameLogic.getInstance().getCombatController().getCombatDisplay().updateCombatUnit();
+		GameLogic.startStageGame();
 		
 		GameLogic.getInstance().getCombatController().getCombatDisplay().updatePointer();
 		GameLogic.getInstance().getCombatController().getSkillPane().updateState();
