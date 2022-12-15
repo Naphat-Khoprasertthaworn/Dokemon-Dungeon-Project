@@ -92,7 +92,7 @@ public class GameLogic {
 	/**
 	  * Max game distance progress.
 	  */
-	public static final int MAX_DISTANCE = 7;
+	public static final int MAX_DISTANCE = 15;
 	
 	/**
 	  * Number of unit in party.
